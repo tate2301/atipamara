@@ -134,16 +134,16 @@ const Dots = (props: {
   );
 };
 
+const icons = [
+    <HomeIcon key={"home-icon"} className="w-6 h-6" />,
+    <SparklesIcon key={"sparkles-icon"} className="w-6 h-6" />,
+    <DocumentIcon key={"document-icon"} className="w-6 h-6" />,
+    <BriefcaseIcon key={"briefcase-icon"} className="w-6 h-6" />,
+    <GlobeAltIcon key={"globe-icon"} className="w-6 h-6" />,
+  ];
+
 export default function DynamicIslandPlayground() {
   const [active, setActive] = useState(2);
-
-  const icons = [
-    <HomeIcon className="w-6 h-6" />,
-    <SparklesIcon className="w-6 h-6" />,
-    <DocumentIcon className="w-6 h-6" />,
-    <BriefcaseIcon className="w-6 h-6" />,
-    <GlobeAltIcon className="w-6 h-6" />,
-  ];
 
   useEffect(() => {
     // navigate with arrows

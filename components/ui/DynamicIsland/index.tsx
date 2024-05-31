@@ -47,7 +47,7 @@ export default function DynamicIsland(props: BottomBarProps) {
                 width: props.width
             })
         }
-    }, [props.width])
+    }, [props.width, animate])
 
     
 

@@ -34,7 +34,7 @@ export default function Home() {
     <div>
       <ButtonWithDisclosure backgroundColor="#0588F0" color="#fff" accentColor="#fff" text="Book an introductory call" icon={<PhoneIcon className="w-6 h-6" />}>
         <h1 className="text-3xl font-bold mb-2">
-          Let's talk about your next project
+          Let&lsquo;s talk about your next project
         </h1>
         <p className="max-w-2xl text-balance">
           We are always excited to work with new people and help them bring their ideas to life. 
