@@ -1,22 +1,30 @@
 import ButtonWithDisclosure from "@/components/ButtonWithDisclosure";
 import PlaygroundPreview from "@/components/ui/Playground";
-import DynamicIsland from "@/components/ui/DynamicIsland";
 import DynamicIslandPlayground from "@/components/Playground/DynamicIslandPlayground";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
+import { GeistMono } from "geist/font/mono";
+import clsx from "clsx";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Interaction Playground",
+  description:
+    "Tatenda Christopher Chinyamakobvu is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+};
 
 export default function Page() {
   return (
-    <div className="h-full max-w-5xl mx-auto py-64 p-4">
+    <div className="h-full max-w-2xl mx-auto py-32 p-4">
       <div className="mb-32">
-        <h1 className="text-8xl font-bold tracking-tight max-w-xl mb-6">
-          Small Interaction Experiments
+        <h1 className={clsx("text-8xl font-bold tracking-tight mb-6")}>
+          Interaction Playground
         </h1>
         <p className="text-lg">
           Built from my ideas, inspiration from great work and rebuilding
           interesting experiences
         </p>
       </div>
-      <div className="space-y-24">
+      <div className="space-y-24 border-t border-dashed border-zinc-400/20 pt-32">
         <PlaygroundPreview
           title="Apple iPhone 15 Bottom Bar"
           description="Inspired by the Apple iPhone 15 product page."

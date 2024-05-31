@@ -22,7 +22,7 @@ export default function DynamicIsland(props: BottomBarProps) {
       opacity: 0,
       backgroundColor: "rgba(0,0,0,0.04)",
       bottom: -24,
-      width: 54,
+      width: 48,
     },
     visible: {
       scale: [0.5, 1.5, 1.3, 1, 1, 1],
@@ -79,7 +79,7 @@ export default function DynamicIsland(props: BottomBarProps) {
         animate={inView ? "visible" : "hidden"}
         whileInView="visible"
         exit={"hidden"}
-        className="flex items-center h-[54px] min-w-[54px] rounded-full p-[8px] origin-center cursor-pointer relative"
+        className="flex items-center h-[48px] min-w-[48px] rounded-full p-[8px] origin-center cursor-pointer relative"
       >
         {props.children}
       </motion.div>
