@@ -63,12 +63,13 @@ export default function DynamicIsland(props: BottomBarProps) {
         });
         
         if(!ref.current) return;
+        const thisRef = ref.current
 
-        observer.observe(ref.current);
+        observer.observe(thisRef);
 
         return () => {
-            if(!ref.current) return;
-            observer.unobserve(ref.current!);
+            if(!thisRef) return;
+            observer.unobserve(thisRef!);
         };
     }, []);
 

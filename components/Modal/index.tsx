@@ -20,7 +20,7 @@ export default function Modal(props: ModalProps) {
         return () => {
             document.body.style.overflowY = "auto";
         }
-    }, [])
+    }, [props.isOpen])
 
     useEffect(() => {
         // close on escape key press
