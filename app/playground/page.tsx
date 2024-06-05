@@ -1,3 +1,5 @@
+"use client";
+
 import ButtonWithDisclosure from "@/components/ButtonWithDisclosure";
 import PlaygroundPreview from "@/components/ui/Playground";
 import DynamicIslandPlayground from "@/components/Playground/DynamicIslandPlayground";
@@ -5,12 +7,13 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import { GeistMono } from "geist/font/mono";
 import clsx from "clsx";
 import { Metadata } from "next";
+import GridProfileCards from "@/components/Playground/GridProfileCards";
 
-export const metadata: Metadata = {
-  title: "Interaction Playground",
-  description:
-    "Tatenda Christopher Chinyamakobvu is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
-};
+// export const metadata: Metadata = {
+//   title: "Interaction Playground",
+//   description:
+//     "Tatenda Christopher Chinyamakobvu is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+// };
 
 export default function Page() {
   return (
@@ -46,6 +49,12 @@ export default function Page() {
           </ButtonWithDisclosure>
         </PlaygroundPreview>
         <DynamicIslandPlayground />
+        <PlaygroundPreview
+          title="Image stack"
+          description="Inspired by Family iOS app interactions."
+        >
+          <GridProfileCards />
+        </PlaygroundPreview>
       </div>
     </div>
   );
