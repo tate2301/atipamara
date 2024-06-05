@@ -17,9 +17,13 @@ import GridProfileCards from "@/components/Playground/GridProfileCards";
 
 export default function Page() {
   return (
-    <div className="h-full max-w-2xl mx-auto py-32 p-4">
+    <div className="h-full max-w-2xl mx-auto pb-32 pt-16 p-4">
       <div className="mb-32">
-        <h1 className={clsx("text-8xl font-bold tracking-tight mb-6")}>
+        <h1
+          className={clsx(
+            "text-5xl font-bold tracking-tight mb-6 bg-gradient-to-br from-zinc-900 via-zinc-700 to-zinc-400 bg-clip-text text-transparent",
+          )}
+        >
           Interaction Playground
         </h1>
         <p className="text-lg">

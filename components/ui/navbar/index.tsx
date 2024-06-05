@@ -1,12 +1,56 @@
+"use client";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   return (
-    <nav className="max-w-2xl mx-auto pt-32 pb-0 px-4">
-      <Link href={"/"}>
-        <h1 className="font-bold">Tatenda Christopher Chinyamakobvu</h1>
-        <p className="mb-4">Design — Engineer</p>
-      </Link>
-    </nav>
+    <header className="max-w-2xl mx-auto pt-32 pb-6 px-4">
+      <nav className="mb-10">
+        <Link href={"/"}>
+          <h1>Tatenda Christopher Chinyamakobvu</h1>
+          <p className="mb-4">Design — Engineer</p>
+        </Link>
+      </nav>
+      <nav className="flex gap-2 -mx-4">
+        <Link
+          href={"/"}
+          className={cn(
+            "rounded-full items-center flex h-[36px] px-4",
+            pathname === "/" && "bg-zinc-900 text-white ",
+          )}
+        >
+          Index
+        </Link>
+        <Link
+          href={"/playground"}
+          className={cn(
+            "text-zinc-500 rounded-full items-center flex h-[36px] px-4",
+            pathname === "/playground" && "bg-zinc-900 text-white ",
+          )}
+        >
+          Playground
+        </Link>
+        <Link
+          href={"/writing"}
+          className={cn(
+            "text-zinc-500 rounded-full items-center flex h-[36px] px-4",
+            pathname === "/writing" && "bg-zinc-900 text-white ",
+          )}
+        >
+          Writing
+        </Link>
+        <Link
+          href={"/photos"}
+          className={cn(
+            "text-zinc-500 rounded-full items-center flex h-[36px] px-4",
+            pathname === "/photos" && "bg-zinc-900 text-white ",
+          )}
+        >
+          Photos
+        </Link>
+      </nav>
+    </header>
   );
 }

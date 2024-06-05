@@ -3,6 +3,13 @@ import { ArrowUpRightIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Link from "next/link";
 
+import { Newsreader } from "next/font/google";
+
+const serif = Newsreader({
+  subsets: ["latin"],
+  style: "italic",
+});
+
 export const metadata: Metadata = {
   title: "Tatenda C Chinyamakobvu - Design Engineer",
   description:
@@ -25,15 +32,15 @@ export default function About() {
           across different roles ranging between frontend developer, fullstack
           developer, product designer and I won&#39;t forget the one experience
           where I won a{" "}
-          <a
-            href="https://zindi.africa/competitions/umojahack-africa-2021-2-sendy-challenge-intermediate/leaderboard"
-            target="_blank"
-            rel="no-referrer"
-            className="text-[#202020]"
-          >
-            Data Science
-          </a>{" "}
-          challenge.
+          <em className={serif.className} style={{ fontSize: "18px" }}>
+            <a
+              href="https://zindi.africa/competitions/umojahack-africa-2021-2-sendy-challenge-intermediate/leaderboard"
+              target="_blank"
+              rel="no-referrer"
+            >
+              Data Science challenge.
+            </a>
+          </em>
         </p>
       </div>
 
@@ -49,6 +56,11 @@ export default function About() {
             title="redux persist nedb"
             description="Persist redux store to NeDB. Built for use with Electron."
             link="https://github.com/tate2301/redux-persist-nedb"
+          />
+          <ProjectCard
+            title="MQTT quickstart template"
+            description="Starter template for building MQTT applications with Node.js"
+            link="https://github.com/tate2301/mqtt-starter"
           />
         </div>
       </div>

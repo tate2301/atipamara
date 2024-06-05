@@ -18,7 +18,10 @@ export default function PlaygroundPreview(props: {
       </div>
       <div
         key={key}
-        className="max-w-xl justify-center items-center flex flex-col border bg-white p-16 pb-8 rounded-xl relative space-y-16"
+        style={{
+          boxShadow: "0px 4px 12px -6px rgba(0, 0, 0, 0.08)",
+        }}
+        className="max-w-xl justify-center items-center flex flex-col border border-zinc-400/30 bg-white p-16 pb-8 rounded-xl relative space-y-16"
       >
         <AnimatePresence>{props.children}</AnimatePresence>
         <button
