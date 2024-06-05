@@ -74,8 +74,8 @@ export default function About() {
             link="/playground"
           />
           <ProjectCard
-            title="Amie Action Bar"
-            description="Recreating the action bar on the Amie app."
+            title="Family profile grid"
+            description="A grid of profiles with a hover effect. Inspired by the Family app."
             link="/playground"
           />
         </div>
