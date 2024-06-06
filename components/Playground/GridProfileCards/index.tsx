@@ -81,10 +81,10 @@ export default function GridProfileCards() {
         className="mb-8 w-24 h-24 overflow-visible relative"
       >
         {[
-          "https://www.atipamara.xyz/_next/image?url=%2Fassets%2Fphotos%2Fz.JPG&w=1920&q=75",
+          "/assets/photos/z.JPG",
           "/assets/photos/IMG_0389.jpg",
-          "https://www.atipamara.xyz/_next/image?url=%2Fassets%2Fphotos%2FIMG_5392.JPEG&w=1920&q=75",
-          "https://www.atipamara.xyz/_next/image?url=%2Fassets%2Fphotos%2FIMG_8471.JPEG&w=1920&q=75",
+          "/assets/photos/IMG_5392.JPEG",
+          "/assets/photos/IMG_8471.JPEG",
         ]
           .slice(0, 4)
           .map((item, i) => (
