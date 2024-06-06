@@ -2,10 +2,6 @@
 import { motion, useAnimate } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Image1 from "@/public/assets/photos/z.jpg";
-import Image2 from "@/public/assets/photos/IMG_0389.jpg";
-import Image3 from "@/public/assets/photos/bc.jpeg";
-import Image4 from "@/public/assets/photos/IMG_7511.jpg";
 
 const getDefaultTransformForIndex = (index: number) => {
   if (index === 0) return "";
@@ -84,26 +80,33 @@ export default function GridProfileCards() {
         onMouseLeave={toggleHover}
         className="mb-8 w-24 h-24 overflow-visible relative"
       >
-        {[Image1, Image2, Image3, Image4].slice(0, 4).map((item, i) => (
-          <motion.div
-            key={`profile-card-${i}`}
-            id={`option-${i}`}
-            style={{
-              zIndex: 5 - i,
-              boxShadow: "rgba(0, 0, 0, 0.16) 0px 4px 12px -3px",
-              transform: getDefaultTransformForIndex(i),
-            }}
-            className="w-24 h-24 rounded-3xl absolute border border-white/10 shadow-sm overflow-hidden"
-          >
-            <Image
-              src={item}
-              alt="Profile image"
-              height={96}
-              width={96}
-              className="object-cover object-center"
-            />
-          </motion.div>
-        ))}
+        {[
+          "/assets/photos/z.jpg",
+          "/assets/photos/IMG_0389.jpg",
+          "/assets/photos/bc.jpeg",
+          "/assets/photos/IMG_7511.jpg",
+        ]
+          .slice(0, 4)
+          .map((item, i) => (
+            <motion.div
+              key={`profile-card-${i}`}
+              id={`option-${i}`}
+              style={{
+                zIndex: 5 - i,
+                boxShadow: "rgba(0, 0, 0, 0.16) 0px 4px 12px -3px",
+                transform: getDefaultTransformForIndex(i),
+              }}
+              className="w-24 h-24 rounded-3xl absolute border border-white/10 shadow-sm overflow-hidden"
+            >
+              <Image
+                src={item}
+                alt="Profile image"
+                height={96}
+                width={96}
+                className="object-cover object-center"
+              />
+            </motion.div>
+          ))}
       </motion.div>
       <p className="font-semibold text-lg text-zinc-900">Strikeforce</p>
       <p>5 members</p>
