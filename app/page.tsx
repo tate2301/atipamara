@@ -74,8 +74,8 @@ export default function About() {
             link="/playground"
           />
           <ProjectCard
-            title="Family profile grid"
-            description="A grid of profiles with a hover effect. Inspired by the Family app."
+            title="Animated image stack"
+            description="A stack of profiles with a hover effect. Inspired by the Family app."
             link="/playground"
           />
         </div>

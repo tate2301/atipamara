@@ -30,7 +30,7 @@ export default function Page() {
           </h1>
           <p className="text-lg">
             Life is great, capture the moments. These are photos of me, my
-            favorite people and some memories.
+            favorite people, pups and some memories.
           </p>
         </div>
       </div>

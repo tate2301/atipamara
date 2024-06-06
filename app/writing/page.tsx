@@ -1,13 +1,5 @@
 "use client";
-
-import ButtonWithDisclosure from "@/components/ButtonWithDisclosure";
-import PlaygroundPreview from "@/components/ui/Playground";
-import DynamicIslandPlayground from "@/components/Playground/DynamicIslandPlayground";
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
-import { GeistMono } from "geist/font/mono";
 import clsx from "clsx";
-import { Metadata } from "next";
-import GridProfileCards from "@/components/Playground/GridProfileCards";
 import UnderDevelopment from "@/components/UnderDevelopment";
 
 // export const metadata: Metadata = {
