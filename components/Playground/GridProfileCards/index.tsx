@@ -96,7 +96,7 @@ export default function GridProfileCards() {
                 boxShadow: "rgba(0, 0, 0, 0.16) 0px 4px 12px -3px",
                 transform: getDefaultTransformForIndex(i),
               }}
-              className="w-24 h-24 rounded-3xl absolute border border-white/10 shadow-sm overflow-hidden"
+              className="w-24 h-24 rounded-3xl absolute border border-white/10 shadow-sm overflow-hidden bg-zinc-900/5"
             >
               <Image
                 src={item}
