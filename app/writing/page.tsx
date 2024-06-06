@@ -8,6 +8,7 @@ import { GeistMono } from "geist/font/mono";
 import clsx from "clsx";
 import { Metadata } from "next";
 import GridProfileCards from "@/components/Playground/GridProfileCards";
+import UnderDevelopment from "@/components/UnderDevelopment";
 
 // export const metadata: Metadata = {
 //   title: "Interaction Playground",
@@ -30,7 +31,9 @@ export default function Page() {
           This is the best way to express my thoughts and ideas
         </p>
       </div>
-      <div className="space-y-24 border-t border-dashed border-zinc-400/20 pt-32"></div>
+      <div className="space-y-24 border-t border-dashed border-zinc-400/20 pt-32">
+        <UnderDevelopment />
+      </div>
     </div>
   );
 }
