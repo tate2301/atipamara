@@ -1,5 +1,3 @@
-"use client";
-
 import ButtonWithDisclosure from "@/components/ButtonWithDisclosure";
 import PlaygroundPreview from "@/components/ui/Playground";
 import DynamicIslandPlayground from "@/components/Playground/DynamicIslandPlayground";
@@ -9,11 +7,11 @@ import clsx from "clsx";
 import { Metadata } from "next";
 import GridProfileCards from "@/components/Playground/GridProfileCards";
 
-// export const metadata: Metadata = {
-//   title: "Interaction Playground",
-//   description:
-//     "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
-// };
+export const metadata: Metadata = {
+  title: "Interaction Playground",
+  description:
+    "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+};
 
 export default function Page() {
   return (

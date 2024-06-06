@@ -84,7 +84,7 @@ export default function GridProfileCards() {
           "/assets/photos/z.jpg",
           "/assets/photos/IMG_0389.jpg",
           "/assets/photos/bc.jpeg",
-          "/assets/photos/IMG_7511.jpg",
+          "/assets/photos/image.JPG",
         ]
           .slice(0, 4)
           .map((item, i) => (
