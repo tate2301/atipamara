@@ -11,7 +11,7 @@ const serif = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Tatenda C Chinyamakobvu - Design Engineer",
+  title: "Atipamara - Design Engineer",
   description:
     "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
 };
