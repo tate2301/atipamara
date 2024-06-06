@@ -2,10 +2,10 @@
 import { motion, useAnimate } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Image1 from "../../../public/assets/photos/z.JPG";
-import Image2 from "../../../public/assets/photos/IMG_0389.jpg";
-import Image3 from "../../../public/assets/photos/bc.JPEG";
-import Image4 from "../../../public/assets/photos/IMG_7511.jpg";
+import Image1 from "@/public/assets/photos/z.jpg";
+import Image2 from "@/public/assets/photos/IMG_0389.jpg";
+import Image3 from "@/public/assets/photos/bc.jpeg";
+import Image4 from "@/public/assets/photos/IMG_7511.jpg";
 
 const getDefaultTransformForIndex = (index: number) => {
   if (index === 0) return "";
