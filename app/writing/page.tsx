@@ -5,7 +5,7 @@ import UnderDevelopment from "@/components/UnderDevelopment";
 // export const metadata: Metadata = {
 //   title: "Interaction Playground",
 //   description:
-//     "Tatenda Christopher Chinyamakobvu is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+//     "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
 // };
 
 export default function Page() {

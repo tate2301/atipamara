@@ -9,7 +9,7 @@ export default function Navbar() {
     <header className="max-w-2xl mx-auto pt-32 pb-6 px-4">
       <nav className="mb-10">
         <Link href={"/"}>
-          <h1>Tatenda Christopher Chinyamakobvu</h1>
+          <h1>Atipamara</h1>
           <p className="mb-4">Design — Engineer</p>
         </Link>
       </nav>

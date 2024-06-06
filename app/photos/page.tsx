@@ -5,9 +5,9 @@ import path from "path";
 import fs from "fs";
 
 export const metadata: Metadata = {
-  title: "Photos - Tatenda Chinyamakobvu",
+  title: "Photos - Atipamara",
   description:
-    "Tatenda Christopher Chinyamakobvu is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+    "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
 };
 
 export default function Page() {
