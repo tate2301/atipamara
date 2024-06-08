@@ -127,7 +127,7 @@ const Dots = (props: {
         initial="hidden"
         animate="visible"
         className={cn(
-          "flex h-full items-center justify-between px-4 rounded-full",
+          "flex h-full items-center justify-between px-4 rounded-full shadow-xl",
           props.className,
         )}
       >
@@ -189,8 +189,7 @@ export function DynamicIsland(props: {
       initial="hidden"
       animate="visible"
       className={cn(
-        "flex relative rounded-full justify-center items-center gap-4 bg-[#eee]",
-        props.className,
+        "flex relative rounded-full justify-center items-center gap-4",
       )}
     >
       <motion.div
@@ -199,7 +198,7 @@ export function DynamicIsland(props: {
         initial="hidden"
         animate="visible"
         className={cn(
-          "w-[54px] h-[54px] text-[#0588F0] rounded-full z-0 flex items-center justify-center flex-shrink-0 bg-[#eee]",
+          "w-[54px] h-[54px] text-[#0588F0] rounded-full z-0 flex items-center justify-center flex-shrink-0 bg-[#eee] shadow-xl",
           props.className,
         )}
       >
@@ -249,7 +248,12 @@ export default function DynamicIslandPlayground() {
       title="Dynamic Island Bottom Navigation"
       description="Inspired by the Apple Dynamic Island"
     >
-      <DynamicIsland items={icons} active={active} onClick={onSetActive} />
+      <DynamicIsland
+        items={icons}
+        active={active}
+        onClick={onSetActive}
+        className="bg-white border border-zinc-400/10"
+      />
     </PlaygroundPreview>
   );
 }
