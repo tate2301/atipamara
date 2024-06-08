@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import Link from "next/link";
 import "./globals.css";
 import Navbar from "@/components/ui/navbar";
+import DynamicNavbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.className} text-[#646464] bg-zinc-100 p-2`}>
+      <body
+        className={`${GeistSans.className} text-[#646464] bg-zinc-100 p-2 pb-16`}
+      >
         <Navbar />
         {children}
       </body>
