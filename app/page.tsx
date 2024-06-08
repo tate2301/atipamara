@@ -50,17 +50,33 @@ export default function About() {
           <ProjectCard
             title="paynow react"
             description="A react wrapper for the Paynow SDK"
-            link="https://github.com/tate2301/paynow-react"
+            link="https://paynow.atipamara.xyz"
           />
+
           <ProjectCard
             title="redux persist nedb"
             description="Persist redux store to NeDB. Built for use with Electron."
             link="https://github.com/tate2301/redux-persist-nedb"
           />
           <ProjectCard
-            title="MQTT quickstart template"
-            description="Starter template for building MQTT applications with Node.js"
-            link="https://github.com/tate2301/mqtt-starter"
+            title="Stopwatch"
+            description="Implementing a stopwatch using a finite state machine"
+            link="https://github.com/tate2301/stopwatch"
+          />
+          <ProjectCard
+            title="Telescope"
+            description="SaaS revenue projection tool"
+            link="https://toolkit.atipamara.xyz"
+          />
+          <ProjectCard
+            title="EcoCash JS"
+            description="Javascript library for interacting with the Ecocash Instant Payments API"
+            link="https://github.com/tate2301/ecocash-js"
+          />
+          <ProjectCard
+            title="Snackbar"
+            description="Boost your productivity with a supercharged task manager"
+            link="https://snackbar.atipamara.xyz"
           />
         </div>
       </div>

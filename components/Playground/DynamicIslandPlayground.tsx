@@ -209,7 +209,7 @@ export function DynamicIsland(props: {
           props.className,
         )}
       >
-        {props.items[props.active].icon}
+        {props.items[props.active]?.icon}
       </motion.div>
       <Dots
         items={props.items}
