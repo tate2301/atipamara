@@ -65,8 +65,15 @@ const dotsVariants = {
     },
   },
   activeHovered: {
+    opacity: 1,
     height: 12 * 3,
-    width: 12 * 3,
+    transition: {
+      type: "spring",
+      ease: "easeOut",
+      stiffness: 200,
+      weight: 0.5,
+      damping: 20,
+    },
   },
 };
 

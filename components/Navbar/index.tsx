@@ -46,7 +46,7 @@ export default function DynamicNavbar() {
         active={dynamicIslandNavbar.findIndex((item) => item.href === path)}
         items={dynamicIslandNavbar}
         onClick={handleClick}
-        className="bg-[#0588F0] text-white"
+        className="bg-[#0588F0] text-white border border-[#2979bb]"
       />
     </header>
   );
