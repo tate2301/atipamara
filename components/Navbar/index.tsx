@@ -6,9 +6,9 @@ import {
   PencilIcon,
   SparklesIcon,
 } from "@heroicons/react/24/solid";
-import { DynamicIsland } from "../Playground/DynamicIslandPlayground";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import FloatingNavbarDotContainer from "../ui/navbar/FloatingNavbarContainer";
 
 const dynamicIslandNavbar = [
   {
@@ -67,11 +67,11 @@ export default function DynamicNavbar() {
 
   return (
     <header className="fixed inset-x-0 z-30 bottom-6 flex justify-center">
-      <DynamicIsland
+      <FloatingNavbarDotContainer
         active={dynamicIslandNavbar.findIndex((item) => item.href === path)}
         items={dynamicIslandNavbar}
         onClick={handleClick}
-        className="bg-[#0588F0] text-white border border-[#2979bb]"
+        className="bg-[#0588F0] text-white border border-[#2979bb] border-opacity-30"
       />
     </header>
   );

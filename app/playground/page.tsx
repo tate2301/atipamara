@@ -1,10 +1,10 @@
 import ButtonWithDisclosure from "@/components/ButtonWithDisclosure";
 import PlaygroundPreview from "@/components/ui/Playground";
-import DynamicIslandPlayground from "@/components/Playground/DynamicIslandPlayground";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { Metadata } from "next";
 import GridProfileCards from "@/components/Playground/GridProfileCards";
+import NavigationFloatingBarPlay from "@/components/Playground/NavigationFloatingBar";
 
 export const metadata: Metadata = {
   title: "Interaction Playground",
@@ -49,7 +49,7 @@ export default function Page() {
             </div>
           </ButtonWithDisclosure>
         </PlaygroundPreview>
-        <DynamicIslandPlayground />
+        <NavigationFloatingBarPlay />
         <PlaygroundPreview
           title="Image stack"
           description="Inspired by Family iOS app interactions."

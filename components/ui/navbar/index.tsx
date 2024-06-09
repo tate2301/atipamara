@@ -1,6 +1,5 @@
 "use client";
 import DynamicNavbar from "@/components/Navbar";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
