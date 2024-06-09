@@ -130,6 +130,29 @@ export default function About() {
         </div>
       </div>
       <div>
+        <h1 className="leading-relaxed mb-10">Achievements and Awards</h1>
+        <div className="space-y-10 flex flex-col">
+          <WorkExperienceCard
+            title="Bronze - UmojaHack Africa 2022"
+            description="I and my team won bronze place in the intermediate machine learning challenge. The task was to build a loan default prediction model using a dataset of Zimnat loans."
+            link="https://zindi.africa/competitions/umojahack-zimbabwe"
+            timeline="2022"
+          />
+          <WorkExperienceCard
+            title="9th Place out of 150 - UmojaHack Africa 2021"
+            description="Ranked 9th in the Sendy Rider Challenge out of 150 teams from all over African universities."
+            link="https://zindi.africa/competitions/umojahack-africa-2021-2-sendy-challenge-intermediate"
+            timeline="2021"
+          />
+          <WorkExperienceCard
+            title="1st Place - Inaugural POTRAZ Hack4SmartCities Challenge"
+            description="Built a rapid-response app that won 1st place and a cash prize of ZWL$1,000,000 valued at USD$37,000. The app uses ambient sound processing and sensors in your mobile phone to determine if a user is in danger."
+            link="https://potraz.gov.zw"
+            timeline="2020"
+          />
+        </div>
+      </div>
+      <div>
         <h1 className="leading-relaxed mb-10">UI Explorations</h1>
         <div className="space-y-4 flex flex-col">
           <ProjectCard
