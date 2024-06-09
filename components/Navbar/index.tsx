@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { DynamicIsland } from "../Playground/DynamicIslandPlayground";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const dynamicIslandNavbar = [
   {
@@ -39,6 +40,30 @@ export default function DynamicNavbar() {
   const handleClick = (idx: number) => {
     navigate.push(dynamicIslandNavbar[idx].href);
   };
+
+  useEffect(() => {
+    const currentIdx = dynamicIslandNavbar.findIndex(
+      (item) => item.href === path,
+    );
+    if (currentIdx === -1) return;
+
+    // navigate with arrows
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        if (currentIdx === dynamicIslandNavbar.length - 1) return;
+        navigate.push(dynamicIslandNavbar[currentIdx + 1].href);
+      } else if (e.key === "ArrowLeft") {
+        if (currentIdx === 0) return;
+        navigate.push(dynamicIslandNavbar[currentIdx - 1].href);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [path]);
 
   return (
     <header className="fixed inset-x-0 z-30 bottom-6 flex justify-center">
