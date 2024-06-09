@@ -13,7 +13,7 @@ const WorkExperienceCard = (props: {
     timeline += " Present";
   }
   return (
-    <Link href={props.link} className="flex gap-8">
+    <Link href={props.link} className="space-y-1 md:space-y-0 md:flex gap-8">
       <p className="text-sm leading-relaxed capitalize w-32 flex-shrink-0">
         {timeline}
       </p>
