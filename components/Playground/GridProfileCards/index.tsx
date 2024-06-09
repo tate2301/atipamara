@@ -108,7 +108,7 @@ export default function GridProfileCards() {
             </motion.div>
           ))}
       </motion.div>
-      <p className="font-semibold text-lg text-zinc-900">Strikeforce</p>
+      <p className="font-bold text-lg text-zinc-900">Strikeforce</p>
       <p>5 members</p>
     </motion.div>
   );

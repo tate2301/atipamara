@@ -83,7 +83,7 @@ const containerVariants: FramerMotionVariants = {
     scale: [1, 1.5, 1, 1, 1],
     opacity: [1, 1],
     height: [54],
-    width: [54, 54, 280, 280, 280],
+    minWidth: [54, 54, 280, 280, 280],
     transition: {
       duration: 2,
       times: [0, 0.15, 0.3, 0.55, 0.75, 1],

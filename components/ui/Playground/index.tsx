@@ -26,7 +26,7 @@ export default function PlaygroundPreview(props: {
         <AnimatePresence>{props.children}</AnimatePresence>
         <button
           onClick={forceRerender}
-          className="bottom-3 font-semibold text-sm mx-auto px-4 h-8 rounded-full bg-zinc-50 border border-zinc-400/20 shadow-sm flex items-center"
+          className="bottom-3 font-bold text-sm mx-auto px-4 h-8 rounded-full bg-zinc-50 border border-zinc-400/20 shadow-sm flex items-center"
         >
           Reset
           <ArrowPathIcon className="w-4 h-4 ml-2" />

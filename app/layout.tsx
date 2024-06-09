@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import Link from "next/link";
 import "./globals.css";
 import Navbar from "@/components/ui/navbar";
-import DynamicNavbar from "@/components/Navbar";
+// import { serif } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
