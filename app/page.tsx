@@ -45,7 +45,7 @@ export default function About() {
       </div>
 
       <div>
-        <h1 className="leading-relaxed mb-6">Projects</h1>
+        <h1 className="leading-relaxed mb-10">Projects</h1>
         <div className="flex flex-col space-y-4 relative">
           <ProjectCard
             title="paynow react"
@@ -80,9 +80,55 @@ export default function About() {
           />
         </div>
       </div>
-
       <div>
-        <h1 className="leading-relaxed mb-6">UI Explorations</h1>
+        <h1 className="leading-relaxed mb-10">Working experience</h1>
+        <div className="space-y-10 flex flex-col">
+          <WorkExperienceCard
+            title="Design Engineer - CUT Innovation Hub"
+            description="Helping student founders and startups design user-focused products. Mentored student developers at the Build With The Idea Factory cohort of 2023."
+            link="https://buildwithtif.xyz"
+            timeline="July 2023 - Present"
+          />
+          <WorkExperienceCard
+            title="Senior Product Engineer - TreatDAO"
+            description="Designed and led the team in developing the $TREAT multichain bridge. Worked with TheGraph to build an indexer for the TreatDAO market smart contracts."
+            link="https://treatdao.org"
+            timeline="December 2022 - April 2023"
+          />
+          <WorkExperienceCard
+            title="Fullstack Web3 Developer - TreatDAO"
+            description="Developed the TreatDAO NFT marketplace. Worked with the EVM to build a decentralized marketplace for NFTs on the Binance Smart Chain."
+            link="https://treatdao.org"
+            timeline="May 2022 - November 2022"
+          />
+          <WorkExperienceCard
+            title="Contract Frontend Developer - 22Seven"
+            description="Contracted to develop the marketing website for 22Seven. Powered by Headless Wordpress & Gatsby."
+            link="https://www.22seven.com"
+            timeline="June 2021 - July 2021"
+          />
+          <WorkExperienceCard
+            title="Fullstack Developer - Techzim"
+            description="Developed the Buy-on-credit feature for the Techzim market and laid out the groundwork for migrating to Headless Wordpress."
+            link="https://www.techzim.co.zw"
+            timeline="Jan 2021 - March 2021"
+          />
+          <WorkExperienceCard
+            title="Soterio Team - Chinhoyi University of Technology"
+            description="Led the development of the Soterio Contact Tracing app. Forked from the Australian Government's COVID-19 BLE based contact tracing app. Our efforts allowed Zimbabwean universities to re-open their doors to students and staff."
+            link="https://www.cut.ac.zw"
+            timeline="April 2020 - November 2020"
+          />
+          <WorkExperienceCard
+            title="Product Designer - Tachom"
+            description="Designing mobile apps and SaaS products for Tachom clients including, Vaai, Afrispark and ThothAI."
+            link="https://www.devtachom.com"
+            timeline="April 2019 - February 2020"
+          />
+        </div>
+      </div>
+      <div>
+        <h1 className="leading-relaxed mb-10">UI Explorations</h1>
         <div className="space-y-4 flex flex-col">
           <ProjectCard
             title="Apple iPhone 15 marketing bottom bar"
@@ -143,6 +189,33 @@ const ProjectCard = (props: {
         {props.title}
       </p>
       <p>{props.description}</p>
+    </Link>
+  );
+};
+
+const WorkExperienceCard = (props: {
+  title: string;
+  description: string;
+  link: string;
+  timeline: string;
+}) => {
+  // timeline should be a string like "2020 - 2020" or "2020 - Present" or "2020 - 2021"
+  // remove any other characters
+  let timeline = props.timeline.replace(/[^0-9\s-]/g, "");
+  if (props.timeline.includes("Present")) {
+    timeline += " Present";
+  }
+  return (
+    <Link href={props.link} className="flex gap-8">
+      <p className="text-sm leading-relaxed capitalize w-32 flex-shrink-0">
+        {timeline}
+      </p>
+      <div>
+        <p className="text-[#202020] font-medium leading-relaxed capitalize mb-2">
+          {props.title}
+        </p>
+        <p className="text-balance">{props.description}</p>
+      </div>
     </Link>
   );
 };
