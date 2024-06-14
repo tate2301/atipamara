@@ -7,7 +7,7 @@ const ProjectCard = (props: {
 }) => {
   return (
     <Link href={props.link}>
-      <p className="text-[#202020] font-medium leading-relaxed capitalize">
+      <p className="text-[#202020] dark:text-white font-medium leading-relaxed capitalize">
         {props.title}
       </p>
       <p>{props.description}</p>

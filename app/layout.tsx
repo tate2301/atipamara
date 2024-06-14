@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${GeistSans.className} text-[#646464] bg-zinc-100 p-2 pb-16`}
+        className={`${GeistSans.className} text-[#646464] bg-zinc-100 dark:bg-zinc-950 dark:text-zinc-400 p-2 pb-16`}
       >
         <Navbar />
         {children}

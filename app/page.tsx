@@ -22,7 +22,7 @@ export default function About() {
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-32 py-32 px-4">
       <div>
-        <h1 className="leading-relaxed mb-6">About me</h1>
+        <h1 className="leading-relaxed mb-6 dark:text-zinc-50">About me</h1>
         <p className="leading-relaxed mb-4">
           I work as a design engineer with the Innovation Hub at the Chinhoyi
           University of Technology. I help startups, founders, and their teams
@@ -188,11 +188,17 @@ export default function About() {
         <div>
           <p>
             See more of my work on{" "}
-            <a href="https://twitter.com/atipamara" className="text-[#202020]">
+            <a
+              href="https://twitter.com/atipamara"
+              className="text-[#202020] dark:text-white"
+            >
               X
             </a>{" "}
             or check out my code on{" "}
-            <a href="https://github.com/tate2301" className="text-[#202020]">
+            <a
+              href="https://github.com/tate2301"
+              className="text-[#202020] dark:text-white"
+            >
               GitHub
             </a>
             . Thanks for visiting.

@@ -18,7 +18,7 @@ export default function Page() {
       <div className="mb-32">
         <h1
           className={clsx(
-            "text-5xl font-bold tracking-tight mb-6 bg-gradient-to-br from-zinc-900 via-zinc-700 to-zinc-400 bg-clip-text text-transparent",
+            "text-5xl font-bold tracking-tight mb-6 bg-gradient-to-br dark:from-zinc-100 via-zinc-400 to-zinc-700 bg-clip-text text-transparent",
           )}
         >
           Interaction Playground
@@ -36,7 +36,7 @@ export default function Page() {
           <ButtonWithDisclosure
             color="#fff"
             accentColor=""
-            backgroundColor="#202020"
+            backgroundColor="#000"
             text="Learn more about our framework"
             icon={<QuestionMarkCircleIcon className="w-6 h-6 text-[#202020]" />}
           >

@@ -24,7 +24,7 @@ const WorkExperienceCard = (props: {
         {timeline}
       </p>
       <div>
-        <p className="text-[#202020] font-medium leading-relaxed capitalize mb-2 inline-flex items-baseline">
+        <p className="text-[#202020] dark:text-zinc-100 font-medium leading-relaxed capitalize mb-2 inline-flex items-baseline">
           {props.title}
           <ArrowUpRightIcon className="w-3 h-3 ml-2 text-zinc-500" />
         </p>

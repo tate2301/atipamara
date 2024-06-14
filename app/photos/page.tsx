@@ -23,7 +23,7 @@ export default function Page() {
         <div>
           <h1
             className={clsx(
-              "text-5xl font-bold tracking-tight mb-2 bg-gradient-to-br from-zinc-900 via-zinc-700 to-zinc-400 bg-clip-text text-transparent",
+              "text-5xl font-bold tracking-tight mb-2 bg-gradient-to-br dark:from-zinc-100 via-zinc-400 to-zinc-700 bg-clip-text text-transparent",
             )}
           >
             Photos
