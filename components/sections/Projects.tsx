@@ -1,47 +1,66 @@
 import ProjectRow from "@/components/projects/ProjectRow";
 
+const PAYNOW_SNIPPET = `import { usePaynow } from 'paynow-react'
+
+const { initiatePayment } = usePaynow({
+  integrationId: process.env.PAYNOW_ID,
+  integrationKey: process.env.PAYNOW_KEY,
+  returnUrl: 'https://yourapp.com/return',
+})
+
+await initiatePayment({
+  reference: 'order-123',
+  amount: 25.00,
+  email: 'customer@email.com',
+})`;
+
 const projects = [
   {
     name: "Huchu",
-    tagline: "Patient management platform for clinics in Zimbabwe",
+    tagline: "Multi-tenant ERP for mining operations",
     description:
-      "A clinical health-record platform for private practitioners and small clinics across Zimbabwe. Handles digital patient records, appointment scheduling, and billing — replacing paper-based systems. Built while embedded with the CUT Health Innovation team.",
-    tags: ["React Native", "Node.js", "PostgreSQL"],
+      "Built for mining companies across Zimbabwe. Employee management, equipment tracking, inventory, financial reporting, and CCTV integration — all behind a mobile-first, offline-capable interface.\n\nSubdomain multitenancy with strict cross-tenant access prevention, RBAC with 2FA, append-only audit log, and service worker sync. The kind of system that has to work even when the internet doesn't.",
+    tags: ["Next.js 15", "PostgreSQL", "Prisma", "PWA", "Docker"],
     badge: "production" as const,
+    badgeLabel: "Production · 3 clients",
+    href: "https://github.com/tate2301/huchu",
     image: "/images/huchu.png",
   },
   {
-    name: "Afrisight",
-    // AFRISIGHT_QUOTE — uncomment and fill when quote arrives:
-    // quote: {
-    //   text: "",
-    //   author: "",
-    //   role: "",
-    // },
-    tagline: "Audience research platform for African markets",
+    name: "Afrisight Analytics Engine",
+    // AFRISIGHT_QUOTE — insert once received
+    // Format:
+    // "[Quote about business impact, not working relationship]"
+    // — [First name], [Role], Afrisight
+    tagline: "Pipeline builder for a market research platform",
     description:
-      "Market research infrastructure for African brands. Panels, surveys, and audience targeting across Zimbabwe, Kenya, and South Africa. Helped clients collect over 40,000 survey responses in the first quarter of launch.",
-    tags: ["Next.js", "TypeScript", "PostgreSQL"],
+      "Built for Afrisight, a market research platform operating across Africa. Consumer brands and sales teams use it to find patterns in survey data and make better decisions.\n\nNo-code interface for MongoDB aggregation pipelines — nested logical filters, profile joins, live schema inference, and a results table with search, sort, pagination, and CSV export. My data science background meant I knew what the analysts actually needed.",
+    tags: ["TypeScript", "MongoDB", "Next.js", "React"],
     badge: "production" as const,
+    badgeLabel: "Production · Afrisight",
     image: "/images/afrisight.png",
   },
   {
-    name: "PaaS",
-    tagline: "Internal deployment platform for student startups",
+    name: "PaaS Platform",
+    tagline: "Self-hosted Heroku alternative",
     description:
-      "A developer platform built for student startup teams at the Innovation Hub. A single dashboard to provision databases, deploy containers, and manage environment variables — reducing 'works on my machine' incidents by giving teams identical staging environments.",
-    tags: ["TypeScript", "Docker", "Next.js"],
-    badge: "production" as const,
+      "GitHub push-to-deploy, automatic preview environments for every pull request, managed database provisioning (PostgreSQL, MySQL, MongoDB, Redis, MinIO), and a full Prometheus + Loki + Grafana observability stack.\n\nBuilt to understand every layer of deployment infrastructure. The best way to learn a system is to build it yourself.",
+    tags: ["Next.js", "Node.js", "Docker", "BullMQ", "Traefik"],
+    badge: "open" as const,
+    badgeLabel: "Open source",
+    href: "https://github.com/tate2301/paas-platform",
     image: "/images/paas.png",
   },
   {
-    name: "Snackbar",
-    tagline: "Keyboard-first task manager for developers",
+    name: "paynow-react",
+    tagline: "React SDK for Zimbabwe's leading payment gateway",
     description:
-      "A supercharged task manager designed around keyboard-first workflows. Tasks, notes, and deadlines live in a single minimal interface. Built as an Electron desktop app with SQLite for local-first data storage.",
-    tags: ["React", "Electron", "SQLite"],
+      "The standard React integration for Paynow, Zimbabwe's dominant payment gateway. Web checkout, EcoCash, OneMoney, polling. Full TypeScript support.\n\nUsed in production fintech applications. Organically adopted — no promotion, just useful.",
+    tags: ["TypeScript", "React", "Paynow API"],
     badge: "open" as const,
-    href: "https://snackbar.atipamara.xyz",
+    badgeLabel: "Open source · 10★",
+    href: "https://github.com/tate2301/paynow-react",
+    codeSnippet: PAYNOW_SNIPPET,
   },
 ];
 
@@ -57,8 +76,10 @@ export default function Projects() {
           description={p.description}
           tags={p.tags}
           badge={p.badge}
+          badgeLabel={p.badgeLabel}
           href={"href" in p ? p.href : undefined}
           image={"image" in p ? p.image : undefined}
+          codeSnippet={"codeSnippet" in p ? p.codeSnippet : undefined}
         />
       ))}
     </section>

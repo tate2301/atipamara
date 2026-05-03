@@ -9,8 +9,10 @@ type ProjectRowProps = {
   description: string;
   tags: string[];
   badge?: "production" | "open";
+  badgeLabel?: string;
   href?: string;
   image?: string;
+  codeSnippet?: string;
 };
 
 export default function ProjectRow({
@@ -19,8 +21,10 @@ export default function ProjectRow({
   description,
   tags,
   badge,
+  badgeLabel,
   href,
   image,
+  codeSnippet,
 }: ProjectRowProps) {
   const [open, setOpen] = useState(false);
 
@@ -48,7 +52,12 @@ export default function ProjectRow({
           <span className="project-desc">{tagline}</span>
         </div>
         <div className="project-right">
-          {badge && <Tag label={badge} variant={badge === "production" ? "production" : "open"} />}
+          {badge && (
+            <Tag
+              label={badgeLabel ?? badge}
+              variant={badge === "production" ? "production" : "open"}
+            />
+          )}
           {tags.map((t) => (
             <Tag key={t} label={t} />
           ))}
@@ -60,6 +69,13 @@ export default function ProjectRow({
           <div className="reveal-img">
             {image ? (
               <Image src={image} alt={name} width={240} height={150} />
+            ) : codeSnippet ? (
+              <pre
+                className="reveal-code"
+                style={{ height: "100%", margin: 0, borderRadius: 0, border: "none", fontSize: "10.5px" }}
+              >
+                {codeSnippet}
+              </pre>
             ) : (
               <div className="reveal-placeholder">
                 {name.toLowerCase()}
