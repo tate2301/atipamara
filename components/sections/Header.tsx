@@ -6,55 +6,45 @@ export default function Header() {
       <ThemeToggle />
       <div className="wordmark">
         <h1>Tatenda Chinyamakobvu</h1>
-        <span className="wordmark-dot" aria-hidden="true" />
+        <span className="wordmark-dot" aria-label="Available for work" title="Available for work" />
       </div>
-      <p className="tagline">Design Engineer — Harare, Zimbabwe</p>
+      <p className="tagline">Full-stack engineer. I care about the parts most engineers skip.</p>
       <div className="bio">
         <p>
-          I build interfaces for founders and early-stage products — from concept to shipped, at the
-          intersection of design and code. Currently at the{" "}
-          <a href="https://buildwithtif.xyz" target="_blank" rel="noopener noreferrer">
-            CUT Innovation Hub
-          </a>{" "}
-          mentoring student-led startups.
+          I build full-stack products that companies run their businesses on.
+          Three companies currently run software I built from scratch, through{" "}
+          <a href="https://corelith.com" target="_blank" rel="noopener noreferrer">Corelith</a>.
         </p>
         <p>
-          Six years in, I&apos;ve ranged across frontend engineering, full-stack, product design, and
-          once placed{" "}
-          <a
-            href="https://zindi.africa/competitions/umojahack-africa-2021-2-sendy-challenge-intermediate/leaderboard"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            9th out of 150 teams
-          </a>{" "}
-          in a continental data science hackathon.
+          I grew up in Zimbabwe writing code for fun. Fifteen years later I&apos;m still
+          doing the same thing — just now people pay me for it, and the stakes are
+          a bit higher.
         </p>
       </div>
       <div className="stat-strip">
         <div className="stat">
-          <span className="stat-val">6+</span>
-          <span className="stat-lbl">yrs experience</span>
-        </div>
-        <div className="stat">
-          <span className="stat-val">20+</span>
-          <span className="stat-lbl">projects shipped</span>
-        </div>
-        <div className="stat">
           <span className="stat-val">3</span>
-          <span className="stat-lbl">countries</span>
+          <span className="stat-lbl">companies in production</span>
         </div>
         <div className="stat">
-          <span className="stat-val">$37k</span>
-          <span className="stat-lbl">prize won</span>
+          <span className="stat-val">6+</span>
+          <span className="stat-lbl">years building</span>
+        </div>
+        <div className="stat">
+          <span className="stat-val">10★</span>
+          <span className="stat-lbl">open source</span>
+        </div>
+        <div className="stat">
+          <span className="stat-val">ZW</span>
+          <span className="stat-lbl">based in Zimbabwe</span>
         </div>
       </div>
       <nav className="nav-links">
+        <a href="mailto:hi@chris.pagka.dev">hi@chris.pagka.dev</a>
+        <span className="nav-sep" aria-hidden="true">/</span>
         <a href="https://github.com/tate2301" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span className="nav-sep" aria-hidden="true">/</span>
         <a href="https://twitter.com/atipamara" target="_blank" rel="noopener noreferrer">X</a>
-        <span className="nav-sep" aria-hidden="true">/</span>
-        <a href="mailto:tatenda@atipamara.xyz">Email</a>
       </nav>
     </header>
   );

@@ -323,3 +323,51 @@ footer a:hover { color: var(--fg-muted); }
 [data-theme="dark"] .d-abb-text { color: var(--fg); }
 .d-abb-icon { width: 28px; height: 28px; border-radius: 50%; background: #0E0E0D; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 [data-theme="dark"] .d-abb-icon { background: var(--fg); }
+
+/* ─── DEMO: Spring Physics Button ───── */
+.d-spring-btn {
+  padding: 14px 40px;
+  background: var(--fg); color: var(--bg);
+  border: none; border-radius: 8px;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer; font-family: var(--font-sans);
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 500ms cubic-bezier(.34,1.56,.64,1),
+              box-shadow 500ms cubic-bezier(.34,1.56,.64,1);
+}
+.d-spring-btn:active {
+  transform: scaleY(0.92) scaleX(1.04);
+  box-shadow: none;
+  transition: transform 80ms ease-in, box-shadow 80ms ease-in;
+}
+@keyframes d-pulse-flash {
+  0%   { opacity: 0.4; transform: scale(0.9); }
+  100% { opacity: 0;   transform: scale(2.2); }
+}
+
+/* ─── DEMO: Noise Button ─────────────── */
+.d-noise-btn {
+  position: relative;
+  padding: 14px 40px;
+  background: #0E0E0D; color: #F2F2EF;
+  border: none; border-radius: 8px;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer; overflow: hidden;
+  font-family: var(--font-sans);
+  transition: box-shadow 200ms ease;
+}
+.d-noise-btn:hover { box-shadow: 0 4px 20px rgba(0,0,0,.3); }
+.d-noise-btn-noise {
+  position: absolute; inset: 0;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+}
+.d-noise-btn-shine {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.25) 50%, transparent 70%);
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  transition: background-position 500ms ease;
+}
+.d-noise-btn:hover .d-noise-btn-shine { background-position: -100% 0; }
