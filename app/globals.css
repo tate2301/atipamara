@@ -371,3 +371,150 @@ footer a:hover { color: var(--fg-muted); }
   transition: background-position 500ms ease;
 }
 .d-noise-btn:hover .d-noise-btn-shine { background-position: -100% 0; }
+
+/* ─── DEMO: Toast Notifications ─────────── */
+.d-toast-trigger {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--fg-muted);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.d-toast-trigger:hover { background: var(--bg-hover); color: var(--fg); }
+.d-toast-stack {
+  position: relative;
+  height: 72px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.d-toast {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -110px;
+  width: 220px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  font-size: 12px;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 320ms cubic-bezier(.34,1.2,.64,1), opacity 320ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.d-toast[data-type="success"] { border-left: 3px solid var(--green); }
+.d-toast[data-type="error"]   { border-left: 3px solid var(--red); }
+.d-toast-icon { flex-shrink: 0; font-size: 12px; }
+
+/* ─── DEMO: Drag to Dismiss ──────────────── */
+.d-drag-card {
+  width: 200px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  touch-action: none;
+  user-select: none;
+}
+.d-drag-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border-hover);
+  border-radius: 2px;
+  margin-bottom: 6px;
+}
+
+/* ─── DEMO: Checkbox Animation ───────────── */
+.d-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background var(--t-fast);
+}
+.d-check-row:hover { background: var(--bg-hover); }
+.d-checkbox {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid var(--border-hover);
+  border-radius: 5px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms cubic-bezier(.34,1.56,.64,1),
+              border-color 150ms ease,
+              transform 150ms cubic-bezier(.34,1.56,.64,1);
+}
+.d-checkbox.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+/* ─── DEMO: macOS Dock ───────────────────── */
+.d-dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 16px;
+}
+[data-theme="dark"] .d-dock {
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.1);
+}
+.d-dock-icon {
+  transform-origin: bottom center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+}
+
+/* ─── DEMO: Dynamic Island ───────────────── */
+.d-island-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 4px 9px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--fg-muted);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.d-island-btn:hover,
+.d-island-btn[data-active="true"] { background: var(--bg-hover); color: var(--fg); }
+
+@keyframes d-wave {
+  0%, 100% { transform: scaleY(.35); }
+  50%       { transform: scaleY(1); }
+}

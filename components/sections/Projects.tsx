@@ -16,15 +16,15 @@ await initiatePayment({
 
 const projects = [
   {
-    name: "Huchu",
-    tagline: "Multi-tenant ERP for mining operations",
+    name: "Corelith",
+    tagline: "Multi-tenant business platform for Zimbabwe",
     description:
-      "Built for mining companies across Zimbabwe. Employee management, equipment tracking, inventory, financial reporting, and CCTV integration — all behind a mobile-first, offline-capable interface.\n\nSubdomain multitenancy with strict cross-tenant access prevention, RBAC with 2FA, append-only audit log, and service worker sync. The kind of system that has to work even when the internet doesn't.",
+      "Three businesses run on it: a grocery retailer, a scrap metal recycler, and a mining operation. Each gets its own subdomain, branded workspace, and industry-specific module set — the retail tenant runs POS, stock management, and purchasing; the scrap tenant tracks weight in/out, inbound tickets, and supplier settlements by kg. One shared core for HR, payroll, financial reporting, banking, and receivables across all three.\n\nOffline-first via service worker sync — 'Preparing offline workspace' loads before the dashboard does. Subdomain multitenancy with strict tenant isolation, RBAC with 2FA, append-only audit log. Built for Zimbabwe where the internet is negotiable.",
     tags: ["Next.js 15", "PostgreSQL", "Prisma", "PWA", "Docker"],
     badge: "production" as const,
     badgeLabel: "Production · 3 clients",
     href: "https://github.com/tate2301/huchu",
-    image: "/images/huchu.png",
+    image: "/images/corelith.png",
   },
   {
     name: "Afrisight Analytics Engine",
