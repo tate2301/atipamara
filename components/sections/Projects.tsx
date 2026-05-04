@@ -16,10 +16,10 @@ await initiatePayment({
 
 const projects = [
   {
-    name: "Huchu",
-    tagline: "Multi-tenant ERP for mining operations",
+    name: "Corelith",
+    tagline: "Multi-tenant business platform for Zimbabwe",
     description:
-      "Built for mining companies across Zimbabwe. Employee management, equipment tracking, inventory, financial reporting, and CCTV integration — all behind a mobile-first, offline-capable interface.\n\nSubdomain multitenancy with strict cross-tenant access prevention, RBAC with 2FA, append-only audit log, and service worker sync. The kind of system that has to work even when the internet doesn't.",
+      "Three different businesses run on it — a mining operation, a grocery retailer, a distribution company. Each gets its own subdomain, its own data, modules configured for their industry. One platform covering 15 industries: stock, sales, HR, payroll, CCTV, equipment maintenance, ZIMRA compliance.\n\nBuilt around Zimbabwe's reality. Service worker sync means every action stores on-device and commits when the internet returns. Subdomain multitenancy with strict tenant isolation, RBAC with 2FA, append-only audit log. It has to work when the internet doesn't.",
     tags: ["Next.js 15", "PostgreSQL", "Prisma", "PWA", "Docker"],
     badge: "production" as const,
     badgeLabel: "Production · 3 clients",
