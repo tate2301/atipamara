@@ -19,7 +19,7 @@ const projects = [
     name: "Corelith",
     tagline: "Multi-tenant business platform for Zimbabwe",
     description:
-      "Three different businesses run on it — a mining operation, a grocery retailer, a distribution company. Each gets its own subdomain, its own data, modules configured for their industry. One platform covering 15 industries: stock, sales, HR, payroll, CCTV, equipment maintenance, ZIMRA compliance.\n\nBuilt around Zimbabwe's reality. Service worker sync means every action stores on-device and commits when the internet returns. Subdomain multitenancy with strict tenant isolation, RBAC with 2FA, append-only audit log. It has to work when the internet doesn't.",
+      "Three businesses run on it: a grocery retailer, a scrap metal recycler, and a mining operation. Each gets its own subdomain, branded workspace, and industry-specific module set — the retail tenant runs POS, stock management, and purchasing; the scrap tenant tracks weight in/out, inbound tickets, and supplier settlements by kg. One shared core for HR, payroll, financial reporting, banking, and receivables across all three.\n\nOffline-first via service worker sync — 'Preparing offline workspace' loads before the dashboard does. Subdomain multitenancy with strict tenant isolation, RBAC with 2FA, append-only audit log. Built for Zimbabwe where the internet is negotiable.",
     tags: ["Next.js 15", "PostgreSQL", "Prisma", "PWA", "Docker"],
     badge: "production" as const,
     badgeLabel: "Production · 3 clients",
