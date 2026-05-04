@@ -24,7 +24,7 @@ const projects = [
     badge: "production" as const,
     badgeLabel: "Production · 3 clients",
     href: "https://github.com/tate2301/huchu",
-    image: "/images/huchu.png",
+    image: "/images/corelith.png",
   },
   {
     name: "Afrisight Analytics Engine",
