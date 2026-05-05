@@ -42,6 +42,8 @@ export default function Header() {
       <nav className="nav-links">
         <a href="mailto:hi@chris.pagka.dev">hi@chris.pagka.dev</a>
         <span className="nav-sep" aria-hidden="true">/</span>
+        <a href="/experiments">Experiments</a>
+        <span className="nav-sep" aria-hidden="true">/</span>
         <a href="https://github.com/tate2301" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span className="nav-sep" aria-hidden="true">/</span>
         <a href="https://twitter.com/atipamara" target="_blank" rel="noopener noreferrer">X</a>

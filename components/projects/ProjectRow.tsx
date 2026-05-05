@@ -31,8 +31,7 @@ export default function ProjectRow({
   return (
     <div
       className={`project-row${open ? " open" : ""}`}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onClick={() => setOpen((v) => !v)}
     >
       <div className="project-head">
         <div className="project-left">
@@ -42,6 +41,7 @@ export default function ProjectRow({
               target="_blank"
               rel="noopener noreferrer"
               className="project-name project-name-link"
+              onClick={(e) => e.stopPropagation()}
             >
               {name}
             </a>
@@ -58,31 +58,43 @@ export default function ProjectRow({
               variant={badge === "production" ? "production" : "open"}
             />
           )}
-          {tags.map((t) => (
-            <Tag key={t} label={t} />
-          ))}
+          <span className={`project-chevron${open ? " open" : ""}`}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M3 5l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         </div>
       </div>
+
       <div className="project-reveal">
         <div className="reveal-inner">
+          {image && (
+            <div className="reveal-media">
+              <Image
+                src={image}
+                alt={`${name} screenshot`}
+                fill
+                sizes="(max-width: 640px) 100vw, 600px"
+                style={{ objectFit: "cover", objectPosition: "top left" }}
+              />
+            </div>
+          )}
+          {!image && codeSnippet && (
+            <div className="reveal-code-block">
+              <pre>{codeSnippet}</pre>
+            </div>
+          )}
           <p className="reveal-body">{description}</p>
-          <div className="reveal-img">
-            {image ? (
-              <Image src={image} alt={name} width={240} height={150} />
-            ) : codeSnippet ? (
-              <pre
-                className="reveal-code"
-                style={{ height: "100%", margin: 0, borderRadius: 0, border: "none", fontSize: "10.5px" }}
-              >
-                {codeSnippet}
-              </pre>
-            ) : (
-              <div className="reveal-placeholder">
-                {name.toLowerCase()}
-                <br />
-                screenshot coming soon
-              </div>
-            )}
+          <div className="reveal-tags">
+            {tags.map((t) => (
+              <Tag key={t} label={t} />
+            ))}
           </div>
         </div>
       </div>
