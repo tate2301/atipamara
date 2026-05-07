@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "I was polishing my website in preparations to start looking out to new clients. I want you to finish up polishing the site. Establish a design system from whats there. improving it. Experiments should be in their own page.",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

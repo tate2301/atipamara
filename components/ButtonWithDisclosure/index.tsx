@@ -104,7 +104,7 @@ export default function ButtonWithDisclosure(props: BottomBarProps) {
           variants={textVariants}
           ref={paragraphRef}
           style={{ color: props.color }}
-          className="font-bold flex-shrink-0 w-auto"
+          className="font-normal flex-shrink-0 w-auto"
         >
           {props.text}
         </motion.p>

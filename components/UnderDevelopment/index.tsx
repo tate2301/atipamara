@@ -16,7 +16,7 @@ export default function UnderDevelopment() {
         ))}
       </div>
       <div className="mb-32">
-        <h1 className="text-xl font-bold tracking-tight mb-2">
+        <h1 className="text-xl font-normal mb-2 text-zinc-950">
           Well, this is awkward
         </h1>
         <p className="text-lg">

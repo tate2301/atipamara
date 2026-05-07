@@ -26,8 +26,8 @@ export default function MagneticButtonPage() {
     <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--fg)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "48px", padding: "20px", fontFamily: "var(--font-sans)", position: "relative" }}>
       <div style={{ position: "absolute", top: "24px", right: "24px" }}><ThemeToggle /></div>
       <div style={{ textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
-        <h1 style={{ fontSize: "24px", fontWeight: 600, color: "var(--fg)", marginBottom: "8px" }}>Magnetic Button</h1>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
+        <h1 style={{ fontSize: "24px", fontWeight: 400, color: "var(--fg)", marginBottom: "8px" }}>Magnetic Button</h1>
         <p style={{ fontSize: "15px", color: "var(--fg-muted)" }}>Hover over the button — it pulls toward your cursor</p>
       </div>
 
@@ -47,7 +47,7 @@ export default function MagneticButtonPage() {
             border: "none",
             borderRadius: "8px",
             fontSize: "15px",
-            fontWeight: 500,
+            fontWeight: 400,
             cursor: "pointer",
             fontFamily: "var(--font-sans)",
             transform: `translate(${pos.x}px, ${pos.y}px)`,
@@ -62,7 +62,7 @@ export default function MagneticButtonPage() {
         </button>
       </div>
 
-      <Link href="/" style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>← Back</Link>
+      <Link href="/" style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}>← Back</Link>
     </div>
   );
 }

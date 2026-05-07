@@ -197,7 +197,7 @@ function VarFontDemo() {
           onChange={(e) => setWeight(Number(e.target.value))}
           style={{ width: "180px", accentColor: "var(--accent)" }}
         />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)" }}>wght: {weight}</span>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}>wght: {weight}</span>
       </div>
     </div>
   );
@@ -225,15 +225,15 @@ function BentoDemo() {
     <div className="exp-demo" style={{ padding: "16px" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", width: "100%", maxWidth: "280px" }}>
         <div style={{ ...card(), gridColumn: "span 2" }} onMouseEnter={lift} onMouseLeave={drop}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "36px", fontWeight: 500, color: "var(--fg)", lineHeight: 1 }}>3</div>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-subtle)", marginTop: "4px" }}>companies in production</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "36px", fontWeight: 400, color: "var(--fg)", lineHeight: 1 }}>3</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", marginTop: "4px" }}>companies in production</div>
         </div>
         <div style={card()} onMouseEnter={lift} onMouseLeave={drop}>
-          <div style={{ fontSize: "12px", fontWeight: 500, color: "var(--fg)", marginBottom: "6px" }}>Huchu</div>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", padding: "1px 5px", borderRadius: "2px", color: "var(--green)", background: "var(--green-bg)" }}>production</span>
+          <div style={{ fontSize: "14px", fontWeight: 400, color: "var(--fg)", marginBottom: "6px" }}>Huchu</div>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", padding: "1px 5px", borderRadius: "2px", color: "var(--green)", background: "var(--green-bg)" }}>production</span>
         </div>
         <div style={card()} onMouseEnter={lift} onMouseLeave={drop}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-muted)", lineHeight: 1.6 }}>&ldquo;The best way to learn a system is to build it yourself.&rdquo;</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-muted)", lineHeight: 1.6 }}>&ldquo;The best way to learn a system is to build it yourself.&rdquo;</div>
         </div>
       </div>
     </div>
@@ -269,7 +269,7 @@ function ScrollProgressDemo() {
       <div style={{ padding: "20px", flexShrink: 0 }}>
         <span className="exp-demo-label" style={{ position: "static", marginBottom: "16px", display: "block" }}>scroll progress</span>
         {paragraphs.map((p, i) => (
-          <p key={i} style={{ fontSize: "12.5px", color: "var(--fg-muted)", lineHeight: 1.8, marginBottom: "14px" }}>{p}</p>
+          <p key={i} style={{ fontSize: "14px", color: "var(--fg-muted)", lineHeight: 1.8, marginBottom: "14px" }}>{p}</p>
         ))}
       </div>
     </div>
@@ -405,9 +405,9 @@ function TiltCardDemo() {
             opacity: leaving ? 0 : 1,
           }}
         />
-        <p style={{ fontSize: "13px", fontWeight: 500, color: "var(--fg)", marginBottom: "4px" }}>Tatenda Chinyamakobvu</p>
-        <p style={{ fontSize: "11.5px", color: "var(--fg-muted)" }}>Full-stack engineer</p>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-subtle)", marginTop: "12px" }}>Corelith · Zimbabwe</p>
+        <p style={{ fontSize: "14px", fontWeight: 400, color: "var(--fg)", marginBottom: "4px" }}>Tatenda Chinyamakobvu</p>
+        <p style={{ fontSize: "14px", color: "var(--fg-muted)" }}>Full-stack engineer</p>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", marginTop: "12px" }}>Corelith · Zimbabwe</p>
       </div>
     </div>
   );
@@ -470,7 +470,7 @@ function CmdDemo() {
           </div>
           <div className="mini-results">
             {filtered.length === 0 ? (
-              <div style={{ padding: "20px", textAlign: "center", fontSize: "13px", color: "var(--fg-subtle)" }}>No results</div>
+              <div style={{ padding: "20px", textAlign: "center", fontSize: "14px", color: "var(--fg-subtle)" }}>No results</div>
             ) : (
               Object.entries(groups).map(([group, items]) => (
                 <div key={group}>
@@ -579,7 +579,7 @@ function StkDemo() {
       <div className={`d-stack${spread ? " spread" : ""}`} onClick={() => setSpread((v) => !v)}>
         {["🧑‍💻", "👩‍🎨", "🧑‍🔬", "👨‍💼"].map((a, i) => <div key={i} className="d-stack-img">{a}</div>)}
       </div>
-      <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)", marginTop: "12px" }}>
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", marginTop: "12px" }}>
         click to {spread ? "collapse" : "spread"}
       </p>
     </div>
@@ -642,14 +642,14 @@ function ScrambleDemo() {
     <div className="exp-demo" style={{ flexDirection: "column", gap: "24px" }}>
       <span className="exp-demo-label">text scramble</span>
       <div
-        style={{ fontFamily: "var(--font-mono)", fontSize: "32px", fontWeight: 500, color: "var(--fg)", letterSpacing: ".04em", cursor: "default", userSelect: "none" }}
+        style={{ fontFamily: "var(--font-mono)", fontSize: "32px", fontWeight: 400, color: "var(--fg)", letterSpacing: ".04em", cursor: "default", userSelect: "none" }}
         onMouseEnter={scramble}
       >
         {display}
       </div>
       <button
         onClick={scramble}
-        style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)", background: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "4px 10px", cursor: "pointer" }}
+        style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", background: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "4px 10px", cursor: "pointer" }}
       >
         ↺ scramble
       </button>
@@ -708,7 +708,7 @@ function SegCtrlDemo() {
               padding: "7px 18px",
               background: "none", border: "none",
               cursor: "pointer",
-              fontFamily: "var(--font-sans)", fontSize: "13px",
+              fontFamily: "var(--font-sans)", fontSize: "14px",
               color: active === i ? "var(--fg)" : "var(--fg-muted)",
               transition: "color 140ms ease",
               borderRadius: "5px",
@@ -823,9 +823,9 @@ function DragDemo() {
       <span className="exp-demo-label">drag to dismiss</span>
       {dismissed ? (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>dismissed ✓</span>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}>dismissed ✓</span>
           <button
-            style={{ fontFamily: "var(--font-mono)", fontSize: "11px", padding: "4px 10px", background: "none", border: "1px solid var(--border)", borderRadius: "4px", cursor: "pointer", color: "var(--fg-muted)" }}
+            style={{ fontFamily: "var(--font-mono)", fontSize: "14px", padding: "4px 10px", background: "none", border: "1px solid var(--border)", borderRadius: "4px", cursor: "pointer", color: "var(--fg-muted)" }}
             onClick={() => setDismissed(false)}
           >↺ restore</button>
         </div>
@@ -843,8 +843,8 @@ function DragDemo() {
           onPointerUp={onUp}
         >
           <div className="d-drag-handle" />
-          <p style={{ fontSize: "13px", color: "var(--fg-muted)", textAlign: "center", margin: 0 }}>Drag down to dismiss</p>
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)", textAlign: "center", marginTop: "4px" }}>throw it — velocity counts</p>
+          <p style={{ fontSize: "14px", color: "var(--fg-muted)", textAlign: "center", margin: 0 }}>Drag down to dismiss</p>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", textAlign: "center", marginTop: "4px" }}>throw it — velocity counts</p>
         </div>
       )}
     </div>
@@ -878,7 +878,7 @@ function CheckboxDemo() {
             </svg>
           </div>
           <span style={{
-            fontSize: "13px",
+            fontSize: "14px",
             color: checked[i] ? "var(--fg-subtle)" : "var(--fg)",
             textDecoration: checked[i] ? "line-through" : "none",
             transition: "color 200ms ease",
@@ -1019,8 +1019,8 @@ function IslandDemo() {
               <>
                 <div style={{ width: "46px", height: "46px", borderRadius: "50%", background: "rgba(34,197,94,.18)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>👤</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.45)", letterSpacing: ".02em" }}>Incoming Call</div>
-                  <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff", marginTop: "1px" }}>Tatenda C.</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.45)", letterSpacing: ".02em" }}>Incoming Call</div>
+                  <div style={{ fontSize: "14px", fontWeight: 400, color: "#fff", marginTop: "1px" }}>Tatenda C.</div>
                   <div style={{ display: "flex", gap: "2px", alignItems: "center", height: "14px", marginTop: "4px" }}>
                     {[0.4, 0.8, 1, 0.6, 0.9, 0.5, 0.75, 1, 0.45, 0.65].map((amp, i) => (
                       <div key={i} style={{ width: "2px", background: "#22c55e", borderRadius: "1px", height: `${amp * 100}%`, animation: "d-wave 1.1s ease-in-out infinite", animationDelay: `${i * 80}ms` }} />
@@ -1037,12 +1037,12 @@ function IslandDemo() {
               <>
                 <div style={{ fontSize: "28px", flexShrink: 0 }}>⏰</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "20px", fontWeight: 700, color: "#fff", fontFamily: "var(--font-mono)", lineHeight: 1 }}>6:00</div>
-                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,.5)", marginTop: "3px" }}>Morning Alarm</div>
+                  <div style={{ fontSize: "20px", fontWeight: 400, color: "#fff", fontFamily: "var(--font-mono)", lineHeight: 1 }}>6:00</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.5)", marginTop: "3px" }}>Morning Alarm</div>
                 </div>
                 <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
-                  <button onClick={() => activate("idle")} style={{ fontSize: "10px", padding: "5px 9px", background: "rgba(255,255,255,.1)", border: "none", borderRadius: "20px", color: "#fff", cursor: "pointer" }}>Snooze</button>
-                  <button onClick={() => activate("idle")} style={{ fontSize: "10px", padding: "5px 9px", background: "rgba(255,255,255,.18)", border: "none", borderRadius: "20px", color: "#fff", cursor: "pointer", fontWeight: 600 }}>Dismiss</button>
+                  <button onClick={() => activate("idle")} style={{ fontSize: "14px", padding: "5px 9px", background: "rgba(255,255,255,.1)", border: "none", borderRadius: "20px", color: "#fff", cursor: "pointer" }}>Snooze</button>
+                  <button onClick={() => activate("idle")} style={{ fontSize: "14px", padding: "5px 9px", background: "rgba(255,255,255,.18)", border: "none", borderRadius: "20px", color: "#fff", cursor: "pointer", fontWeight: 400 }}>Dismiss</button>
                 </div>
               </>
             )}
@@ -1050,8 +1050,8 @@ function IslandDemo() {
               <>
                 <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: "rgba(59,130,246,.3)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>⚡</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#fff" }}>Claude</div>
-                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.5)", marginTop: "2px" }}>Downloading…</div>
+                  <div style={{ fontSize: "14px", fontWeight: 400, color: "#fff" }}>Claude</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.5)", marginTop: "2px" }}>Downloading…</div>
                 </div>
                 <svg width="50" height="50" viewBox="0 0 50 50" style={{ flexShrink: 0 }}>
                   <circle cx="25" cy="25" r={R} fill="none" stroke="rgba(255,255,255,.15)" strokeWidth="3" />
@@ -1072,13 +1072,13 @@ function IslandDemo() {
               <>
                 <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: "rgba(59,130,246,.22)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px" }}>↗</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.45)" }}>Turn right</div>
-                  <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff", marginTop: "1px" }}>Baker St</div>
-                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.45)", marginTop: "2px" }}>in 200m</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.45)" }}>Turn right</div>
+                  <div style={{ fontSize: "14px", fontWeight: 400, color: "#fff", marginTop: "1px" }}>Baker St</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.45)", marginTop: "2px" }}>in 200m</div>
                 </div>
                 <div style={{ textAlign: "center", flexShrink: 0 }}>
-                  <div style={{ fontSize: "18px", fontWeight: 700, color: "#fff", fontFamily: "var(--font-mono)", lineHeight: 1 }}>5</div>
-                  <div style={{ fontSize: "9px", color: "rgba(255,255,255,.45)" }}>min</div>
+                  <div style={{ fontSize: "18px", fontWeight: 400, color: "#fff", fontFamily: "var(--font-mono)", lineHeight: 1 }}>5</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.45)" }}>min</div>
                 </div>
               </>
             )}
@@ -1086,8 +1086,8 @@ function IslandDemo() {
               <>
                 <div style={{ width: "46px", height: "46px", borderRadius: "50%", background: "rgba(168,85,247,.22)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>👩</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "11.5px", fontWeight: 600, color: "#fff" }}>Farai</div>
-                  <div style={{ fontSize: "10.5px", color: "rgba(255,255,255,.55)", marginTop: "2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>are you still at the office? I&apos;ll</div>
+                  <div style={{ fontSize: "14px", fontWeight: 400, color: "#fff" }}>Farai</div>
+                  <div style={{ fontSize: "14px", color: "rgba(255,255,255,.55)", marginTop: "2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>are you still at the office? I&apos;ll</div>
                 </div>
               </>
             )}
@@ -1457,54 +1457,39 @@ export default function Experiments() {
 
   return (
     <section id="exp-section" ref={sectionRef}>
-      {/* sticky bar */}
-      <div className="exp-bar">
-        <div className="exp-bar-left">
-          <span className="exp-bar-title">Experiments</span>
-          <span className="exp-bar-count">{EXPS.length}</span>
+      <div className="exp-index">
+        <div className="exp-index-head">
+          <span className="exp-index-label">Index</span>
+          <span className="exp-index-count">{EXPS.length} studies</span>
         </div>
-      </div>
-
-      {/* mobile tabs */}
-      <div className="exp-mobile-tabs">
-        {EXPS.map((exp) => (
-          <button
-            key={exp.id}
-            className={`exp-mobile-tab${active === exp.id ? " active" : ""}`}
-            onClick={() => switchTo(exp.id)}
-          >
-            {exp.name}
-          </button>
-        ))}
-      </div>
-
-      {/* split */}
-      <div className="exp-split">
-        {/* list */}
-        <div className="exp-list-col">
+        <div className="exp-index-reel" aria-label="Choose an experiment">
           {EXPS.map((exp, i) => (
-            <div key={exp.id}>
-              {i > 0 && <div className="exp-list-divider" />}
-              <div
-                className={`exp-list-item${active === exp.id ? " active" : ""}`}
-                onClick={() => switchTo(exp.id)}
-              >
-                <div className="exp-list-inner">
-                  <span className="exp-list-name">{exp.name}</span>
-                  <span className="exp-list-meta">{exp.date}</span>
-                </div>
-                <span className="exp-list-arrow">→</span>
-              </div>
-            </div>
+            <button
+              key={exp.id}
+              className={`exp-index-item${active === exp.id ? " active" : ""}`}
+              onClick={() => switchTo(exp.id)}
+              title={exp.name}
+            >
+              <span className="exp-index-num">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="exp-index-name">{exp.name}</span>
+            </button>
           ))}
         </div>
+      </div>
 
-        {/* panel */}
-        <div className="exp-panel-col">
-          <p style={{ fontSize: "12.5px", color: "var(--fg-muted)", lineHeight: 1.7, marginBottom: "16px" }}>
-            {current.detail}
-          </p>
-          <div className="exp-toggle">
+      <div className="exp-current">
+        <div className="exp-current-kicker">
+          <span>{current.date}</span>
+          <span>{current.tags}</span>
+        </div>
+        <div className="exp-current-main">
+          <div>
+            <h2 className="exp-current-title">{current.name}</h2>
+            <p className="exp-current-desc">{current.desc}</p>
+          </div>
+          <div className="exp-toggle" aria-label="Experiment view">
             <button
               className={`exp-toggle-btn${view === "demo" ? " active" : ""}`}
               onClick={() => setView("demo")}
@@ -1518,15 +1503,20 @@ export default function Experiments() {
               Code
             </button>
           </div>
-          <div className={`exp-card${fading ? " fade" : ""}`}>
-            <div className={`exp-pane${view === "demo" ? " show" : ""}`}>
-              <DemoComponent />
-            </div>
-            <div className={`exp-pane${view === "code" ? " show" : ""}`}>
-              <div className="exp-code-pane">
-                <div className="exp-code-inner" dangerouslySetInnerHTML={{ __html: CODE[active] }} />
-              </div>
-            </div>
+        </div>
+        <p className="exp-current-detail">{current.detail}</p>
+      </div>
+
+      <div className={`exp-card${fading ? " fade" : ""}`}>
+        <div className={`exp-pane${view === "demo" ? " show" : ""}`}>
+          <DemoComponent />
+        </div>
+        <div className={`exp-pane${view === "code" ? " show" : ""}`}>
+          <div className="exp-code-pane">
+            <div
+              className="exp-code-inner"
+              dangerouslySetInnerHTML={{ __html: CODE[active] }}
+            />
           </div>
         </div>
       </div>

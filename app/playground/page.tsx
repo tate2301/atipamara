@@ -18,7 +18,7 @@ export default function Page() {
       <div className="mb-32">
         <h1
           className={clsx(
-            "text-5xl font-bold tracking-tight mb-6 bg-gradient-to-br dark:from-zinc-100 via-zinc-400 to-zinc-700 bg-clip-text text-transparent",
+            "text-5xl font-normal mb-6 text-zinc-950 dark:text-zinc-100",
           )}
         >
           Interaction Playground
@@ -41,7 +41,7 @@ export default function Page() {
             icon={<QuestionMarkCircleIcon className="w-6 h-6 text-[#202020]" />}
           >
             <div className="bg-white p-8 rounded-lg">
-              <h1 className="text-2xl font-bold">Add a new item</h1>
+              <h1 className="text-2xl font-normal">Add a new item</h1>
               <p className="text-gray-600 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
                 et metus nec nisl.

@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.2.8",
+    "@fontsource/atkinson-hyperlegible-mono": "^5.2.10",
+    "@fontsource/libertinus-serif": "^5.2.1",
     "@heroicons/react": "^2.1.3",
     "@next/font": "^14.2.3",
     "@radix-ui/react-tooltip": "^1.0.7",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.9",
     "fs": "^0.0.1-security",
-    "geist": "^1.3.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

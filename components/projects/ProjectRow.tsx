@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import {
+  PaasIllustration,
+  PaynowIllustration,
+} from "@/components/illustrations/ProjectIllustrations";
 import Tag from "@/components/ui/Tag";
 
 type ProjectRowProps = {
@@ -12,6 +16,7 @@ type ProjectRowProps = {
   badgeLabel?: string;
   href?: string;
   image?: string;
+  illustration?: "paas" | "paynow";
   codeSnippet?: string;
 };
 
@@ -24,13 +29,20 @@ export default function ProjectRow({
   badgeLabel,
   href,
   image,
+  illustration,
   codeSnippet,
 }: ProjectRowProps) {
   const [open, setOpen] = useState(false);
+  const Illustration =
+    illustration === "paas"
+      ? PaasIllustration
+      : illustration === "paynow"
+        ? PaynowIllustration
+        : null;
 
   return (
     <div
-      className={`project-row${open ? " open" : ""}`}
+      className={`project-row${open ? " open" : ""} p-4`}
       onClick={() => setOpen((v) => !v)}
     >
       <div className="project-head">
@@ -74,7 +86,11 @@ export default function ProjectRow({
 
       <div className="project-reveal">
         <div className="reveal-inner">
-          {image && (
+          {Illustration ? (
+            <div className="reveal-media reveal-media-illustration">
+              <Illustration />
+            </div>
+          ) : image ? (
             <div className="reveal-media">
               <Image
                 src={image}
@@ -84,8 +100,8 @@ export default function ProjectRow({
                 style={{ objectFit: "cover", objectPosition: "top left" }}
               />
             </div>
-          )}
-          {!image && codeSnippet && (
+          ) : null}
+          {!Illustration && !image && codeSnippet && (
             <div className="reveal-code-block">
               <pre>{codeSnippet}</pre>
             </div>

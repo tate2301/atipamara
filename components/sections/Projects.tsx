@@ -49,7 +49,7 @@ const projects = [
     badge: "open" as const,
     badgeLabel: "Open source",
     href: "https://github.com/tate2301/paas-platform",
-    image: "/images/paas.png",
+    illustration: "paas" as const,
   },
   {
     name: "paynow-react",
@@ -60,6 +60,7 @@ const projects = [
     badge: "open" as const,
     badgeLabel: "Open source · 10★",
     href: "https://github.com/tate2301/paynow-react",
+    illustration: "paynow" as const,
     codeSnippet: PAYNOW_SNIPPET,
   },
 ];
@@ -79,6 +80,7 @@ export default function Projects() {
           badgeLabel={p.badgeLabel}
           href={"href" in p ? p.href : undefined}
           image={"image" in p ? p.image : undefined}
+          illustration={"illustration" in p ? p.illustration : undefined}
           codeSnippet={"codeSnippet" in p ? p.codeSnippet : undefined}
         />
       ))}

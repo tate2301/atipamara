@@ -13,7 +13,9 @@ export default function PlaygroundPreview(props: {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <h3 className="font-bold text-lg">{props.title}</h3>
+        <h3 className="font-normal text-lg text-zinc-950 dark:text-zinc-100">
+          {props.title}
+        </h3>
         <p>{props.description}</p>
       </div>
       <div
@@ -26,7 +28,7 @@ export default function PlaygroundPreview(props: {
         <AnimatePresence>{props.children}</AnimatePresence>
         <button
           onClick={forceRerender}
-          className="bottom-3 font-bold text-sm mx-auto px-4 h-8 rounded-full bg-zinc-50 dark:bg-zinc-800 dark:text-white border border-zinc-400/10 shadow-sm flex items-center"
+          className="bottom-3 font-normal text-[14px] mx-auto px-4 h-8 rounded-full bg-zinc-50 dark:bg-zinc-800 dark:text-white border border-zinc-400/10 shadow-sm flex items-center"
         >
           Reset
           <ArrowPathIcon className="w-4 h-4 ml-2" />

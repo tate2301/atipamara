@@ -31,10 +31,10 @@ export default function AppleBottomBarPage() {
       </div>
 
       <div style={{ textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>
           Experiment
         </p>
-        <h1 style={{ fontSize: "24px", fontWeight: 600, color: "var(--fg)", marginBottom: "8px" }}>
+        <h1 style={{ fontSize: "24px", fontWeight: 400, color: "var(--fg)", marginBottom: "8px" }}>
           Apple Bottom Bar
         </h1>
         <p style={{ fontSize: "15px", color: "var(--fg-muted)" }}>
@@ -50,7 +50,7 @@ export default function AppleBottomBarPage() {
         icon={<QuestionMarkCircleIcon className="w-6 h-6 text-[#202020]" />}
       >
         <div className="bg-white p-8 rounded-lg">
-          <h1 className="text-2xl font-bold">Add a new item</h1>
+          <h1 className="text-2xl font-normal">Add a new item</h1>
           <p className="text-gray-600 mt-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et metus nec nisl.
           </p>
@@ -59,7 +59,7 @@ export default function AppleBottomBarPage() {
 
       <Link
         href="/"
-        style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}
+        style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}
       >
         ← Back
       </Link>

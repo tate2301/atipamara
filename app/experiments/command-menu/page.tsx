@@ -69,10 +69,10 @@ export default function CommandMenuPage() {
     <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--fg)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "var(--font-sans)", position: "relative" }}>
       <div style={{ position: "absolute", top: "24px", right: "24px" }}><ThemeToggle /></div>
       <div style={{ textAlign: "center", marginBottom: "48px" }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
-        <h1 style={{ fontSize: "24px", fontWeight: 600, color: "var(--fg)", marginBottom: "8px" }}>Command Menu</h1>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
+        <h1 style={{ fontSize: "24px", fontWeight: 400, color: "var(--fg)", marginBottom: "8px" }}>Command Menu</h1>
         <p style={{ fontSize: "15px", color: "var(--fg-muted)" }}>
-          Press <kbd style={{ fontFamily: "var(--font-mono)", fontSize: "12px", padding: "2px 6px", border: "1px solid var(--border)", borderRadius: "4px", color: "var(--fg-muted)" }}>⌘K</kbd> to open — fuzzy search, arrow keys, Enter to run
+          Press <kbd style={{ fontFamily: "var(--font-mono)", fontSize: "14px", padding: "2px 6px", border: "1px solid var(--border)", borderRadius: "4px", color: "var(--fg-muted)" }}>⌘K</kbd> to open — fuzzy search, arrow keys, Enter to run
         </p>
       </div>
       <button
@@ -81,9 +81,9 @@ export default function CommandMenuPage() {
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
         <span style={{ flex: 1, textAlign: "left" }}>Search or run a command…</span>
-        <kbd style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px" }}>⌘K</kbd>
+        <kbd style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px" }}>⌘K</kbd>
       </button>
-      <Link href="/" style={{ marginTop: "48px", fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)", textDecoration: "none" }}>← Back</Link>
+      <Link href="/" style={{ marginTop: "48px", fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", textDecoration: "none" }}>← Back</Link>
 
       {open && (
         <div
@@ -104,7 +104,7 @@ export default function CommandMenuPage() {
                 placeholder="Type a command or search…"
                 style={{ flex: 1, background: "none", border: "none", outline: "none", fontSize: "15px", color: "var(--fg)", fontFamily: "var(--font-sans)" }}
               />
-              <button onClick={() => setOpen(false)} style={{ background: "none", cursor: "pointer", color: "var(--fg-subtle)", fontFamily: "var(--font-mono)", fontSize: "10.5px", padding: "2px 5px", borderRadius: "3px", border: "1px solid var(--border)" }}>ESC</button>
+              <button onClick={() => setOpen(false)} style={{ background: "none", cursor: "pointer", color: "var(--fg-subtle)", fontFamily: "var(--font-mono)", fontSize: "14px", padding: "2px 5px", borderRadius: "3px", border: "1px solid var(--border)" }}>ESC</button>
             </div>
             <div style={{ maxHeight: "320px", overflowY: "auto" }}>
               {filtered.length === 0 ? (
@@ -112,7 +112,7 @@ export default function CommandMenuPage() {
               ) : (
                 Object.entries(groups).map(([group, items]) => (
                   <div key={group}>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", textTransform: "uppercase", letterSpacing: ".08em", color: "var(--fg-subtle)", padding: "8px 12px 4px" }}>{group}</div>
+                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "14px", textTransform: "uppercase", letterSpacing: ".08em", color: "var(--fg-subtle)", padding: "8px 12px 4px" }}>{group}</div>
                     {items.map((item) => {
                       gi++;
                       const idx = gi;
@@ -124,7 +124,7 @@ export default function CommandMenuPage() {
                           style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "9px 12px", background: sel === idx ? "var(--bg-subtle)" : "transparent", border: "none", cursor: "pointer", textAlign: "left", color: "var(--fg)", fontSize: "14px", fontFamily: "var(--font-sans)" }}
                         >
                           <span>{item.label}</span>
-                          <span style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)" }}>{item.hint}</span>
+                          <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}>{item.hint}</span>
                         </button>
                       );
                     })}

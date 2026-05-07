@@ -25,10 +25,10 @@ function Stat({ value, label, suffix = "", duration = 2000, running }: StatProps
   const count = useCounter(value, duration, running);
   return (
     <div style={{ textAlign: "center", padding: "32px 24px" }}>
-      <p style={{ fontSize: "56px", fontWeight: 600, color: "var(--fg)", lineHeight: 1, marginBottom: "8px", fontVariantNumeric: "tabular-nums", fontFamily: "var(--font-mono)", letterSpacing: "-.03em" }}>
+      <p style={{ fontSize: "56px", fontWeight: 400, color: "var(--fg)", lineHeight: 1, marginBottom: "8px", fontVariantNumeric: "tabular-nums", fontFamily: "var(--font-mono)", letterSpacing: "-.03em" }}>
         {count.toLocaleString()}{suffix}
       </p>
-      <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)", textTransform: "uppercase", letterSpacing: ".06em" }}>{label}</p>
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", textTransform: "uppercase", letterSpacing: ".06em" }}>{label}</p>
     </div>
   );
 }
@@ -66,8 +66,8 @@ export default function AnimatedCounterPage() {
     <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--fg)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "var(--font-sans)", position: "relative" }}>
       <div style={{ position: "absolute", top: "24px", right: "24px" }}><ThemeToggle /></div>
       <div style={{ textAlign: "center", marginBottom: "56px" }}>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
-        <h1 style={{ fontSize: "24px", fontWeight: 600, color: "var(--fg)", marginBottom: "8px" }}>Animated Counter</h1>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "14px", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--fg-subtle)", marginBottom: "12px" }}>Experiment</p>
+        <h1 style={{ fontSize: "24px", fontWeight: 400, color: "var(--fg)", marginBottom: "8px" }}>Animated Counter</h1>
         <p style={{ fontSize: "15px", color: "var(--fg-muted)" }}>Numbers count up when they enter the viewport</p>
       </div>
 
@@ -84,12 +84,12 @@ export default function AnimatedCounterPage() {
 
       <button
         onClick={replay}
-        style={{ marginTop: "32px", fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)", background: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "6px 14px", cursor: "pointer", transition: "color 140ms ease, border-color 140ms ease" }}
+        style={{ marginTop: "32px", fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)", background: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "6px 14px", cursor: "pointer", transition: "color 140ms ease, border-color 140ms ease" }}
       >
         ↺ replay
       </button>
 
-      <Link href="/" style={{ marginTop: "40px", fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>← Back</Link>
+      <Link href="/" style={{ marginTop: "40px", fontFamily: "var(--font-mono)", fontSize: "14px", color: "var(--fg-subtle)" }}>← Back</Link>
     </div>
   );
 }

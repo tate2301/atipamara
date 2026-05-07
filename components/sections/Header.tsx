@@ -6,19 +6,34 @@ export default function Header() {
       <ThemeToggle />
       <div className="wordmark">
         <h1>Tatenda Chinyamakobvu</h1>
-        <span className="wordmark-dot" aria-label="Available for work" title="Available for work" />
+        <span
+          className="wordmark-dot"
+          aria-label="Available for work"
+          title="Available for work"
+        />
       </div>
-      <p className="tagline">Full-stack engineer. I care about the parts most engineers skip.</p>
+      <p className="tagline">
+        Full-stack engineer. I care about the <em>parts most engineers skip</em>
+        .
+      </p>
       <div className="bio">
         <p>
           I build full-stack products that companies run their businesses on.
-          Three companies currently run software I built from scratch, through{" "}
-          <a href="https://corelith.com" target="_blank" rel="noopener noreferrer">Corelith</a>.
+          Three companies currently run software I built <em>from scratch</em>,
+          through{" "}
+          <a
+            href="https://corelith.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Corelith
+          </a>
+          .
         </p>
         <p>
-          I grew up in Zimbabwe writing code for fun. Fifteen years later I&apos;m still
-          doing the same thing — just now people pay me for it, and the stakes are
-          a bit higher.
+          I grew up in Zimbabwe writing code for fun. Fifteen years later
+          I&apos;m still doing the same thing — just now people pay me for it,
+          and the stakes are a bit higher.
         </p>
       </div>
       <div className="stat-strip">
@@ -41,12 +56,30 @@ export default function Header() {
       </div>
       <nav className="nav-links">
         <a href="mailto:hi@chris.pagka.dev">hi@chris.pagka.dev</a>
-        <span className="nav-sep" aria-hidden="true">/</span>
+        <span className="nav-sep" aria-hidden="true">
+          /
+        </span>
         <a href="/experiments">Experiments</a>
-        <span className="nav-sep" aria-hidden="true">/</span>
-        <a href="https://github.com/tate2301" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span className="nav-sep" aria-hidden="true">/</span>
-        <a href="https://twitter.com/atipamara" target="_blank" rel="noopener noreferrer">X</a>
+        <span className="nav-sep" aria-hidden="true">
+          /
+        </span>
+        <a
+          href="https://github.com/tate2301"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <span className="nav-sep" aria-hidden="true">
+          /
+        </span>
+        <a
+          href="https://twitter.com/atipamara"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          X
+        </a>
       </nav>
     </header>
   );

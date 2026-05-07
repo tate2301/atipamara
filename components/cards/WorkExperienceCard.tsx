@@ -20,11 +20,11 @@ const WorkExperienceCard = (props: {
       rel="no-referrer"
       className="space-y-1 md:space-y-0 md:flex gap-8"
     >
-      <p className="text-sm leading-relaxed capitalize w-32 flex-shrink-0">
+      <p className="text-[14px] leading-relaxed capitalize w-32 flex-shrink-0">
         {timeline}
       </p>
       <div>
-        <p className="text-[#202020] dark:text-zinc-100 font-medium leading-relaxed capitalize mb-2 inline-flex items-baseline">
+        <p className="text-[#202020] dark:text-zinc-100 font-normal leading-relaxed capitalize mb-2 inline-flex items-baseline">
           {props.title}
           <ArrowUpRightIcon className="w-3 h-3 ml-2 text-zinc-500" />
         </p>

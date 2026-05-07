@@ -14,7 +14,7 @@ export default function Page() {
       <div className="mb-32">
         <h1
           className={clsx(
-            "text-5xl font-bold tracking-tight mb-2 bg-gradient-to-br dark:from-zinc-100 via-zinc-400 to-zinc-700 bg-clip-text text-transparent",
+            "text-5xl font-normal mb-3 text-zinc-950 dark:text-zinc-100",
           )}
         >
           Writing
