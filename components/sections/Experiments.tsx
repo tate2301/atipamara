@@ -2,19 +2,41 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  House,
+  Terminal,
+  Database,
+  Image as PhImage,
+  Waveform,
+  Gear,
+  Trash,
+  CheckCircle,
+  XCircle,
+  Info,
+  Phone,
+  BellSimple,
+  ArrowDown,
+  NavigationArrow,
+  ChatCircle,
+  MagnifyingGlass,
+  ArrowRight,
+  GithubLogo,
+  XLogo,
+  Moon,
+  Flask,
+  ArrowLeft,
+  ArrowsHorizontal,
+} from "@phosphor-icons/react";
 
 /*
    TYPES & DATA
  */
 export type ExpId =
   | "var-font"
-  | "spring-btn"
   | "cursor-trail"
   | "tilt-card"
   | "cmd"
   | "mag"
-  | "noise-btn"
-  | "seg-ctrl"
   | "toast"
   | "drag"
   | "checkbox"
@@ -24,7 +46,10 @@ export type ExpId =
   | "fluid-type"
   | "flip-list"
   | "spring-config"
-  | "focus-ring";
+  | "focus-ring"
+  | "resizable"
+  | "streaming"
+  | "view-transition";
 
 export type Exp = {
   id: ExpId;
@@ -60,14 +85,6 @@ export const EXPS: Exp[] = [
       "A single word rendered with a variable font. On hover, the weight axis slides from 300 to 800, and the text visibly breathes. The easing curve overshoots slightly before settling, giving it physical weight. Built entirely with font-variation-settings and a CSS transition. Drag the slider to explore the weight axis manually.",
   },
   {
-    id: "spring-btn",
-    name: "Spring Physics Button",
-    date: "Dec 2024",
-    desc: "A button that compresses on press and bounces back with real spring physics.",
-    detail:
-      "On mousedown, the button squashes (scaleY 0.92, scaleX 1.04) like it has physical mass. On release, it springs back using a cubic-bezier that overshoots. The shadow deepens on press. No animation library; all cubic-bezier curves hand-tuned in CSS.",
-  },
-  {
     id: "cursor-trail",
     name: "Cursor Trail",
     date: "Nov 2024",
@@ -98,22 +115,6 @@ export const EXPS: Exp[] = [
     desc: "A button that pulls toward the cursor with elastic spring return.",
     detail:
       "As the cursor approaches the button, it translates toward the cursor, up to 8px in any direction. The pull is proportional to distance from centre. On mouseleave, it springs back using cubic-bezier(.23,1,.32,1) with a slight overshoot.",
-  },
-  {
-    id: "noise-btn",
-    name: "Noise Button",
-    date: "May 2024",
-    desc: "A button with SVG noise grain texture and a light-sweep on hover.",
-    detail:
-      "Two layered pseudo-elements: a fractal noise SVG filter (mix-blend-mode: overlay) adds grain that makes the surface feel physical. On hover, a diagonal gradient animates from right to left, simulating a light sweep. The combination Vercel and Linear use on premium CTAs.",
-  },
-  {
-    id: "seg-ctrl",
-    name: "Segmented Control",
-    date: "Feb 2024",
-    desc: "A pill indicator slides between segments with a spring that slightly overshoots.",
-    detail:
-      "Three segments: Design, Code, Ship. A white pill indicator slides under the active segment using cubic-bezier(.34,1.1,.64,1) — just enough overshoot to feel lively. The indicator width morphs to match each button's width.",
   },
   {
     id: "toast",
@@ -179,6 +180,30 @@ export const EXPS: Exp[] = [
     detail:
       "Tab through four element types: button, input, link, card. Each gets a focus ring tuned to its shape — pill gets a pill ring, square gets a square ring. The ring is drawn with outline and offset, never box-shadow, so it composites correctly. The color adapts to light and dark mode via CSS custom properties.",
   },
+  {
+    id: "resizable",
+    name: "Resizable Panels",
+    date: "May 2025",
+    desc: "Drag the divider to resize two panels — pointer capture, min/max constraints.",
+    detail:
+      "A single drag handle separates two panels. Pointer capture routes all move events to the handle even when the cursor leaves it. The split is clamped between 20% and 80% so neither panel collapses. On pointerup, the split snaps to the nearest 5% increment with a spring.",
+  },
+  {
+    id: "streaming",
+    name: "Streaming Text",
+    date: "Apr 2025",
+    desc: "Characters render one at a time as if arriving from a stream, with variable delay.",
+    detail:
+      "A setTimeout loop renders each character individually. Delay is 28ms per character, stretching to 180ms after punctuation — the natural reading rhythm of spoken language. A blinking cursor trails the head. This is the rendering model behind every LLM chat interface in 2025.",
+  },
+  {
+    id: "view-transition",
+    name: "View Transitions",
+    date: "Mar 2025",
+    desc: "Shared-element morphing between list and detail views using the native browser API.",
+    detail:
+      "document.startViewTransition() wraps a state update. Elements with matching view-transition-name values morph between their old and new positions automatically. The browser generates ::view-transition-old and ::view-transition-new pseudo-elements, animating between them with a cross-fade by default. Custom keyframes override the default.",
+  },
 ];
 
 /*
@@ -235,36 +260,6 @@ function VarFontDemo() {
           wght: {weight}
         </span>
       </div>
-    </div>
-  );
-}
-
-/*  Spring Physics Button  */
-function SpringBtnDemo() {
-  const [flashing, setFlashing] = useState(false);
-  const flash = () => {
-    setFlashing(true);
-    setTimeout(() => setFlashing(false), 300);
-  };
-
-  return (
-    <div className="exp-demo" style={{ position: "relative" }}>
-      <span className="exp-demo-label">spring physics</span>
-      {flashing && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "8px",
-            background: "var(--accent-subtle)",
-            animation: "d-pulse-flash 300ms ease-out forwards",
-            pointerEvents: "none",
-          }}
-        />
-      )}
-      <button className="d-spring-btn" onClick={flash}>
-        Press me
-      </button>
     </div>
   );
 }
@@ -434,14 +429,14 @@ function TiltCardDemo() {
 }
 
 /*  Command Menu  */
-type CmdItem = { label: string; hint: string; group: string };
+type CmdItem = { label: string; hint: string; group: string; icon: React.ReactNode };
 const CMD_ITEMS: CmdItem[] = [
-  { label: "Go to home", hint: "navigate", group: "Navigation" },
-  { label: "Open GitHub", hint: "", group: "Links" },
-  { label: "Open X / Twitter", hint: "", group: "Links" },
-  { label: "Magnetic Button", hint: "experiment", group: "Experiments" },
-  { label: "Animated Counter", hint: "experiment", group: "Experiments" },
-  { label: "Switch to dark mode", hint: "theme", group: "Settings" },
+  { label: "Go to home", hint: "navigate", group: "Navigation", icon: <House size={14} /> },
+  { label: "Open GitHub", hint: "tate2301", group: "Links", icon: <GithubLogo size={14} /> },
+  { label: "Open X / Twitter", hint: "@atipamara", group: "Links", icon: <XLogo size={14} /> },
+  { label: "Dynamic Island", hint: "experiment", group: "Experiments", icon: <Flask size={14} /> },
+  { label: "macOS Dock", hint: "experiment", group: "Experiments", icon: <Flask size={14} /> },
+  { label: "Switch to dark mode", hint: "theme", group: "Settings", icon: <Moon size={14} /> },
 ];
 function fuzzyMatch(s: string, q: string) {
   if (!q) return true;
@@ -549,6 +544,7 @@ function CmdDemo() {
                         onMouseEnter={() => setSel(idx)}
                         onClick={() => setOpen(false)}
                       >
+                        <span className="mini-item-icon">{item.icon}</span>
                         <span>{item.label}</span>
                         <span className="mini-item-hint">{item.hint}</span>
                       </div>
@@ -606,120 +602,17 @@ function MagDemo() {
   );
 }
 
-/*  Noise Button  */
-function NoiseBtnDemo() {
-  return (
-    <div className="exp-demo">
-      <span className="exp-demo-label">noise button</span>
-      <svg width="0" height="0" style={{ position: "absolute" }}>
-        <defs>
-          <filter id="exp-noise-filter">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.65"
-              numOctaves="3"
-              stitchTiles="stitch"
-            />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-        </defs>
-      </svg>
-      <button className="d-noise-btn">
-        <div
-          className="d-noise-btn-noise"
-          style={{ filter: "url(#exp-noise-filter)" }}
-        />
-        <div className="d-noise-btn-shine" />
-        <span style={{ position: "relative" }}>Hover me</span>
-      </button>
-    </div>
-  );
-}
-
-/*  Segmented Control  */
-function SegCtrlDemo() {
-  const [active, setActive] = useState(0);
-  const btnsRef = useRef<(HTMLButtonElement | null)[]>([]);
-  const [ind, setInd] = useState({ left: 3, width: 0 });
-  const segments = ["Design", "Code", "Ship"];
-
-  const updateInd = useCallback((idx: number) => {
-    const btn = btnsRef.current[idx];
-    if (!btn) return;
-    setInd({ left: btn.offsetLeft, width: btn.offsetWidth });
-  }, []);
-
-  useEffect(() => {
-    const t = setTimeout(() => updateInd(0), 60);
-    return () => clearTimeout(t);
-  }, [updateInd]);
-  useEffect(() => {
-    updateInd(active);
-  }, [active, updateInd]);
-
-  return (
-    <div className="exp-demo">
-      <span className="exp-demo-label">segmented control</span>
-      <div
-        style={{
-          position: "relative",
-          display: "inline-flex",
-          background: "var(--bg-subtle)",
-          border: "1px solid var(--border)",
-          borderRadius: "8px",
-          padding: "3px",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "3px",
-            bottom: "3px",
-            left: `${ind.left}px`,
-            width: `${ind.width}px`,
-            background: "var(--bg-card)",
-            borderRadius: "5px",
-            boxShadow: "var(--shadow-sm)",
-            transition:
-              "left 220ms cubic-bezier(.34,1.1,.64,1), width 220ms cubic-bezier(.34,1.1,.64,1)",
-            pointerEvents: "none",
-          }}
-        />
-        {segments.map((seg, i) => (
-          <button
-            key={seg}
-            ref={(el) => {
-              btnsRef.current[i] = el;
-            }}
-            onClick={() => setActive(i)}
-            style={{
-              position: "relative",
-              zIndex: 1,
-              padding: "7px 18px",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontFamily: "var(--font-sans)",
-              fontSize: "14px",
-              color: active === i ? "var(--fg)" : "var(--fg-muted)",
-              transition: "color 140ms ease",
-              borderRadius: "5px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {seg}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /*  Toast Notifications  */
 type ToastItem = {
   id: number;
   msg: string;
   type: "default" | "success" | "error";
+};
+
+const TOAST_ICON: Record<ToastItem["type"], React.ReactNode> = {
+  success: <CheckCircle weight="fill" size={15} />,
+  error: <XCircle weight="fill" size={15} />,
+  default: <Info weight="fill" size={15} />,
 };
 
 function ToastDemo() {
@@ -738,30 +631,14 @@ function ToastDemo() {
   return (
     <div className="exp-demo" style={{ flexDirection: "column", gap: "14px" }}>
       <span className="exp-demo-label">toast notifications</span>
-      <div
-        style={{
-          display: "flex",
-          gap: "6px",
-          justifyContent: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <button
-          className="d-toast-trigger"
-          onClick={() => add("File saved successfully", "success")}
-        >
+      <div style={{ display: "flex", gap: "6px", justifyContent: "center", flexWrap: "wrap" }}>
+        <button className="d-toast-trigger" onClick={() => add("File saved successfully", "success")}>
           Success
         </button>
-        <button
-          className="d-toast-trigger"
-          onClick={() => add("Something went wrong", "error")}
-        >
+        <button className="d-toast-trigger" onClick={() => add("Something went wrong", "error")}>
           Error
         </button>
-        <button
-          className="d-toast-trigger"
-          onClick={() => add("A new update is ready", "default")}
-        >
+        <button className="d-toast-trigger" onClick={() => add("A new update is ready", "default")}>
           Info
         </button>
       </div>
@@ -780,7 +657,7 @@ function ToastDemo() {
               }}
               onClick={() => remove(t.id)}
             >
-              <span className="d-toast-icon" aria-hidden="true" />
+              <span className="d-toast-icon" aria-hidden="true">{TOAST_ICON[t.type]}</span>
               {t.msg}
             </div>
           );
@@ -982,28 +859,34 @@ function CheckboxDemo() {
 }
 
 /*  macOS Dock  */
+const DOCK_APPS: { icon: React.ReactNode; label: string; color: string }[] = [
+  { icon: <House weight="fill" size={20} />, label: "Home", color: "#4F46E5" },
+  { icon: <Terminal weight="fill" size={20} />, label: "Terminal", color: "#059669" },
+  { icon: <Database weight="fill" size={20} />, label: "Database", color: "#B45309" },
+  { icon: <PhImage weight="fill" size={20} />, label: "Photos", color: "#DB2777" },
+  { icon: <Waveform weight="fill" size={20} />, label: "Audio", color: "#7C3AED" },
+  { icon: <Gear weight="fill" size={20} />, label: "Settings", color: "#6B7280" },
+  { icon: <Trash weight="fill" size={20} />, label: "Trash", color: "#DC2626" },
+];
+
 function DockDemo() {
   const [mouseX, setMouseX] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const apps = ["HM", "CMD", "DB", "IMG", "AUD", "SET", "DEL"];
-  const BASE = 36;
+  const BASE = 40;
   const MAX_S = 1.72;
   const SIGMA = 58;
 
   const getScale = (idx: number): number => {
     if (mouseX === null || !containerRef.current) return 1;
     const rect = containerRef.current.getBoundingClientRect();
-    const span = rect.width / apps.length;
+    const span = rect.width / DOCK_APPS.length;
     const cx = rect.left + (idx + 0.5) * span;
     const d = Math.abs(mouseX - cx);
     return 1 + (MAX_S - 1) * Math.exp(-(d * d) / (SIGMA * SIGMA));
   };
 
   return (
-    <div
-      className="exp-demo"
-      style={{ justifyContent: "flex-end", paddingBottom: "16px" }}
-    >
+    <div className="exp-demo" style={{ justifyContent: "flex-end", paddingBottom: "16px" }}>
       <span className="exp-demo-label">dock magnification</span>
       <div
         ref={containerRef}
@@ -1011,24 +894,26 @@ function DockDemo() {
         onMouseMove={(e) => setMouseX(e.clientX)}
         onMouseLeave={() => setMouseX(null)}
       >
-        {apps.map((app, i) => {
+        {DOCK_APPS.map((app, i) => {
           const s = getScale(i);
           return (
             <div
-              key={app}
+              key={app.label}
               className="d-dock-icon"
-              data-tone={i}
+              title={app.label}
               style={{
                 width: `${BASE}px`,
                 height: `${BASE}px`,
+                background: app.color,
                 transform: `translateY(${-(s - 1) * BASE * 0.5}px) scale(${s})`,
-                transition:
-                  mouseX !== null
-                    ? "transform 60ms ease"
-                    : "transform 220ms cubic-bezier(.23,1,.32,1)",
+                transition: mouseX !== null ? "transform 60ms ease" : "transform 220ms cubic-bezier(.23,1,.32,1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff",
               }}
             >
-              {app}
+              {app.icon}
             </div>
           );
         })}
@@ -1555,7 +1440,7 @@ function IslandDemo() {
           >
             {state === "ring" && (
               <>
-                <div className="d-island-avatar">TC</div>
+                <div className="d-island-avatar" style={{ background: "#4F46E5", display: "flex", alignItems: "center", justifyContent: "center" }}><Phone weight="fill" size={18} /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="d-island-muted">Incoming call</div>
                   <div className="d-island-title">Tatenda C.</div>
@@ -1591,7 +1476,7 @@ function IslandDemo() {
             )}
             {state === "alarm" && (
               <>
-                <div className="d-island-glyph">06</div>
+                <div className="d-island-glyph" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><BellSimple weight="fill" size={20} /></div>
                 <div style={{ flex: 1 }}>
                   <div className="d-island-time">6:00</div>
                   <div className="d-island-muted">Morning alarm</div>
@@ -1614,7 +1499,7 @@ function IslandDemo() {
             )}
             {state === "download" && (
               <>
-                <div className="d-island-glyph">DL</div>
+                <div className="d-island-glyph" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowDown weight="bold" size={20} /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="d-island-title">Claude</div>
                   <div className="d-island-muted">Downloading...</div>
@@ -1662,7 +1547,7 @@ function IslandDemo() {
             )}
             {state === "nav" && (
               <>
-                <div className="d-island-glyph">RT</div>
+                <div className="d-island-glyph" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><NavigationArrow weight="fill" size={20} /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="d-island-muted">Turn right</div>
                   <div className="d-island-title">Baker St</div>
@@ -1676,7 +1561,7 @@ function IslandDemo() {
             )}
             {state === "message" && (
               <>
-                <div className="d-island-avatar purple">FM</div>
+                <div className="d-island-avatar purple" style={{ background: "#7C3AED", display: "flex", alignItems: "center", justifyContent: "center" }}><ChatCircle weight="fill" size={18} /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="d-island-title">Farai</div>
                   <div className="d-island-muted truncate">
@@ -1714,6 +1599,240 @@ function IslandDemo() {
     </div>
   );
 }
+/*  Resizable Panels  */
+function ResizableDemo() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [split, setSplit] = useState(50);
+  const [snapped, setSnapped] = useState(50);
+  const dragging = useRef(false);
+
+  const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    dragging.current = true;
+  };
+
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging.current || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const raw = ((e.clientX - rect.left) / rect.width) * 100;
+    setSplit(Math.min(80, Math.max(20, raw)));
+  };
+
+  const onUp = () => {
+    dragging.current = false;
+    const nearest = Math.round(split / 5) * 5;
+    setSnapped(nearest);
+    setSplit(nearest);
+  };
+
+  const panel = (label: string, content: React.ReactNode): React.CSSProperties => ({});
+
+  return (
+    <div className="exp-demo" style={{ padding: 0, overflow: "hidden" }}>
+      <span className="exp-demo-label" style={{ zIndex: 10 }}>resizable panels</span>
+      <div ref={containerRef} style={{ display: "flex", width: "100%", height: "100%", minHeight: "200px" }}>
+        <div
+          style={{
+            width: `${split}%`,
+            borderRight: "none",
+            background: "var(--bg-subtle)",
+            display: "flex",
+            flexDirection: "column",
+            padding: "16px",
+            gap: "8px",
+            overflow: "hidden",
+            transition: dragging.current ? "none" : "width 200ms cubic-bezier(.23,1,.32,1)",
+          }}
+        >
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)", flexShrink: 0 }}>Panel A · {split.toFixed(0)}%</span>
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, overflow: "hidden" }}>
+            {["Projects", "Components", "Assets", "Settings"].map((item) => (
+              <div key={item} style={{ padding: "6px 8px", borderRadius: "5px", fontSize: "13px", color: "var(--fg-muted)", background: "var(--bg-hover)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item}</div>
+            ))}
+          </div>
+        </div>
+        <div
+          className="d-resize-handle"
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+        >
+          <ArrowsHorizontal size={12} style={{ color: "var(--fg-subtle)", pointerEvents: "none" }} />
+        </div>
+        <div
+          style={{
+            flex: 1,
+            background: "var(--bg-card)",
+            padding: "16px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            overflow: "hidden",
+          }}
+        >
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)" }}>Panel B · {(100 - split).toFixed(0)}%</span>
+          <div style={{ fontSize: "13px", color: "var(--fg-muted)", lineHeight: 1.6 }}>
+            Drag the divider. Pointer capture keeps tracking outside the handle boundary. Releases snap to the nearest 5%.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*  Streaming Text  */
+const STREAM_TEXTS = [
+  "Building software that moves people is a craft, not a process.",
+  "The best interfaces feel inevitable in hindsight.",
+  "Every animation is a conversation between the interface and the user.",
+  "Constraints are not the enemy of creativity. They are its engine.",
+];
+
+function StreamingDemo() {
+  const [displayed, setDisplayed] = useState("");
+  const [textIdx, setTextIdx] = useState(0);
+  const [streaming, setStreaming] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const stream = useCallback((text: string) => {
+    setDisplayed("");
+    setStreaming(true);
+    let i = 0;
+    const tick = () => {
+      if (i >= text.length) {
+        setStreaming(false);
+        return;
+      }
+      setDisplayed(text.slice(0, ++i));
+      const ch = text[i - 1];
+      const delay = /[.,!?]/.test(ch) ? 200 : /[ ]/.test(ch) ? 40 : 28;
+      timerRef.current = setTimeout(tick, delay);
+    };
+    tick();
+  }, []);
+
+  useEffect(() => {
+    stream(STREAM_TEXTS[0]);
+    return () => clearTimeout(timerRef.current);
+  }, [stream]);
+
+  const next = useCallback(() => {
+    clearTimeout(timerRef.current);
+    const nextIdx = (textIdx + 1) % STREAM_TEXTS.length;
+    setTextIdx(nextIdx);
+    stream(STREAM_TEXTS[nextIdx]);
+  }, [textIdx, stream]);
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "20px", padding: "24px", alignItems: "stretch" }}>
+      <span className="exp-demo-label">streaming text</span>
+      <div style={{ minHeight: "72px", fontSize: "16px", lineHeight: 1.7, color: "var(--fg)", fontFamily: "var(--font-sans)" }}>
+        {displayed}
+        <span
+          className="d-stream-cursor"
+          style={{ opacity: streaming ? 1 : 0 }}
+        />
+      </div>
+      <button
+        onClick={next}
+        style={{
+          alignSelf: "flex-start",
+          padding: "7px 14px",
+          background: "var(--bg-subtle)",
+          border: "1px solid var(--border)",
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontFamily: "var(--font-mono)",
+          fontSize: "13px",
+          color: "var(--fg-muted)",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+        }}
+      >
+        {streaming ? "Streaming…" : <><ArrowRight size={13} /> Next</>}
+      </button>
+    </div>
+  );
+}
+
+/*  View Transitions  */
+const VT_ITEMS = [
+  { id: 1, title: "Spring physics", sub: "Verlet integration", color: "#4F46E5" },
+  { id: 2, title: "OKLCH color", sub: "Perceptual space", color: "#059669" },
+  { id: 3, title: "Fluid type", sub: "CSS clamp()", color: "#B45309" },
+];
+
+function ViewTransitionDemo() {
+  const [view, setView] = useState<"list" | "detail">("list");
+  const [selected, setSelected] = useState<(typeof VT_ITEMS)[0] | null>(null);
+
+  const go = (toView: "list" | "detail", item?: (typeof VT_ITEMS)[0]) => {
+    const update = () => {
+      if (item) setSelected(item);
+      setView(toView);
+    };
+    if (typeof document !== "undefined" && "startViewTransition" in document) {
+      (document as Document & { startViewTransition: (cb: () => void) => void }).startViewTransition(update);
+    } else {
+      update();
+    }
+  };
+
+  return (
+    <div className="exp-demo" style={{ padding: 0, overflow: "hidden" }}>
+      <span className="exp-demo-label">view transitions</span>
+      {view === "list" ? (
+        <div style={{ padding: "16px", display: "flex", flexDirection: "column", gap: "6px", width: "100%" }}>
+          {VT_ITEMS.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => go("detail", item)}
+              style={{
+                cursor: "pointer",
+                padding: "12px 14px",
+                borderRadius: "8px",
+                border: "1px solid var(--border)",
+                background: "var(--bg-subtle)",
+                display: "flex",
+                gap: "12px",
+                alignItems: "center",
+                viewTransitionName: `vt-item-${item.id}` as React.CSSProperties["viewTransitionName"],
+              } as React.CSSProperties}
+            >
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: "14px", color: "var(--fg)", fontWeight: 500 }}>{item.title}</div>
+                <div style={{ fontSize: "12px", color: "var(--fg-subtle)", fontFamily: "var(--font-mono)" }}>{item.sub}</div>
+              </div>
+              <ArrowRight size={14} style={{ marginLeft: "auto", color: "var(--fg-subtle)" }} />
+            </div>
+          ))}
+        </div>
+      ) : selected ? (
+        <div
+          style={{
+            padding: "20px",
+            viewTransitionName: `vt-item-${selected.id}` as React.CSSProperties["viewTransitionName"],
+            width: "100%",
+          } as React.CSSProperties}
+        >
+          <div style={{ width: 48, height: 48, borderRadius: "12px", background: selected.color, marginBottom: "14px" }} />
+          <div style={{ fontSize: "20px", fontWeight: 600, color: "var(--fg)", letterSpacing: "-.02em", marginBottom: "4px" }}>{selected.title}</div>
+          <div style={{ fontSize: "13px", color: "var(--fg-subtle)", fontFamily: "var(--font-mono)", marginBottom: "16px" }}>{selected.sub}</div>
+          <button
+            onClick={() => go("list")}
+            style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "var(--fg-muted)", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: "var(--font-sans)" }}
+          >
+            <ArrowLeft size={13} /> Back
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 /*
    CODE SNIPPETS
  */
@@ -1760,18 +1879,6 @@ background: linear-gradient(90deg,
 <span class="cm">/* Or drive with JS for a range slider */</span>
 <span class="kw">const</span> [weight, setWeight] = <span class="fn">useState</span>(<span class="num">300</span>)
 style={{ fontVariationSettings: \`<span class="str">'wght' \${weight}</span>\` }}`,
-
-  "spring-btn": `<span class="cm">/* Squash on press, spring on release */</span>
-.<span class="fn">btn</span>:active {
-  transform: scaleY(<span class="num">0.92</span>) scaleX(<span class="num">1.04</span>);
-  transition: transform <span class="num">100ms</span> cubic-bezier(.<span class="num">23</span>,<span class="num">1</span>,.<span class="num">32</span>,<span class="num">1</span>),
-              box-shadow <span class="num">100ms</span> cubic-bezier(.<span class="num">23</span>,<span class="num">1</span>,.<span class="num">32</span>,<span class="num">1</span>);
-}
-.<span class="fn">btn</span> {
-  <span class="prop">transition</span>:
-    transform <span class="num">220ms</span> cubic-bezier(.<span class="num">23</span>,<span class="num">1</span>,.<span class="num">32</span>,<span class="num">1</span>),
-    box-shadow <span class="num">220ms</span> ease;
-}`,
 
   "cursor-trail": `<span class="cm">// 12 nodes with decreasing spring stiffness</span>
 <span class="kw">const</span> N = nodes.current
@@ -1835,41 +1942,6 @@ style={{
     ? <span class="str">'transform 80ms linear'</span>
     : <span class="str">'transform 400ms cubic-bezier(.23,1,.32,1)'</span>
 }}`,
-
-  "noise-btn": `<span class="cm">/* Grain layer via SVG filter */</span>
-&lt;filter id=<span class="str">"noise"</span>&gt;
-  &lt;feTurbulence
-    type=<span class="str">"fractalNoise"</span>
-    baseFrequency=<span class="str">"0.65"</span>
-    numOctaves=<span class="str">"3"</span> /&gt;
-  &lt;feColorMatrix type=<span class="str">"saturate"</span> values=<span class="str">"0"</span> /&gt;
-&lt;/filter&gt;
-
-<span class="cm">/* Light sweep on hover */</span>
-.<span class="fn">shine</span> {
-  background: linear-gradient(<span class="num">105deg</span>,
-    transparent <span class="num">30%</span>,
-    rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>,.<span class="num">25</span>) <span class="num">50%</span>,
-    transparent <span class="num">70%</span>);
-  background-size: <span class="num">200%</span>;
-}
-.<span class="fn">btn</span>:hover .<span class="fn">shine</span> {
-  background-position: -<span class="num">100%</span>;
-}`,
-
-  "seg-ctrl": `<span class="cm">// Pill indicator tracks active button</span>
-<span class="kw">const</span> <span class="fn">updateInd</span> = (idx: <span class="kw">number</span>) => {
-  <span class="kw">const</span> btn = btnsRef.current[idx]
-  <span class="kw">if</span> (!btn) <span class="kw">return</span>
-  <span class="fn">setInd</span>({ left: btn.offsetLeft, width: btn.offsetWidth })
-}
-
-<span class="cm">/* CSS spring handles the slide */</span>
-.<span class="fn">indicator</span> {
-  <span class="prop">transition</span>:
-    left <span class="num">220ms</span> cubic-bezier(.<span class="num">34</span>,<span class="num">1.1</span>,.<span class="num">64</span>,<span class="num">1</span>),
-    width <span class="num">220ms</span> cubic-bezier(.<span class="num">34</span>,<span class="num">1.1</span>,.<span class="num">64</span>,<span class="num">1</span>);
-}`,
 
   toast: `<span class="cm">// Stack appearance  depth via scale + offset</span>
 <span class="kw">const</span> fromTop = toasts.length - <span class="num">1</span> - i
@@ -1997,19 +2069,68 @@ el.style.transition = <span class="str">'none'</span>
 
 <span class="cm">/* Always use :focus-visible, not :focus */</span>
 <span class="cm">/* :focus fires on click; :focus-visible only on keyboard */</span>`,
+
+  resizable: `<span class="cm">// Pointer capture — tracks outside handle boundary</span>
+<span class="kw">const</span> <span class="fn">onDown</span> = (e: PointerEvent) => {
+  e.currentTarget.<span class="fn">setPointerCapture</span>(e.pointerId)
+  dragging.current = <span class="kw">true</span>
+}
+
+<span class="kw">const</span> <span class="fn">onMove</span> = (e: PointerEvent) => {
+  <span class="kw">if</span> (!dragging.current) <span class="kw">return</span>
+  <span class="kw">const</span> pct = (e.clientX - rect.left) / rect.width * <span class="num">100</span>
+  <span class="fn">setSplit</span>(Math.<span class="fn">min</span>(<span class="num">80</span>, Math.<span class="fn">max</span>(<span class="num">20</span>, pct)))
+}
+
+<span class="cm">// Snap to nearest 5% on release</span>
+<span class="kw">const</span> <span class="fn">onUp</span> = () => {
+  <span class="kw">const</span> nearest = Math.<span class="fn">round</span>(split / <span class="num">5</span>) * <span class="num">5</span>
+  <span class="fn">setSplit</span>(nearest)
+}`,
+
+  streaming: `<span class="cm">// Variable delay — pause longer at punctuation</span>
+<span class="kw">const</span> <span class="fn">tick</span> = () => {
+  <span class="fn">setDisplayed</span>(text.<span class="fn">slice</span>(<span class="num">0</span>, ++i))
+  <span class="kw">const</span> ch = text[i - <span class="num">1</span>]
+  <span class="kw">const</span> delay =
+    /[.,!?]/.test(ch) ? <span class="num">200</span>  <span class="cm">// end of clause</span>
+    : /[ ]/.test(ch)  ? <span class="num">40</span>   <span class="cm">// word break</span>
+    : <span class="num">28</span>               <span class="cm">// character</span>
+  timer = <span class="fn">setTimeout</span>(tick, delay)
+}
+
+<span class="cm">// Blinking cursor via CSS animation</span>
+.<span class="fn">cursor</span> {
+  <span class="prop">animation</span>: blink <span class="num">900ms</span> step-end infinite;
+}`,
+
+  "view-transition": `<span class="cm">// Wrap state update in a View Transition</span>
+<span class="kw">const</span> <span class="fn">navigate</span> = (item: Item) => {
+  <span class="kw">if</span> (document.<span class="fn">startViewTransition</span>) {
+    document.<span class="fn">startViewTransition</span>(() =>
+      <span class="fn">setState</span>(item))
+  } <span class="kw">else</span> {
+    <span class="fn">setState</span>(item) <span class="cm">// fallback</span>
+  }
+}
+
+<span class="cm">/* Named elements morph automatically */</span>
+.<span class="fn">item</span> { view-transition-name: item-1 }
+
+<span class="cm">/* Override default cross-fade */</span>
+::view-transition-old(<span class="fn">item-1</span>) {
+  <span class="prop">animation</span>: slide-out <span class="num">200ms</span> ease;
+}`,
 };
 
 const DEMOS: Record<ExpId, React.FC> = {
   oklch: OklchDemo,
   "fluid-type": FluidTypeDemo,
   "var-font": VarFontDemo,
-  "spring-btn": SpringBtnDemo,
   "cursor-trail": CursorTrailDemo,
   "tilt-card": TiltCardDemo,
   cmd: CmdDemo,
   mag: MagDemo,
-  "noise-btn": NoiseBtnDemo,
-  "seg-ctrl": SegCtrlDemo,
   toast: ToastDemo,
   drag: DragDemo,
   checkbox: CheckboxDemo,
@@ -2018,19 +2139,19 @@ const DEMOS: Record<ExpId, React.FC> = {
   "spring-config": SpringConfigDemo,
   "flip-list": FlipListDemo,
   "focus-ring": FocusRingDemo,
+  resizable: ResizableDemo,
+  streaming: StreamingDemo,
+  "view-transition": ViewTransitionDemo,
 };
 
 export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
   oklch: "oklch-color",
   "fluid-type": "fluid-typography",
   "var-font": "variable-font-morph",
-  "spring-btn": "spring-physics-button",
   "cursor-trail": "cursor-trail",
   "tilt-card": "tilt-card",
   cmd: "command-menu",
   mag: "magnetic-button",
-  "noise-btn": "noise-button",
-  "seg-ctrl": "segmented-control",
   toast: "toast-notifications",
   drag: "drag-to-dismiss",
   checkbox: "checkbox-animation",
@@ -2039,6 +2160,9 @@ export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
   "spring-config": "spring-configurator",
   "flip-list": "flip-animation",
   "focus-ring": "focus-ring-system",
+  resizable: "resizable-panels",
+  streaming: "streaming-text",
+  "view-transition": "view-transitions",
 };
 
 export function getExperimentPath(exp: Exp) {

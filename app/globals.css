@@ -1001,3 +1001,47 @@ footer a:hover { color: var(--fg-muted); }
   0%, 100% { transform: scaleY(.35); }
   50%       { transform: scaleY(1); }
 }
+
+/* Resizable Panels */
+.d-resize-handle {
+  width: 6px;
+  flex-shrink: 0;
+  background: var(--border);
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background 140ms ease;
+  user-select: none;
+  touch-action: none;
+}
+.d-resize-handle:hover,
+.d-resize-handle:active { background: var(--accent); }
+
+/* Streaming Text Cursor */
+.d-stream-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--fg);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: d-blink 700ms steps(1) infinite;
+}
+@keyframes d-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* View Transitions */
+@keyframes vt-slide-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes vt-slide-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-12px); }
+}
+::view-transition-old(root) { animation: 200ms ease vt-slide-out; }
+::view-transition-new(root) { animation: 200ms ease vt-slide-in; }
