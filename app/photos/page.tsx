@@ -1,55 +1,51 @@
-import clsx from "clsx";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import path from "path";
 import fs from "fs";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "Photos - Atipamara",
+  title: "Photos — Tatenda Chinyamakobvu",
   description:
-    "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
+    "A small archive of photos — favourite people, pups, and moments worth keeping.",
 };
 
 export default function Page() {
   const photosDirectory = path.join(process.cwd(), "public/assets/photos");
   const photoFiles = fs.readdirSync(photosDirectory);
-
-  // Create an array to store the photo URLs
   const photoUrls = photoFiles.map((file) => `/assets/photos/${file}`);
 
   return (
     <>
-      <div className="h-full max-w-2xl mx-auto pb-32 pt-16 p-4">
-        <div>
-          <h1
-            className={clsx(
-              "text-5xl font-normal mb-3 text-zinc-950 dark:text-zinc-100",
-            )}
-          >
-            Photos
-          </h1>
-          <p className="text-lg">
-            Life is great, capture the moments. These are photos of me, my
-            favorite people, pups and some memories.
+      <div className="wrap">
+        <div className="exp-page-header">
+          <ThemeToggle />
+          <Link href="/" className="exp-back">
+            Home
+          </Link>
+          <h1 className="exp-page-title">Photos</h1>
+          <p className="exp-page-desc">
+            A small archive — favourite people, pups, and moments worth keeping.
           </p>
         </div>
-      </div>
-      <div className="space-y-24 border-t border-dashed border-zinc-400/20">
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:container 2xl:mx-auto gap-4 mb-16 p-4">
+        <section className="photos-grid">
           {photoUrls.map((photoUrl) => (
-            <li
-              key={photoUrl}
-              className="relative aspect-[9/11] rounded-xl overflow-hidden bg-zinc-900/10"
-            >
+            <figure key={photoUrl} className="photos-item">
               <Image
                 src={photoUrl}
                 fill
-                className="object-cover"
-                alt={"My pic"}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="photos-img"
+                alt=""
               />
-            </li>
+            </figure>
           ))}
-        </ul>
+        </section>
+      </div>
+      <div className="wrap">
+        <Footer />
       </div>
     </>
   );

@@ -20,6 +20,24 @@ export default function Page() {
       <Experience />
       <Awards />
       <section className="section">
+        <Link href="/writing" className="exp-teaser-row">
+          <div>
+            <div className="exp-teaser-name">Writing</div>
+            <div className="exp-teaser-sub">Notes, debugging stories, and the occasional opinion</div>
+          </div>
+          <span className="exp-teaser-arrow">→</span>
+        </Link>
+      </section>
+      <section className="section">
+        <Link href="/photos" className="exp-teaser-row">
+          <div>
+            <div className="exp-teaser-name">Photos</div>
+            <div className="exp-teaser-sub">A small archive — people, pups, and moments worth keeping</div>
+          </div>
+          <span className="exp-teaser-arrow">→</span>
+        </Link>
+      </section>
+      <section className="section">
         <Link href="/experiments" className="exp-teaser-row">
           <div>
             <div className="exp-teaser-name">Experiments</div>
