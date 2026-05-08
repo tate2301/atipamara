@@ -1,0 +1,20 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="cmd" />
+
+The command palette is the senior engineer's shortcut mechanism — it assumes the user knows what they want and just needs a fast path to it. The design challenge isn't the palette itself, it's teaching users it exists. Apple did it by making Spotlight the system-wide affordance. Linear brought it to web apps. Now it's table stakes.
+
+**Fuzzy matching.** The filter isn't substring search — it's subsequence matching. For each query character, find the next occurrence in the target string. `"git"` matches `"Open GitHub"` because g, i, t appear in order. This means users can type the letters they remember, not the exact start of the item name. The algorithm is O(n×m) per item, negligible for ≤200 items.
+
+**Grouped results.** Items are bucketed into Navigation, Links, Experiments, Settings. Groups separate conceptually different actions without hiding any results. The active index is a flat count across all groups — arrow keys navigate the flat list, but the visual presentation is grouped. This is a common source of bugs: index-into-groups vs index-into-flat-list.
+
+**The animation.** The palette enters from below at `translateY(8px)` with `opacity: 0`, settling to `translateY(0)` and `opacity: 1`. The backdrop blur (`backdrop-filter: blur(8px)`) uses a CSS class toggle so the browser can schedule the paint. Using inline style for backdrop-filter on every render can cause layout thrash on slower devices.
+
+**Why no Cmd+K global listener here.** In a full implementation you'd attach a `keydown` listener on `window` in a `useEffect`. In this embedded demo, the trigger is a visible button to avoid hijacking the user's browser shortcuts mid-page. In a real app this would be wired: `if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); open() }`.
+
+<Callout type="insight">
+cmdk by Rauno Fröberg is the canonical open-source implementation of this pattern. Worth reading the source — the virtualization, the ARIA handling, and the composable group API are all well-considered. This demo is a teaching simplification; for production use the real library.
+</Callout>
+
+<ExperimentSourceBlock id="cmd" />

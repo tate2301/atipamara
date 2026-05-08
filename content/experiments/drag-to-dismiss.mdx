@@ -1,0 +1,20 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="drag" />
+
+Every mobile bottom sheet — iOS sheets, Android bottom sheets, Sonner toasts on mobile — uses this model. Drag down to dismiss. But the naive implementation (dismiss when `y > threshold`) feels wrong in two ways: a slow deliberate drag gets ignored if it doesn't reach the threshold, and a fast flick gets ignored even though the intent was obvious.
+
+**The two-signal model.** The dismiss condition is `distance > 80px OR velocity > 0.5px/ms`. Either signal alone triggers dismissal. A fast flick at 20px distance reads as "throw away." A slow drag past 80px reads as "move aside." Both feel correct.
+
+**Pointer capture.** `setPointerCapture(pointerId)` on pointerdown is the critical call. Without it, if the pointer leaves the element boundary during a drag, the pointermove events stop firing — so the card freezes mid-drag and releases incorrectly when the pointer returns. Capture routes all subsequent pointer events to the element regardless of position. This is how every native drag gesture works under the hood.
+
+**Rubber-banding upward.** Dragging past the top edge applies `rawY × 0.18` instead of `rawY`. The 0.18 multiplier is chosen to feel like elastic resistance — each pixel of input produces 18% of a pixel of movement. iOS uses roughly this same ratio for overscroll rubber-banding.
+
+**Velocity measurement.** Velocity is `(currentY - lastY) / (currentTime - lastTime)` measured on every pointermove. The value at pointerup is the release velocity. This degrades gracefully: slow devices that fire fewer events get a coarser velocity reading, but it's still directionally correct.
+
+<Callout type="insight">
+The spring return (`cubic-bezier(.23, 1, .32, 1)`) on abandoned drags uses the same curve as the magnetic button's return. This isn't coincidence — it's a system decision. All spring-return interactions on this site use this curve. Consistency across interactions builds a subconscious sense of physical coherence.
+</Callout>
+
+<ExperimentSourceBlock id="drag" />
