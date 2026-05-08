@@ -96,8 +96,9 @@ export default function ProjectRow({
                 src={image}
                 alt={`${name} screenshot`}
                 fill
-                sizes="(max-width: 640px) 100vw, 600px"
-                style={{ objectFit: "cover", objectPosition: "top left" }}
+                quality={95}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 720px"
+                style={{ objectFit: "contain", objectPosition: "center" }}
               />
             </div>
           ) : null}

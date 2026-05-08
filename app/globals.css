@@ -144,7 +144,7 @@ header { padding: 88px 0 80px; position: relative; }
 .project-reveal { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 480ms cubic-bezier(.25,.46,.45,.94), opacity var(--t-med); }
 .project-row.open .project-reveal { max-height: 900px; opacity: 1; }
 .reveal-inner { display: flex; flex-direction: column; gap: 16px; padding: 2px 0 24px; border-bottom: 1px solid var(--border); }
-.reveal-media { position: relative; width: 100%; aspect-ratio: 16 / 7; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-subtle); flex-shrink: 0; }
+.reveal-media { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-subtle); flex-shrink: 0; }
 .reveal-media-illustration { aspect-ratio: 16 / 10; background: #080808; border-color: #171717; }
 .reveal-code-block { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-subtle); }
 .reveal-code-block pre { font-family: var(--font-mono); font-size: 14px; color: var(--fg-muted); line-height: 1.75; white-space: pre; overflow-x: auto; tab-size: 2; padding: 20px; margin: 0; }
