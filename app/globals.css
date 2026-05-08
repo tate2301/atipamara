@@ -1187,3 +1187,127 @@ footer a:hover { color: var(--fg-muted); }
     gap: 8px;
   }
 }
+
+/* --------------------------------------------
+   WRITING POST (MDX)
+-------------------------------------------- */
+.post-header {
+  position: relative;
+  padding: 64px 0 24px;
+}
+@media (max-width: 640px) { .post-header { padding: 48px 0 16px; } }
+
+.post-article {
+  padding: 8px 0 80px;
+  max-width: 64ch;
+  margin: 0 auto;
+}
+.post-article > * + * { margin-top: 1.1em; }
+
+.post-article h1 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  color: var(--fg);
+  margin: 0 0 8px;
+}
+.post-article h2 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  color: var(--fg);
+  margin-top: 2em;
+  line-height: 1.3;
+}
+.post-article h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg);
+  margin-top: 1.6em;
+}
+
+.post-article p,
+.post-article li {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--fg-muted);
+}
+.post-article p strong,
+.post-article li strong { color: var(--fg); font-weight: 500; }
+.post-article a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+  transition: border-color 140ms ease;
+}
+.post-article a:hover { border-bottom-color: var(--accent); }
+
+.post-article ul, .post-article ol {
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.post-article li { margin: 0; }
+.post-article li::marker { color: var(--fg-subtle); }
+
+.post-article code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--fg);
+}
+.post-article pre {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+.post-article pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.post-article blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 18px;
+  color: var(--fg);
+  font-style: italic;
+  margin: 0;
+}
+
+.post-article hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.4em 0;
+}
+
+.post-article img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.post-article .post-meta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-subtle);
+  margin: 0 0 2em;
+  letter-spacing: .02em;
+}
+
+@media (max-width: 640px) {
+  .post-article h1 { font-size: 26px; }
+  .post-article p, .post-article li { font-size: 15.5px; }
+}
