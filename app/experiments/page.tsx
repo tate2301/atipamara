@@ -7,7 +7,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Experiments - Tatenda Chinyamakobvu",
   description:
-    "19 interactive UI experiments: CSS animations, physics simulations, and interaction patterns.",
+    "18 interactive UI studies: spring physics, perceptual color, fluid typography, and interaction patterns.",
 };
 
 export default function ExperimentsPage() {

@@ -1,0 +1,20 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="spring-config" />
+
+Every animation on this site driven by a spring uses three parameters: stiffness, damping, and mass. This experiment makes those parameters tangible. The ball bounces; the curve plots the position over time.
+
+**Stiffness** is the restoring force — how strongly the spring pulls the object toward its target. High stiffness (400+) produces fast, snappy responses. Low stiffness (50) produces slow, floaty movement. When stiffness is very high without proportional damping, the spring overshoots violently.
+
+**Damping** is the resistive force — friction, air resistance. It opposes velocity. Low damping lets the spring oscillate many times before settling. The critical damping value — where the object reaches its target in minimum time without oscillating — is `2 × √(stiffness × mass)`. CSS cubic-bezier springs are always critically or over-damped. Framer Motion's `type: "spring"` can be under-damped.
+
+**Mass** slows everything proportionally. Higher mass makes the spring feel heavier — slower acceleration, slower deceleration, same number of oscillations. In UI: mass is the tool for making something feel weighty without making it feel unresponsive.
+
+**The implementation uses Verlet integration**, not a physics engine. Each frame: compute the restoring force (`-stiffness × displacement`) and damping force (`-damping × velocity`), sum them, divide by mass to get acceleration, integrate velocity and position with `dt = 1/60`. This is the same math Framer Motion uses internally — the cubic-bezier is just a pre-computed approximation of this simulation.
+
+<Callout type="insight">
+Most of this site's spring animations use stiffness=200, damping=18 — slightly under-damped, with about 15% overshoot. The dock uses stiffness=120, damping=14 (gentler). The checkbox uses stiffness=300, damping=22 (snappier). The numbers sound arbitrary, but they encode a coherent set of physical sensations: every element belongs to the same imagined physical world.
+</Callout>
+
+<ExperimentSourceBlock id="spring-config" />

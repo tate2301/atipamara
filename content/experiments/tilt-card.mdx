@@ -1,0 +1,20 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="tilt-card" />
+
+3D tilt on hover has been done badly so many times that it reads as a gimmick. Done well, it reads as physical — the card occupies space, light behaves correctly, and the return feels like an object settling.
+
+**The rotation math.** Normalize the cursor position to `[0, 1]` within the card, then shift to `[-0.5, 0.5]`. Multiply by the max rotation angle (14°). `rotateX` maps to the Y axis of the cursor (how far up or down). `rotateY` maps to the X axis. The signs are chosen so the card tilts *toward* the cursor — near the top-right corner, the card tilts top-right.
+
+**The specular highlight.** A `radial-gradient` centered at `(cursorX%, cursorY%)` with `mix-blend-mode: overlay` simulates a light source. Overlay blends luminosity — bright parts get brighter, dark parts get darker. The gradient center follows the cursor, so the bright spot tracks the "light." Most tilt card implementations miss this or implement it as a fixed-position shimmer, which reads as fake.
+
+**The shadow.** Box shadow shifts opposite to the tilt direction: `${-tiltY * 0.6}px ${tiltX * 0.6}px`. When the card tilts right (rotateY positive), the shadow shifts left. This reinforces the 3D illusion — the shadow projects away from the light source.
+
+**On mouseleave.** The transition switches from `none` (during tracking) to `500ms cubic-bezier(.25,.46,.45,.94)`. No transition during movement keeps the card responsive; the spring only applies on return. This asymmetry is why it feels physical rather than floaty.
+
+<Callout type="insight">
+`perspective: 700px` on the parent sets how dramatic the 3D effect appears. Lower values (400px) exaggerate the perspective distortion at high tilt angles. Higher values (1200px) make the effect subtle. 700px is roughly the viewing distance for a laptop screen, making the perspective feel geometrically accurate.
+</Callout>
+
+<ExperimentSourceBlock id="tilt-card" />

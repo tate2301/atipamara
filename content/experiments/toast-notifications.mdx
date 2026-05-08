@@ -1,0 +1,26 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+# Toast Notifications
+
+<ExperimentDemoBlock id="toast" />
+
+A stacking toast queue with natural push-in and dismiss animations. New toasts slide up from the bottom while older ones compress upward to make room — the same spatial model used by Linear, Vercel, and Sonner.
+
+## Queue model
+
+Toasts are stored in a `useState` array. Adding a toast prepends to the front of the list (index 0 = newest). Each item carries an `id`, `type`, and `message`. A `useEffect` per-toast fires a `setTimeout` to auto-dismiss after a configurable duration.
+
+The rendered list shows at most 3 toasts stacked. Items beyond that are still in state — they become visible as the front ones dismiss — but are hidden from the DOM to keep the visual stack bounded.
+
+<Callout type="insight">
+Dismissing by filtering on `id` is simpler and safer than dismissing by index. Indices shift as items are removed; IDs remain stable across the entire lifetime of the toast.
+</Callout>
+
+## Animation
+
+Each toast enters with `transform: translateY(8px)` and `opacity: 0`, driven by a CSS class applied on mount. The browser transitions these to `0` and `1` over 200ms. On dismiss, a departing class reverses the transform before the element is removed from state — this is a two-step pattern: trigger the exit animation, then remove after `transitionend`.
+
+Type-specific icons (`CheckCircle`, `XCircle`, `Info`) from Phosphor provide instant semantic differentiation without relying on color alone.
+
+<ExperimentSourceBlock id="toast" />
