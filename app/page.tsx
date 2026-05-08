@@ -23,7 +23,7 @@ export default function Page() {
         <Link href="/experiments" className="exp-teaser-row">
           <div>
             <div className="exp-teaser-name">Experiments</div>
-            <div className="exp-teaser-sub">19 interactive demos — CSS, animation, physics</div>
+            <div className="exp-teaser-sub">18 interactive studies — physics, color, typography, interaction</div>
           </div>
           <span className="exp-teaser-arrow">→</span>
         </Link>

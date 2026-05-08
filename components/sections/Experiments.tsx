@@ -8,24 +8,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
  */
 export type ExpId =
   | "var-font"
-  | "bento"
-  | "scroll-progress"
   | "spring-btn"
   | "cursor-trail"
   | "tilt-card"
   | "cmd"
   | "mag"
-  | "cnt"
-  | "stk"
   | "noise-btn"
-  | "scramble"
-  | "abb"
   | "seg-ctrl"
   | "toast"
   | "drag"
   | "checkbox"
   | "dock"
-  | "island";
+  | "island"
+  | "oklch"
+  | "fluid-type"
+  | "flip-list"
+  | "spring-config"
+  | "focus-ring";
 
 export type Exp = {
   id: ExpId;
@@ -37,28 +36,28 @@ export type Exp = {
 
 export const EXPS: Exp[] = [
   {
+    id: "oklch",
+    name: "OKLCH Color Mixer",
+    date: "May 2025",
+    desc: "Gradient interpolation in perceptual OKLCH vs sRGB — the difference is stark.",
+    detail:
+      "sRGB interpolation between two hues cuts through a desaturated grey midpoint. OKLCH interpolates through perceived lightness — L stays constant, so the midpoint is vivid, never muddy. Drag the hue sliders. The top gradient is sRGB. The bottom is OKLCH. The difference defines modern color in CSS.",
+  },
+  {
+    id: "fluid-type",
+    name: "Fluid Typography",
+    date: "Apr 2025",
+    desc: "A type scale that flows between min and max with CSS clamp() — no breakpoints.",
+    detail:
+      "Each step in the scale is defined by a single clamp(): a minimum size, a fluid midpoint tied to viewport width, and a maximum. Drag the viewport slider. The heading, body, and caption respond independently. The formula: clamp(min, min + (max - min) * ((100vw - 320px) / (1200 - 320)), max).",
+  },
+  {
     id: "var-font",
     name: "Variable Font Morph",
     date: "Mar 2025",
     desc: "Font weight and width axes animate on hover, morphing between states.",
     detail:
       "A single word rendered with a variable font. On hover, the weight axis slides from 300 to 800, and the text visibly breathes. The easing curve overshoots slightly before settling, giving it physical weight. Built entirely with font-variation-settings and a CSS transition. Drag the slider to explore the weight axis manually.",
-  },
-  {
-    id: "bento",
-    name: "Bento Grid",
-    date: "Feb 2025",
-    desc: "An asymmetric feature grid where each card has its own personality.",
-    detail:
-      "Five cards in a CSS Grid layout: one large hero card, two medium, two small. Each has a different internal layout. The grid gaps are intentionally uneven. Cards lift with a box-shadow on hover. Resize the window and the grid reflows at defined breakpoints using named grid areas.",
-  },
-  {
-    id: "scroll-progress",
-    name: "Scroll-Linked Progress",
-    date: "Jan 2025",
-    desc: "A reading progress bar driven by scroll position with zero JS in the CSS version.",
-    detail:
-      "A 3px bar at the top of a scrollable container fills as you scroll. The pure-CSS version uses animation-timeline: scroll()  no scroll event listeners, no requestAnimationFrame. The demo uses a JS fallback for cross-browser support.",
   },
   {
     id: "spring-btn",
@@ -101,22 +100,6 @@ export const EXPS: Exp[] = [
       "As the cursor approaches the button, it translates toward the cursor, up to 8px in any direction. The pull is proportional to distance from centre. On mouseleave, it springs back using cubic-bezier(.23,1,.32,1) with a slight overshoot.",
   },
   {
-    id: "cnt",
-    name: "Animated Counter",
-    date: "Jul 2024",
-    desc: "Numbers count up from zero when scrolled into view, driven by easeOutCubic.",
-    detail:
-      "Three stats animate independently with a slight stagger. The easing is easeOutCubic: fast at the start, slowing into the final value. An IntersectionObserver triggers on first entry. A replay button resets and re-runs all three.",
-  },
-  {
-    id: "stk",
-    name: "Image Stack",
-    date: "Jun 2024",
-    desc: "Stacked avatar circles fan out on hover with a spring overshoot.",
-    detail:
-      "Four avatar circles overlapping at rest. On hover they fan out symmetrically: first rotates left, last rotates right. The transition uses cubic-bezier(.34,1.56,.64,1), the spring with perceptible overshoot. On mouseleave they snap back.",
-  },
-  {
     id: "noise-btn",
     name: "Noise Button",
     date: "May 2024",
@@ -125,28 +108,12 @@ export const EXPS: Exp[] = [
       "Two layered pseudo-elements: a fractal noise SVG filter (mix-blend-mode: overlay) adds grain that makes the surface feel physical. On hover, a diagonal gradient animates from right to left, simulating a light sweep. The combination Vercel and Linear use on premium CTAs.",
   },
   {
-    id: "scramble",
-    name: "Text Scramble",
-    date: "Apr 2024",
-    desc: "Characters cycle through random glyphs before resolving, left to right.",
-    detail:
-      "On hover, each character cycles through random alphanumerics at ~30fps. Characters resolve left to right  leftmost locks in first. The effect feels like a terminal decoding a message. The iteration speed is fractional so the decoding isn't perfectly mechanical.",
-  },
-  {
-    id: "abb",
-    name: "Apple Bottom Bar",
-    date: "Mar 2024",
-    desc: "Recreation of the frosted-glass pill from the iPhone 15 marketing page.",
-    detail:
-      "A rounded pill with backdrop-filter: blur(20px), semi-transparent background, and a subtle white border. The blur radius and opacity are calibrated to match Apple's implementation  most copies get the opacity wrong (too high) or the border wrong (too visible).",
-  },
-  {
     id: "seg-ctrl",
     name: "Segmented Control",
     date: "Feb 2024",
     desc: "A pill indicator slides between segments with a spring that slightly overshoots.",
     detail:
-      "Three segments: Design, Code, Ship. A white pill indicator slides under the active segment using cubic-bezier(.34,1.1,.64,1)  just enough overshoot to feel lively. The indicator width morphs to match each button's width.",
+      "Three segments: Design, Code, Ship. A white pill indicator slides under the active segment using cubic-bezier(.34,1.1,.64,1) — just enough overshoot to feel lively. The indicator width morphs to match each button's width.",
   },
   {
     id: "toast",
@@ -154,7 +121,7 @@ export const EXPS: Exp[] = [
     date: "Jan 2026",
     desc: "Stacked notifications that slide in, queue behind each other, and auto-dismiss.",
     detail:
-      "Three types: success, error, info. New toasts land at the front; older ones stack behind at reduced scale and opacity  a visual metaphor for depth. Each auto-dismisses after 3.5 seconds. Click any toast to remove it early. This is the visual language behind Sonner.",
+      "Three types: success, error, info. New toasts land at the front; older ones stack behind at reduced scale and opacity — a visual metaphor for depth. Each auto-dismisses after 3.5 seconds. Click any toast to remove it early. This is the visual language behind Sonner.",
   },
   {
     id: "drag",
@@ -162,7 +129,7 @@ export const EXPS: Exp[] = [
     date: "Dec 2025",
     desc: "A card that tracks pointer drag and dismisses when thrown far enough.",
     detail:
-      "Pointer capture keeps tracking even if the cursor leaves the element. On release, velocity is measured  a fast flick dismisses even if the distance was short. A slow drag needs to exceed 80px. Spring return on abandon. This is the interaction model of every mobile bottom sheet.",
+      "Pointer capture keeps tracking even if the cursor leaves the element. On release, velocity is measured — a fast flick dismisses even if the distance was short. A slow drag needs to exceed 80px. Spring return on abandon. This is the interaction model of every mobile bottom sheet.",
   },
   {
     id: "checkbox",
@@ -178,7 +145,7 @@ export const EXPS: Exp[] = [
     date: "Oct 2025",
     desc: "Icons magnify as the cursor approaches, with Gaussian distance falloff.",
     detail:
-      "Scale is computed as 1 + (maxScale  1)  e^(dist / ). The Gaussian falloff means adjacent icons grow proportionally  the icon under the cursor peaks at 1.8, its neighbours at ~1.4.  controls the spread width. On mouseleave, everything springs back with a gentle overshoot.",
+      "Scale is computed as 1 + (maxScale − 1) × e^(−dist² / σ²). The Gaussian falloff means adjacent icons grow proportionally — the icon under the cursor peaks at 1.8, its neighbours at ~1.4. σ controls the spread width. On mouseleave, everything springs back with a gentle overshoot.",
   },
   {
     id: "island",
@@ -186,7 +153,31 @@ export const EXPS: Exp[] = [
     date: "Sep 2025",
     desc: "Apple's Dynamic Island with five Live Activity states.",
     detail:
-      "The pill morphs between states using a single div  no clipping, no hidden layers. Width and height animate together with a spring that slightly overshoots. Content fades in 150ms after the shape starts moving, so text never rides a distorting container. Five states: ring, alarm, download, navigation, message.",
+      "The pill morphs between states using a single div — no clipping, no hidden layers. Width and height animate together with a spring that slightly overshoots. Content fades in 150ms after the shape starts moving, so text never rides a distorting container. Five states: ring, alarm, download, navigation, message.",
+  },
+  {
+    id: "spring-config",
+    name: "Spring Configurator",
+    date: "Aug 2025",
+    desc: "Tune stiffness, damping, and mass — watch the spring curve respond in real time.",
+    detail:
+      "A ball animates on a spring defined by three parameters. Stiffness sets how fast it pulls toward rest. Damping controls how quickly oscillation dies. Mass slows everything proportionally. The canvas plots the position curve alongside the demo. These are the same numbers driving every animation on this site.",
+  },
+  {
+    id: "flip-list",
+    name: "FLIP Animation",
+    date: "Jul 2025",
+    desc: "List items animate to new positions using the FLIP technique — no layout thrash.",
+    detail:
+      "FLIP: record First positions, shuffle items to get Last positions, Invert by applying a CSS transform that puts each element back in its First position, then Play by removing the transform. The browser animates from the inverted start to zero transform. Items appear to glide, not teleport.",
+  },
+  {
+    id: "focus-ring",
+    name: "Focus Ring System",
+    date: "Jun 2025",
+    desc: "Custom focus indicators that feel designed — not browser defaults, not invisible.",
+    detail:
+      "Tab through four element types: button, input, link, card. Each gets a focus ring tuned to its shape — pill gets a pill ring, square gets a square ring. The ring is drawn with outline and offset, never box-shadow, so it composites correctly. The color adapts to light and dark mode via CSS custom properties.",
   },
 ];
 
@@ -243,182 +234,6 @@ function VarFontDemo() {
         >
           wght: {weight}
         </span>
-      </div>
-    </div>
-  );
-}
-
-/*  Bento Grid  */
-function BentoDemo() {
-  const card = (style?: React.CSSProperties) => ({
-    padding: "16px",
-    border: "1px solid var(--border)",
-    borderRadius: "8px",
-    background: "var(--bg-subtle)",
-    transition: "box-shadow 140ms ease, transform 140ms ease",
-    ...style,
-  });
-  const lift = (e: React.MouseEvent<HTMLDivElement>) => {
-    (e.currentTarget as HTMLElement).style.cssText +=
-      ";box-shadow:var(--shadow-md);transform:translateY(-2px)";
-  };
-  const drop = (e: React.MouseEvent<HTMLDivElement>) => {
-    (e.currentTarget as HTMLElement).style.boxShadow = "";
-    (e.currentTarget as HTMLElement).style.transform = "";
-  };
-
-  return (
-    <div className="exp-demo" style={{ padding: "16px" }}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "8px",
-          width: "100%",
-          maxWidth: "280px",
-        }}
-      >
-        <div
-          style={{ ...card(), gridColumn: "span 2" }}
-          onMouseEnter={lift}
-          onMouseLeave={drop}
-        >
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "36px",
-              fontWeight: 400,
-              color: "var(--fg)",
-              lineHeight: 1,
-            }}
-          >
-            3
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "14px",
-              color: "var(--fg-subtle)",
-              marginTop: "4px",
-            }}
-          >
-            companies in production
-          </div>
-        </div>
-        <div style={card()} onMouseEnter={lift} onMouseLeave={drop}>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: 400,
-              color: "var(--fg)",
-              marginBottom: "6px",
-            }}
-          >
-            Huchu
-          </div>
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "14px",
-              padding: "1px 5px",
-              borderRadius: "2px",
-              color: "var(--green)",
-              background: "var(--green-bg)",
-            }}
-          >
-            production
-          </span>
-        </div>
-        <div style={card()} onMouseEnter={lift} onMouseLeave={drop}>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "14px",
-              color: "var(--fg-muted)",
-              lineHeight: 1.6,
-            }}
-          >
-            &ldquo;The best way to learn a system is to build it
-            yourself.&rdquo;
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/*  Scroll Progress  */
-function ScrollProgressDemo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [pct, setPct] = useState(0);
-
-  const onScroll = () => {
-    const el = containerRef.current;
-    if (!el) return;
-    const max = el.scrollHeight - el.clientHeight;
-    setPct(max > 0 ? (el.scrollTop / max) * 100 : 0);
-  };
-
-  const paragraphs = [
-    "Scroll down to see the progress bar fill. The CSS-only version uses animation-timeline: scroll()  no event listeners needed.",
-    "Every word counts. Specific, not impressive. The bar at the top tracks exactly how far you've read.",
-    "Built to understand every layer of what we ship. Deployment, database, observability  the parts most engineers leave to someone else.",
-    "Three companies currently run software built from scratch. The stakes are real. The code runs in production.",
-    "The best way to learn a system is to build it yourself. Then ship it. Then maintain it.",
-    "I grew up in Zimbabwe writing code for fun. Fifteen years later the fun hasn't stopped.",
-  ];
-
-  return (
-    <div
-      ref={containerRef}
-      className="exp-demo"
-      style={{
-        padding: 0,
-        overflowY: "auto",
-        flexDirection: "column",
-        alignItems: "stretch",
-      }}
-      onScroll={onScroll}
-    >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "3px",
-          background: "var(--border)",
-          zIndex: 10,
-          flexShrink: 0,
-        }}
-      >
-        <div
-          style={{
-            height: "100%",
-            background: "var(--accent)",
-            width: `${pct}%`,
-            transition: "width 0ms",
-          }}
-        />
-      </div>
-      <div style={{ padding: "20px", flexShrink: 0 }}>
-        <span
-          className="exp-demo-label"
-          style={{ position: "static", marginBottom: "16px", display: "block" }}
-        >
-          scroll progress
-        </span>
-        {paragraphs.map((p, i) => (
-          <p
-            key={i}
-            style={{
-              fontSize: "14px",
-              color: "var(--fg-muted)",
-              lineHeight: 1.8,
-              marginBottom: "14px",
-            }}
-          >
-            {p}
-          </p>
-        ))}
       </div>
     </div>
   );
@@ -791,108 +606,6 @@ function MagDemo() {
   );
 }
 
-/*  Animated Counter  */
-function useCounter(target: number, dur: number, running: boolean) {
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!running) {
-      setV(0);
-      return;
-    }
-    const t0 = performance.now();
-    let raf: number;
-    const tick = (now: number) => {
-      const p = Math.min((now - t0) / dur, 1);
-      setV(Math.round((1 - Math.pow(1 - p, 3)) * target));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [running, target, dur]);
-  return v;
-}
-
-function CntDemo() {
-  const [running, setRunning] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const replay = useCallback(() => {
-    setRunning(false);
-    setTimeout(() => setRunning(true), 50);
-  }, []);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setRunning(true);
-      },
-      { threshold: 0.5 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  const a = useCounter(3, 1000, running);
-  const b = useCounter(10, 1600, running);
-  const c = useCounter(6, 1300, running);
-
-  return (
-    <div
-      ref={ref}
-      className="exp-demo"
-      style={{ flexDirection: "column", gap: "24px" }}
-    >
-      <span className="exp-demo-label">animated counter</span>
-      <div className="d-counters">
-        {[
-          { v: a, l: "companies" },
-          { v: b, l: "open-source stars" },
-          { v: c, l: "yrs building" },
-        ].map(({ v, l }) => (
-          <div key={l} className="d-counter">
-            <div className="d-counter-val">{v}</div>
-            <div className="d-counter-lbl">{l}</div>
-          </div>
-        ))}
-      </div>
-      <button className="d-counter-replay" onClick={replay}>
-        Replay
-      </button>
-    </div>
-  );
-}
-
-/*  Image Stack  */
-function StkDemo() {
-  const [spread, setSpread] = useState(false);
-  const people = ["TC", "FM", "RN", "AK"];
-
-  return (
-    <div className="exp-demo" style={{ flexDirection: "column", gap: "16px" }}>
-      <span className="exp-demo-label">image stack</span>
-      <div
-        className={`d-stack${spread ? " spread" : ""}`}
-        onClick={() => setSpread((v) => !v)}
-      >
-        {people.map((person, i) => (
-          <div key={person} className="d-stack-img" data-tone={i}>
-            {person}
-          </div>
-        ))}
-      </div>
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "14px",
-          color: "var(--fg-subtle)",
-          marginTop: "12px",
-        }}
-      >
-        click to {spread ? "collapse" : "spread"}
-      </p>
-    </div>
-  );
-}
-
 /*  Noise Button  */
 function NoiseBtnDemo() {
   return (
@@ -919,90 +632,6 @@ function NoiseBtnDemo() {
         <div className="d-noise-btn-shine" />
         <span style={{ position: "relative" }}>Hover me</span>
       </button>
-    </div>
-  );
-}
-
-/*  Text Scramble  */
-function ScrambleDemo() {
-  const TARGET = "CORELITH";
-  const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const [display, setDisplay] = useState(TARGET);
-  const rafRef = useRef<number>();
-  const t0 = useRef(0);
-  const LOCK_DELAY = 65;
-  const SCRAMBLE_DUR = 320;
-
-  const scramble = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    t0.current = performance.now();
-    const tick = (now: number) => {
-      const elapsed = now - t0.current;
-      let allDone = true;
-      const result = TARGET.split("").map((ch, i) => {
-        if (elapsed >= i * LOCK_DELAY + SCRAMBLE_DUR) return ch;
-        allDone = false;
-        return CHARS[Math.floor(Math.random() * CHARS.length)];
-      });
-      setDisplay(result.join(""));
-      if (!allDone) rafRef.current = requestAnimationFrame(tick);
-      else setDisplay(TARGET);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-  }, []);
-
-  useEffect(
-    () => () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    },
-    [],
-  );
-
-  return (
-    <div className="exp-demo" style={{ flexDirection: "column", gap: "24px" }}>
-      <span className="exp-demo-label">text scramble</span>
-      <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "32px",
-          fontWeight: 400,
-          color: "var(--fg)",
-          letterSpacing: ".04em",
-          cursor: "default",
-          userSelect: "none",
-        }}
-        onMouseEnter={scramble}
-      >
-        {display}
-      </div>
-      <button
-        onClick={scramble}
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "14px",
-          color: "var(--fg-subtle)",
-          background: "none",
-          border: "1px solid var(--border)",
-          borderRadius: "4px",
-          padding: "4px 10px",
-          cursor: "pointer",
-        }}
-      >
-        Scramble again
-      </button>
-    </div>
-  );
-}
-
-/*  Apple Bottom Bar  */
-function AbbDemo() {
-  return (
-    <div className="exp-demo">
-      <span className="exp-demo-label">apple bottom bar</span>
-      <div className="d-abb">
-        <span className="d-abb-text">Learn more</span>
-        <div className="d-abb-icon" aria-hidden="true" />
-      </div>
     </div>
   );
 }
@@ -1407,6 +1036,442 @@ function DockDemo() {
     </div>
   );
 }
+/*  OKLCH Color Mixer  */
+function OklchDemo() {
+  const [hue1, setHue1] = useState(260);
+  const [hue2, setHue2] = useState(160);
+
+  const oklchGradient = (h1: number, h2: number) => {
+    const steps = 7;
+    const stops = Array.from({ length: steps }, (_, i) => {
+      const t = i / (steps - 1);
+      const h = h1 + (h2 - h1) * t;
+      const hRad = (h * Math.PI) / 180;
+      const L = 0.65;
+      const C = 0.18;
+      const a = C * Math.cos(hRad);
+      const b = C * Math.sin(hRad);
+      const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+      const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+      const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+      const lc = l_ * l_ * l_;
+      const mc = m_ * m_ * m_;
+      const sc = s_ * s_ * s_;
+      let r = +4.0767416621 * lc - 3.3077115913 * mc + 0.2309699292 * sc;
+      let g = -1.2684380046 * lc + 2.6097574011 * mc - 0.3413193965 * sc;
+      let bv = -0.0041960863 * lc - 0.7034186147 * mc + 1.7076147010 * sc;
+      const toSrgb = (x: number) => {
+        const v = Math.max(0, Math.min(1, x));
+        return Math.round((v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055) * 255);
+      };
+      return `rgb(${toSrgb(r)},${toSrgb(g)},${toSrgb(bv)}) ${(t * 100).toFixed(0)}%`;
+    });
+    return `linear-gradient(90deg, ${stops.join(", ")})`;
+  };
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "20px", padding: "24px" }}>
+      <span className="exp-demo-label">oklch color mixer</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>
+            sRGB — hue {hue1}° → {hue2}°
+          </span>
+          <div
+            style={{
+              height: "36px",
+              borderRadius: "6px",
+              background: `linear-gradient(90deg, hsl(${hue1},70%,55%), hsl(${hue2},70%,55%))`,
+              border: "1px solid var(--border)",
+            }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>
+            OKLCH — perceptual L=0.65 C=0.18
+          </span>
+          <div
+            style={{
+              height: "36px",
+              borderRadius: "6px",
+              background: oklchGradient(hue1, hue2),
+              border: "1px solid var(--border)",
+            }}
+          />
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: "16px", width: "100%" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+          <label style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>
+            Hue A: {hue1}°
+          </label>
+          <input type="range" min="0" max="360" value={hue1} onChange={(e) => setHue1(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent)" }} />
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+          <label style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>
+            Hue B: {hue2}°
+          </label>
+          <input type="range" min="0" max="360" value={hue2} onChange={(e) => setHue2(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent)" }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*  Fluid Typography  */
+function FluidTypeDemo() {
+  const [vw, setVw] = useState(768);
+  const MIN_VW = 320;
+  const MAX_VW = 1200;
+
+  const fluid = (minPx: number, maxPx: number) => {
+    const slope = (maxPx - minPx) / (MAX_VW - MIN_VW);
+    const intercept = minPx - slope * MIN_VW;
+    const preferred = slope * vw + intercept;
+    return Math.min(maxPx, Math.max(minPx, preferred));
+  };
+
+  const headingSize = fluid(28, 52);
+  const bodySize = fluid(15, 18);
+  const captionSize = fluid(12, 14);
+  const pct = ((vw - MIN_VW) / (MAX_VW - MIN_VW)) * 100;
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "20px", padding: "24px", alignItems: "stretch" }}>
+      <span className="exp-demo-label">fluid typography</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div style={{ fontSize: headingSize, fontWeight: 700, color: "var(--fg)", lineHeight: 1.1, letterSpacing: "-.02em", transition: "font-size 60ms ease" }}>
+          Design systems
+        </div>
+        <div style={{ fontSize: bodySize, color: "var(--fg-muted)", lineHeight: 1.6, transition: "font-size 60ms ease" }}>
+          Typography that scales continuously, not discretely.
+        </div>
+        <div style={{ fontSize: captionSize, fontFamily: "var(--font-mono)", color: "var(--fg-subtle)", transition: "font-size 60ms ease" }}>
+          {headingSize.toFixed(1)}px heading · {bodySize.toFixed(1)}px body · {captionSize.toFixed(1)}px caption
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>Viewport: {vw}px</span>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>{pct.toFixed(0)}% of range</span>
+        </div>
+        <input type="range" min={MIN_VW} max={MAX_VW} value={vw} onChange={(e) => setVw(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent)" }} />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)" }}>{MIN_VW}px</span>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)" }}>{MAX_VW}px</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*  Spring Configurator  */
+function SpringConfigDemo() {
+  const [stiffness, setStiffness] = useState(200);
+  const [damping, setDamping] = useState(18);
+  const [mass, setMass] = useState(1);
+  const [running, setRunning] = useState(false);
+  const [ballY, setBallY] = useState(0);
+  const [curve, setCurve] = useState<number[]>([]);
+  const rafRef = useRef<number>();
+
+  const run = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    const TARGET = 80;
+    let pos = 0;
+    let vel = 0;
+    const dt = 1 / 60;
+    const pts: number[] = [];
+    setRunning(true);
+    setBallY(0);
+
+    const tick = () => {
+      const force = -stiffness * (pos - TARGET) - damping * vel;
+      const acc = force / mass;
+      vel += acc * dt;
+      pos += vel * dt;
+      pts.push(pos);
+      setBallY(pos);
+      if (pts.length < 120) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setCurve([...pts]);
+        setRunning(false);
+      }
+    };
+    setCurve([]);
+    rafRef.current = requestAnimationFrame(tick);
+  }, [stiffness, damping, mass]);
+
+  useEffect(() => { run(); }, [run]);
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+
+  const W = 220;
+  const H = 80;
+  const TARGET_VAL = 80;
+  const pts = curve.length > 0 ? curve : [];
+  const maxY = Math.max(TARGET_VAL, ...pts);
+  const pathD = pts
+    .map((y, i) => {
+      const x = (i / (pts.length - 1 || 1)) * W;
+      const py = H - (y / maxY) * (H - 4);
+      return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${py.toFixed(1)}`;
+    })
+    .join(" ");
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "16px", padding: "20px" }}>
+      <span className="exp-demo-label">spring configurator</span>
+      <div style={{ display: "flex", gap: "20px", alignItems: "flex-end" }}>
+        <div style={{ position: "relative", width: "32px", height: "100px", background: "var(--bg-subtle)", borderRadius: "6px", border: "1px solid var(--border)", overflow: "hidden" }}>
+          <div
+            style={{
+              position: "absolute",
+              bottom: `calc(${((ballY / 100) * 60)}px)`,
+              left: "4px",
+              right: "4px",
+              height: "24px",
+              background: "var(--accent)",
+              borderRadius: "4px",
+              transition: running ? "none" : undefined,
+            }}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <svg width={W} height={H} style={{ display: "block" }}>
+            <line x1="0" y1={H - (TARGET_VAL / maxY) * (H - 4)} x2={W} y2={H - (TARGET_VAL / maxY) * (H - 4)} stroke="var(--border)" strokeWidth="1" strokeDasharray="3,3" />
+            {pathD && <path d={pathD} fill="none" stroke="var(--accent)" strokeWidth="1.5" />}
+          </svg>
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        {([["Stiffness", stiffness, setStiffness, 20, 600] as const,
+           ["Damping", damping, setDamping, 1, 60] as const,
+           ["Mass", mass, setMass, 0.1, 4] as const] as const).map(([label, val, setter, min, max]) => (
+          <div key={label} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--fg-subtle)", width: "70px", flexShrink: 0 }}>{label}: {typeof val === "number" && val < 10 ? val.toFixed(1) : val}</span>
+            <input
+              type="range"
+              min={min}
+              max={max}
+              step={label === "Mass" ? 0.1 : 1}
+              value={val}
+              onChange={(e) => setter(Number(e.target.value) as never)}
+              style={{ flex: 1, accentColor: "var(--accent)" }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/*  FLIP List Animation  */
+function FlipListDemo() {
+  const ITEMS = ["Render", "Layout", "Paint", "Composite"];
+  const [order, setOrder] = useState(ITEMS);
+  const [animating, setAnimating] = useState(false);
+  const refsMap = useRef<Map<string, HTMLDivElement>>(new Map());
+  const prevPositions = useRef<Map<string, DOMRect>>(new Map());
+
+  const shuffle = useCallback(() => {
+    if (animating) return;
+    const els = refsMap.current;
+    prevPositions.current.clear();
+    els.forEach((el, key) => {
+      prevPositions.current.set(key, el.getBoundingClientRect());
+    });
+    setOrder((prev) => {
+      const arr = [...prev];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    });
+  }, [animating]);
+
+  useEffect(() => {
+    const els = refsMap.current;
+    const prev = prevPositions.current;
+    if (prev.size === 0) return;
+    const toPlay: { el: HTMLDivElement; dx: number; dy: number }[] = [];
+    els.forEach((el, key) => {
+      const old = prev.get(key);
+      if (!old) return;
+      const cur = el.getBoundingClientRect();
+      const dx = old.left - cur.left;
+      const dy = old.top - cur.top;
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+        toPlay.push({ el, dx, dy });
+      }
+    });
+    if (toPlay.length === 0) return;
+    setAnimating(true);
+    toPlay.forEach(({ el, dx, dy }) => {
+      el.style.transform = `translate(${dx}px,${dy}px)`;
+      el.style.transition = "none";
+    });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        toPlay.forEach(({ el }) => {
+          el.style.transform = "";
+          el.style.transition = "transform 380ms cubic-bezier(.34,1.2,.64,1)";
+        });
+        setTimeout(() => setAnimating(false), 400);
+      });
+    });
+  }, [order]);
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "16px", padding: "20px" }}>
+      <span className="exp-demo-label">flip list</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "4px", width: "100%" }}>
+        {order.map((item) => (
+          <div
+            key={item}
+            ref={(el) => {
+              if (el) refsMap.current.set(item, el);
+              else refsMap.current.delete(item);
+            }}
+            style={{
+              padding: "10px 14px",
+              border: "1px solid var(--border)",
+              borderRadius: "6px",
+              background: "var(--bg-subtle)",
+              fontSize: "14px",
+              color: "var(--fg)",
+              fontFamily: "var(--font-mono)",
+              userSelect: "none",
+            }}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={shuffle}
+        style={{
+          padding: "8px 18px",
+          background: "var(--bg-subtle)",
+          border: "1px solid var(--border)",
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontFamily: "var(--font-mono)",
+          fontSize: "13px",
+          color: "var(--fg-muted)",
+          alignSelf: "center",
+        }}
+      >
+        Shuffle
+      </button>
+    </div>
+  );
+}
+
+/*  Focus Ring System  */
+function FocusRingDemo() {
+  const [focused, setFocused] = useState<string | null>(null);
+
+  const ringStyle = (id: string, shape: "pill" | "rect" | "underline" = "rect"): React.CSSProperties => {
+    const isFocused = focused === id;
+    if (!isFocused) return {};
+    return {
+      outline: shape === "underline" ? "none" : "2px solid var(--accent)",
+      outlineOffset: shape === "pill" ? "3px" : "2px",
+      borderBottom: shape === "underline" ? "2px solid var(--accent)" : undefined,
+      boxShadow: shape === "underline" ? "none" : "0 0 0 4px color-mix(in oklch, var(--accent) 18%, transparent)",
+    };
+  };
+
+  const focusProps = (id: string) => ({
+    onFocus: () => setFocused(id),
+    onBlur: () => setFocused(null),
+    style: { outline: "none" },
+  });
+
+  return (
+    <div
+      className="exp-demo"
+      style={{ flexDirection: "column", gap: "20px", padding: "24px", alignItems: "stretch" }}
+    >
+      <span className="exp-demo-label">focus ring system — tab through</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+        <button
+          {...focusProps("btn")}
+          style={{
+            padding: "10px 20px",
+            background: "var(--accent)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "100px",
+            cursor: "pointer",
+            fontFamily: "var(--font-sans)",
+            fontSize: "14px",
+            alignSelf: "flex-start",
+            transition: "outline-offset 100ms ease, box-shadow 100ms ease",
+            ...ringStyle("btn", "pill"),
+          }}
+        >
+          Primary action
+        </button>
+        <input
+          {...focusProps("input")}
+          defaultValue="Type something"
+          style={{
+            padding: "9px 12px",
+            background: "var(--bg-subtle)",
+            color: "var(--fg)",
+            border: "1px solid var(--border)",
+            borderRadius: "6px",
+            fontFamily: "var(--font-sans)",
+            fontSize: "14px",
+            transition: "outline-offset 100ms ease, box-shadow 100ms ease",
+            ...ringStyle("input"),
+          }}
+        />
+        <a
+          href="#"
+          {...focusProps("link")}
+          onClick={(e) => e.preventDefault()}
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "14px",
+            color: "var(--accent)",
+            textDecoration: "underline",
+            alignSelf: "flex-start",
+            paddingBottom: "1px",
+            transition: "outline-offset 100ms ease, box-shadow 100ms ease",
+            ...ringStyle("link", "underline"),
+          }}
+        >
+          Inline link
+        </a>
+        <div
+          {...focusProps("card")}
+          tabIndex={0}
+          style={{
+            padding: "12px 14px",
+            border: "1px solid var(--border)",
+            borderRadius: "8px",
+            background: "var(--bg-card)",
+            cursor: "pointer",
+            fontSize: "14px",
+            color: "var(--fg-muted)",
+            transition: "outline-offset 100ms ease, box-shadow 100ms ease",
+            ...ringStyle("card"),
+          }}
+        >
+          Focusable card
+        </div>
+      </div>
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)", margin: 0 }}>
+        {focused ? `focused: ${focused}` : "click an element or press Tab"}
+      </p>
+    </div>
+  );
+}
+
 /*  Dynamic Island  */
 type IslandState = "idle" | "ring" | "alarm" | "download" | "nav" | "message";
 const ISLAND_DIMS: Record<IslandState, { w: number; h: number }> = {
@@ -1653,6 +1718,35 @@ function IslandDemo() {
    CODE SNIPPETS
  */
 const CODE: Record<ExpId, string> = {
+  oklch: `<span class="cm">/* OKLCH interpolation — perceptual L stays constant */</span>
+<span class="cm">/* sRGB: hsl(260,70%,55%) → hsl(160,70%,55%) — greys out in middle */</span>
+background: linear-gradient(90deg,
+  hsl(<span class="num">260</span>,<span class="num">70%</span>,<span class="num">55%</span>),
+  hsl(<span class="num">160</span>,<span class="num">70%</span>,<span class="num">55%</span>));
+
+<span class="cm">/* OKLCH: manual steps at L=0.65, C=0.18 */</span>
+background: linear-gradient(90deg,
+  oklch(<span class="num">0.65</span> <span class="num">0.18</span> <span class="num">260</span>),
+  oklch(<span class="num">0.65</span> <span class="num">0.18</span> <span class="num">200</span>),
+  oklch(<span class="num">0.65</span> <span class="num">0.18</span> <span class="num">160</span>));
+
+<span class="cm">/* Native in modern CSS — no JS needed */</span>`,
+
+  "fluid-type": `<span class="cm">/* clamp(min, preferred, max) */</span>
+.<span class="fn">heading</span> {
+  font-size: <span class="fn">clamp</span>(
+    <span class="num">1.75rem</span>,
+    <span class="cm">/* slope × 100vw + intercept */</span>
+    calc(<span class="num">1.75rem</span> + <span class="num">1.5</span> *
+      ((100vw - <span class="num">20rem</span>) / (<span class="num">75</span> - <span class="num">20</span>))),
+    <span class="num">3.25rem</span>
+  );
+}
+
+<span class="cm">/* Same formula, different scale steps */</span>
+.<span class="fn">body</span>    { font-size: <span class="fn">clamp</span>(<span class="num">0.9375rem</span>, calc(...), <span class="num">1.125rem</span>); }
+.<span class="fn">caption</span> { font-size: <span class="fn">clamp</span>(<span class="num">0.75rem</span>,   calc(...), <span class="num">0.875rem</span>); }`,
+
   "var-font": `<span class="cm">/* Animate weight axis on hover */</span>
 .<span class="fn">word</span> {
   <span class="prop">font-variation-settings</span>: <span class="str">'wght'</span> <span class="kw">var</span>(--weight, <span class="num">300</span>);
@@ -1666,42 +1760,6 @@ const CODE: Record<ExpId, string> = {
 <span class="cm">/* Or drive with JS for a range slider */</span>
 <span class="kw">const</span> [weight, setWeight] = <span class="fn">useState</span>(<span class="num">300</span>)
 style={{ fontVariationSettings: \`<span class="str">'wght' \${weight}</span>\` }}`,
-
-  bento: `.<span class="fn">grid</span> {
-  <span class="prop">display</span>: grid;
-  <span class="prop">grid-template-columns</span>: <span class="num">1fr 1fr</span>;
-  <span class="prop">grid-template-areas</span>:
-    <span class="str">"hero hero"</span>
-    <span class="str">"stat  quote"</span>
-    <span class="str">"tags  location"</span>;
-  <span class="prop">gap</span>: <span class="num">8px</span>;
-}
-.<span class="fn">hero</span> { <span class="prop">grid-area</span>: hero }
-
-.<span class="fn">card</span>:hover {
-  <span class="prop">box-shadow</span>: var(--shadow-md);
-  <span class="prop">transform</span>: translateY(-<span class="num">2px</span>);
-  <span class="prop">transition</span>: transform <span class="num">140ms</span> ease,
-              box-shadow <span class="num">140ms</span> ease;
-}`,
-
-  "scroll-progress": `<span class="cm">/* CSS-only  Scroll Timeline API */</span>
-.<span class="fn">progress</span> {
-  <span class="prop">animation</span>: fill linear;
-  <span class="prop">animation-timeline</span>: <span class="fn">scroll</span>(nearest);
-  <span class="prop">transform-origin</span>: left center;
-}
-@keyframes <span class="fn">fill</span> {
-  <span class="kw">from</span> { transform: scaleX(<span class="num">0</span>) }
-  <span class="kw">to</span>   { transform: scaleX(<span class="num">1</span>) }
-}
-
-<span class="cm">/* JS fallback for Safari */</span>
-container.<span class="fn">addEventListener</span>(<span class="str">'scroll'</span>, () => {
-  <span class="kw">const</span> p = el.scrollTop /
-    (el.scrollHeight - el.clientHeight)
-  bar.style.width = \`\${p * <span class="num">100</span>}%\`
-})`,
 
   "spring-btn": `<span class="cm">/* Squash on press, spring on release */</span>
 .<span class="fn">btn</span>:active {
@@ -1778,32 +1836,6 @@ style={{
     : <span class="str">'transform 400ms cubic-bezier(.23,1,.32,1)'</span>
 }}`,
 
-  cnt: `<span class="cm">// easeOutCubic counter via rAF</span>
-<span class="kw">const</span> t0 = performance.<span class="fn">now</span>()
-<span class="kw">const</span> <span class="fn">tick</span> = (now: <span class="kw">number</span>) => {
-  <span class="kw">const</span> p = Math.<span class="fn">min</span>((now - t0) / dur, <span class="num">1</span>)
-  <span class="fn">setVal</span>(Math.<span class="fn">round</span>(
-    (<span class="num">1</span> - (<span class="num">1</span> - p) ** <span class="num">3</span>) * target
-  ))
-  <span class="kw">if</span> (p < <span class="num">1</span>) <span class="fn">requestAnimationFrame</span>(tick)
-}
-<span class="fn">requestAnimationFrame</span>(tick)`,
-
-  stk: `<span class="cm">/* CSS drives all transforms */</span>
-.<span class="fn">d-stack-img</span> {
-  <span class="prop">transition</span>: transform <span class="num">320ms</span>
-    cubic-bezier(.<span class="num">34</span>, <span class="num">1.56</span>, .<span class="num">64</span>, <span class="num">1</span>);
-}
-.<span class="fn">spread</span> :nth-child(<span class="num">1</span>) {
-  transform: translateX(-<span class="num">24px</span>) rotate(-<span class="num">8deg</span>);
-}
-.<span class="fn">spread</span> :nth-child(<span class="num">2</span>) {
-  transform: translateX(-<span class="num">8px</span>) rotate(-<span class="num">3deg</span>);
-}
-
-<span class="cm">// React toggles the class</span>
-<span class="kw">const</span> [spread, setSpread] = <span class="fn">useState</span>(<span class="kw">false</span>)`,
-
   "noise-btn": `<span class="cm">/* Grain layer via SVG filter */</span>
 &lt;filter id=<span class="str">"noise"</span>&gt;
   &lt;feTurbulence
@@ -1823,33 +1855,6 @@ style={{
 }
 .<span class="fn">btn</span>:hover .<span class="fn">shine</span> {
   background-position: -<span class="num">100%</span>;
-}`,
-
-  scramble: `<span class="cm">// Characters resolve left-to-right via rAF</span>
-<span class="kw">const</span> CHARS = <span class="str">"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"</span>
-<span class="kw">const</span> LOCK_DELAY = <span class="num">65</span> <span class="cm">// ms per character</span>
-
-<span class="kw">const</span> <span class="fn">tick</span> = (now: <span class="kw">number</span>) => {
-  <span class="kw">const</span> elapsed = now - t0.current
-  <span class="kw">const</span> result = TARGET.<span class="fn">split</span>(<span class="str">""</span>).<span class="fn">map</span>((ch, i) => {
-    <span class="kw">if</span> (elapsed >= i * LOCK_DELAY + <span class="num">320</span>)
-      <span class="kw">return</span> ch <span class="cm">// locked</span>
-    <span class="kw">return</span> CHARS[Math.<span class="fn">floor</span>(Math.<span class="fn">random</span>() * CHARS.length)]
-  })
-  <span class="fn">setDisplay</span>(result.<span class="fn">join</span>(<span class="str">""</span>))
-}`,
-
-  abb: `<span class="cm">/* Glass morphism */</span>
-.<span class="fn">pill</span> {
-  background: rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>, .<span class="num">75</span>);
-  backdrop-filter: blur(<span class="num">20px</span>);
-  -webkit-backdrop-filter: blur(<span class="num">20px</span>);
-  border: <span class="num">1px</span> solid rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>, .<span class="num">5</span>);
-  border-radius: <span class="num">100px</span>;
-}
-[data-theme=<span class="str">"dark"</span>] .<span class="fn">pill</span> {
-  background: rgba(<span class="num">30</span>,<span class="num">30</span>,<span class="num">28</span>, .<span class="num">8</span>);
-  border-color: rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>, .<span class="num">08</span>);
 }`,
 
   "seg-ctrl": `<span class="cm">// Pill indicator tracks active button</span>
@@ -1939,50 +1944,101 @@ style={{
 <span class="cm">// Content fades in 160ms after morph starts</span>
 opacity: vis && state !== <span class="str">'idle'</span> ? <span class="num">1</span> : <span class="num">0</span>,
 transition: <span class="str">'opacity 180ms ease'</span>`,
+
+  "spring-config": `<span class="cm">// Verlet integration — position + velocity per frame</span>
+<span class="kw">const</span> <span class="fn">tick</span> = () => {
+  <span class="kw">const</span> force =
+    -stiffness * (pos - target)  <span class="cm">// restore</span>
+    - damping * vel              <span class="cm">// resist</span>
+  acc = force / mass
+  vel += acc * dt
+  pos += vel * dt
+  <span class="fn">requestAnimationFrame</span>(tick)
+}
+
+<span class="cm">// Critical damping: no oscillation</span>
+<span class="cm">// damping = 2 × √(stiffness × mass)</span>
+<span class="cm">// Under-damped: bouncy  Over-damped: sluggish</span>`,
+
+  "flip-list": `<span class="cm">// FLIP: First → Last → Invert → Play</span>
+
+<span class="cm">// 1. Record First positions</span>
+els.<span class="fn">forEach</span>((el, key) =>
+  prev.<span class="fn">set</span>(key, el.<span class="fn">getBoundingClientRect</span>()))
+
+<span class="cm">// 2. Mutate state — DOM moves to Last</span>
+<span class="fn">setOrder</span>(<span class="fn">shuffle</span>(order))
+
+<span class="cm">// 3. Invert: apply transform to Last → First</span>
+<span class="kw">const</span> dy = old.top - cur.top
+el.style.transform = \`translateY(\${dy}px)\`
+el.style.transition = <span class="str">'none'</span>
+
+<span class="cm">// 4. Play: remove transform, let CSS animate to 0</span>
+<span class="fn">requestAnimationFrame</span>(() => {
+  el.style.transform = <span class="str">''</span>
+  el.style.transition = <span class="str">'transform 380ms cubic-bezier(.34,1.2,.64,1)'</span>
+})`,
+
+  "focus-ring": `<span class="cm">/* Custom focus ring — outline, never box-shadow */</span>
+:focus-visible {
+  <span class="cm">/* outline composites correctly; box-shadow clips */</span>
+  <span class="prop">outline</span>: <span class="num">2px</span> solid var(--accent);
+  <span class="prop">outline-offset</span>: <span class="num">2px</span>;
+  <span class="prop">box-shadow</span>: <span class="num">0 0 0 4px</span>
+    color-mix(<span class="kw">in</span> oklch, var(--accent) <span class="num">18%</span>, transparent);
+}
+
+<span class="cm">/* Pill gets a pill ring */</span>
+.<span class="fn">btn-pill</span>:focus-visible {
+  <span class="prop">outline-offset</span>: <span class="num">3px</span>;
+  <span class="prop">border-radius</span>: <span class="num">100px</span>;
+}
+
+<span class="cm">/* Always use :focus-visible, not :focus */</span>
+<span class="cm">/* :focus fires on click; :focus-visible only on keyboard */</span>`,
 };
 
 const DEMOS: Record<ExpId, React.FC> = {
+  oklch: OklchDemo,
+  "fluid-type": FluidTypeDemo,
   "var-font": VarFontDemo,
-  bento: BentoDemo,
-  "scroll-progress": ScrollProgressDemo,
   "spring-btn": SpringBtnDemo,
   "cursor-trail": CursorTrailDemo,
   "tilt-card": TiltCardDemo,
   cmd: CmdDemo,
   mag: MagDemo,
-  cnt: CntDemo,
-  stk: StkDemo,
   "noise-btn": NoiseBtnDemo,
-  scramble: ScrambleDemo,
-  abb: AbbDemo,
   "seg-ctrl": SegCtrlDemo,
   toast: ToastDemo,
   drag: DragDemo,
   checkbox: CheckboxDemo,
   dock: DockDemo,
   island: IslandDemo,
+  "spring-config": SpringConfigDemo,
+  "flip-list": FlipListDemo,
+  "focus-ring": FocusRingDemo,
 };
 
 export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
+  oklch: "oklch-color",
+  "fluid-type": "fluid-typography",
   "var-font": "variable-font-morph",
-  bento: "bento-grid",
-  "scroll-progress": "scroll-linked-progress",
   "spring-btn": "spring-physics-button",
   "cursor-trail": "cursor-trail",
   "tilt-card": "tilt-card",
   cmd: "command-menu",
   mag: "magnetic-button",
-  cnt: "animated-counter",
-  stk: "image-stack",
   "noise-btn": "noise-button",
-  scramble: "text-scramble",
-  abb: "apple-bottom-bar",
   "seg-ctrl": "segmented-control",
   toast: "toast-notifications",
   drag: "drag-to-dismiss",
   checkbox: "checkbox-animation",
   dock: "macos-dock",
   island: "dynamic-island",
+  "spring-config": "spring-configurator",
+  "flip-list": "flip-animation",
+  "focus-ring": "focus-ring-system",
 };
 
 export function getExperimentPath(exp: Exp) {

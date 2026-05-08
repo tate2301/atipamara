@@ -1,0 +1,30 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="fluid-type" />
+
+Drag the viewport slider. The heading, body, and caption all scale simultaneously, each on its own curve. There are no media query breakpoints. The font size is a continuous function of the viewport width.
+
+**The formula.** `clamp(min, preferred, max)` where `preferred = min + (max - min) × ((100vw - minVW) / (maxVW - minVW))`. This is linear interpolation between `min` at `minVW` and `max` at `maxVW`, clamped so it never exceeds either bound. Expanded:
+
+```css
+font-size: clamp(
+  1.75rem,
+  calc(1.75rem + 1.5 * ((100vw - 20rem) / 55)),
+  3.25rem
+);
+```
+
+The division `(100vw - 20rem) / 55` normalizes the viewport to a 0–1 range. Multiply by the size delta. Add the minimum. Clamp.
+
+**Why not just `vw` units.** Pure `font-size: 4vw` has no bounds — it's too small at 320px and enormous at 2560px. `clamp()` adds the min and max guardrails that make fluid type usable in practice.
+
+**Scale steps, not arbitrary sizes.** The heading, body, and caption don't scale by the same amount — each has its own slope. The heading changes by 24px across the range; the body changes by 3px. At narrow viewports, the type hierarchy compresses toward a single size (all levels become more similar). At wide viewports, it expands for visual drama. This is intentional — the hierarchy should feel proportionate at every width.
+
+**Generating the values.** Tools like Utopia.fyi generate the `clamp()` values from a type scale ratio and viewport range. The underlying math is what's above. Understanding the formula means you can override the tool when the scale needs non-standard steps.
+
+<Callout type="insight">
+Fluid typography and fluid spacing together define a layout that scales continuously. Define the type scale in `rem` using `clamp()`. Define spacing tokens the same way. The result is a design system with no breakpoints — the layout responds to every viewport width, not just the three you chose.
+</Callout>
+
+<ExperimentSourceBlock id="fluid-type" />

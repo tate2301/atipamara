@@ -1,0 +1,20 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+<ExperimentDemoBlock id="focus-ring" />
+
+Tab through the four elements. Each gets a focus indicator tuned to its shape. The pill button gets a pill ring. The input gets a rectangular ring. The link gets an underline. The card gets a rectangular ring with the same offset as the input.
+
+**Why not `box-shadow`.** `box-shadow` is drawn inside the stacking context and can be clipped by `overflow: hidden` on a parent. `outline` composites at the painting layer — it's drawn over all content, never clipped. For focus rings that need to be reliable across arbitrary DOM contexts, `outline` is correct.
+
+**`outline-offset`.** The gap between the element's edge and the ring. Pill button: 3px, giving visual breathing room around the rounded corners. Square elements: 2px, which looks tighter and more precise. The offset is part of the design — not a default to leave at zero.
+
+**The glow.** `box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 18%, transparent)` adds a soft aura without blur. The `color-mix` in OKLCH ensures the glow hue matches the accent correctly across light and dark modes. Using `rgba(accent, 0.18)` works in simple cases but fails when the accent color changes between themes.
+
+**`:focus-visible` not `:focus`.** `:focus` fires on any focus event — including mouse clicks. That means every button press shows a focus ring, which feels noisy. `:focus-visible` fires only when the browser determines keyboard navigation is happening. This is the correct default for accessible, non-distracting focus design.
+
+<Callout type="insight">
+The WCAG 2.1 focus visible criterion (2.4.7) requires focus to be visible. WCAG 2.2 adds enhanced criteria (2.4.11, 2.4.12) about minimum size and contrast. A 2px outline at the accent color with the 4px glow passes all three. Browser defaults (the blue ring) often fail contrast requirements on dark surfaces — never rely on them.
+</Callout>
+
+<ExperimentSourceBlock id="focus-ring" />
