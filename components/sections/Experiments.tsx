@@ -1,10 +1,12 @@
 "use client";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /*
    TYPES & DATA
  */
-type ExpId =
+export type ExpId =
   | "var-font"
   | "bento"
   | "scroll-progress"
@@ -25,44 +27,19 @@ type ExpId =
   | "dock"
   | "island";
 
-type Exp = {
+export type Exp = {
   id: ExpId;
   name: string;
   date: string;
-  tags: string;
   desc: string;
   detail: string;
 };
 
-const EXP_GROUPS: { label: string; ids: ExpId[] }[] = [
-  {
-    label: "Systems",
-    ids: [
-      "var-font",
-      "bento",
-      "scroll-progress",
-      "cnt",
-      "stk",
-      "noise-btn",
-      "scramble",
-    ],
-  },
-  {
-    label: "Interface",
-    ids: ["cmd", "seg-ctrl", "toast", "drag", "checkbox", "abb"],
-  },
-  {
-    label: "Motion",
-    ids: ["spring-btn", "mag", "cursor-trail", "tilt-card", "dock", "island"],
-  },
-];
-
-const EXPS: Exp[] = [
+export const EXPS: Exp[] = [
   {
     id: "var-font",
     name: "Variable Font Morph",
     date: "Mar 2025",
-    tags: "typography / CSS",
     desc: "Font weight and width axes animate on hover, morphing between states.",
     detail:
       "A single word rendered with a variable font. On hover, the weight axis slides from 300 to 800, and the text visibly breathes. The easing curve overshoots slightly before settling, giving it physical weight. Built entirely with font-variation-settings and a CSS transition. Drag the slider to explore the weight axis manually.",
@@ -71,7 +48,6 @@ const EXPS: Exp[] = [
     id: "bento",
     name: "Bento Grid",
     date: "Feb 2025",
-    tags: "layout / CSS Grid",
     desc: "An asymmetric feature grid where each card has its own personality.",
     detail:
       "Five cards in a CSS Grid layout: one large hero card, two medium, two small. Each has a different internal layout. The grid gaps are intentionally uneven. Cards lift with a box-shadow on hover. Resize the window and the grid reflows at defined breakpoints using named grid areas.",
@@ -80,7 +56,6 @@ const EXPS: Exp[] = [
     id: "scroll-progress",
     name: "Scroll-Linked Progress",
     date: "Jan 2025",
-    tags: "scroll / animation",
     desc: "A reading progress bar driven by scroll position with zero JS in the CSS version.",
     detail:
       "A 3px bar at the top of a scrollable container fills as you scroll. The pure-CSS version uses animation-timeline: scroll()  no scroll event listeners, no requestAnimationFrame. The demo uses a JS fallback for cross-browser support.",
@@ -89,7 +64,6 @@ const EXPS: Exp[] = [
     id: "spring-btn",
     name: "Spring Physics Button",
     date: "Dec 2024",
-    tags: "physics / spring / press",
     desc: "A button that compresses on press and bounces back with real spring physics.",
     detail:
       "On mousedown, the button squashes (scaleY 0.92, scaleX 1.04) like it has physical mass. On release, it springs back using a cubic-bezier that overshoots. The shadow deepens on press. No animation library; all cubic-bezier curves hand-tuned in CSS.",
@@ -98,7 +72,6 @@ const EXPS: Exp[] = [
     id: "cursor-trail",
     name: "Cursor Trail",
     date: "Nov 2024",
-    tags: "cursor / canvas / motion",
     desc: "A trail of fading dots follows the cursor with spring lag between each node.",
     detail:
       "12 nodes, each following the previous with decreasing spring stiffness. The first node is tight, the last loose. Each is a circle on a canvas overlay with radius shrinking toward the tail, hue cycling slowly. Move your cursor around the panel.",
@@ -107,7 +80,6 @@ const EXPS: Exp[] = [
     id: "tilt-card",
     name: "Tilt Card",
     date: "Oct 2024",
-    tags: "3D / perspective / mouse",
     desc: "A card that tilts in 3D toward the cursor, with a specular highlight that moves.",
     detail:
       "On mousemove, the card rotates up to 12 degrees on X and Y axes. A radial gradient set to mix-blend-mode: overlay tracks the cursor, simulating a light source. On mouseleave, the card springs back to flat. The drop-shadow shifts based on tilt angle.",
@@ -116,7 +88,6 @@ const EXPS: Exp[] = [
     id: "cmd",
     name: "Command Menu",
     date: "Sep 2024",
-    tags: "Cmd K / keyboard / search",
     desc: "A Cmd K command palette with fuzzy search, grouped results, and keyboard navigation.",
     detail:
       "Press Cmd K to open. Type to filter; the fuzzy match doesn't require exact matches. Arrow keys navigate, Enter runs, Escape closes. Results are grouped. The backdrop blurs content behind. The palette animates in from below.",
@@ -125,7 +96,6 @@ const EXPS: Exp[] = [
     id: "mag",
     name: "Magnetic Button",
     date: "Aug 2024",
-    tags: "cursor / physics / hover",
     desc: "A button that pulls toward the cursor with elastic spring return.",
     detail:
       "As the cursor approaches the button, it translates toward the cursor, up to 8px in any direction. The pull is proportional to distance from centre. On mouseleave, it springs back using cubic-bezier(.23,1,.32,1) with a slight overshoot.",
@@ -134,7 +104,6 @@ const EXPS: Exp[] = [
     id: "cnt",
     name: "Animated Counter",
     date: "Jul 2024",
-    tags: "scroll / numbers / easing",
     desc: "Numbers count up from zero when scrolled into view, driven by easeOutCubic.",
     detail:
       "Three stats animate independently with a slight stagger. The easing is easeOutCubic: fast at the start, slowing into the final value. An IntersectionObserver triggers on first entry. A replay button resets and re-runs all three.",
@@ -143,7 +112,6 @@ const EXPS: Exp[] = [
     id: "stk",
     name: "Image Stack",
     date: "Jun 2024",
-    tags: "hover / spring / avatars",
     desc: "Stacked avatar circles fan out on hover with a spring overshoot.",
     detail:
       "Four avatar circles overlapping at rest. On hover they fan out symmetrically: first rotates left, last rotates right. The transition uses cubic-bezier(.34,1.56,.64,1), the spring with perceptible overshoot. On mouseleave they snap back.",
@@ -152,7 +120,6 @@ const EXPS: Exp[] = [
     id: "noise-btn",
     name: "Noise Button",
     date: "May 2024",
-    tags: "texture / grain / shine",
     desc: "A button with SVG noise grain texture and a light-sweep on hover.",
     detail:
       "Two layered pseudo-elements: a fractal noise SVG filter (mix-blend-mode: overlay) adds grain that makes the surface feel physical. On hover, a diagonal gradient animates from right to left, simulating a light sweep. The combination Vercel and Linear use on premium CTAs.",
@@ -161,7 +128,6 @@ const EXPS: Exp[] = [
     id: "scramble",
     name: "Text Scramble",
     date: "Apr 2024",
-    tags: "text / random / hover",
     desc: "Characters cycle through random glyphs before resolving, left to right.",
     detail:
       "On hover, each character cycles through random alphanumerics at ~30fps. Characters resolve left to right  leftmost locks in first. The effect feels like a terminal decoding a message. The iteration speed is fractional so the decoding isn't perfectly mechanical.",
@@ -170,7 +136,6 @@ const EXPS: Exp[] = [
     id: "abb",
     name: "Apple Bottom Bar",
     date: "Mar 2024",
-    tags: "blur / glass / iOS",
     desc: "Recreation of the frosted-glass pill from the iPhone 15 marketing page.",
     detail:
       "A rounded pill with backdrop-filter: blur(20px), semi-transparent background, and a subtle white border. The blur radius and opacity are calibrated to match Apple's implementation  most copies get the opacity wrong (too high) or the border wrong (too visible).",
@@ -179,7 +144,6 @@ const EXPS: Exp[] = [
     id: "seg-ctrl",
     name: "Segmented Control",
     date: "Feb 2024",
-    tags: "selection / spring / indicator",
     desc: "A pill indicator slides between segments with a spring that slightly overshoots.",
     detail:
       "Three segments: Design, Code, Ship. A white pill indicator slides under the active segment using cubic-bezier(.34,1.1,.64,1)  just enough overshoot to feel lively. The indicator width morphs to match each button's width.",
@@ -188,7 +152,6 @@ const EXPS: Exp[] = [
     id: "toast",
     name: "Toast Notifications",
     date: "Jan 2026",
-    tags: "feedback / stack / dismiss",
     desc: "Stacked notifications that slide in, queue behind each other, and auto-dismiss.",
     detail:
       "Three types: success, error, info. New toasts land at the front; older ones stack behind at reduced scale and opacity  a visual metaphor for depth. Each auto-dismisses after 3.5 seconds. Click any toast to remove it early. This is the visual language behind Sonner.",
@@ -197,7 +160,6 @@ const EXPS: Exp[] = [
     id: "drag",
     name: "Drag to Dismiss",
     date: "Dec 2025",
-    tags: "gesture / pointer / spring",
     desc: "A card that tracks pointer drag and dismisses when thrown far enough.",
     detail:
       "Pointer capture keeps tracking even if the cursor leaves the element. On release, velocity is measured  a fast flick dismisses even if the distance was short. A slow drag needs to exceed 80px. Spring return on abandon. This is the interaction model of every mobile bottom sheet.",
@@ -206,7 +168,6 @@ const EXPS: Exp[] = [
     id: "checkbox",
     name: "Checkbox Animation",
     date: "Nov 2025",
-    tags: "SVG / path / micro-interaction",
     desc: "A checkmark that draws itself with a spring on check, strikethrough on complete.",
     detail:
       "An SVG path drives the checkmark draw using stroke-dasharray and stroke-dashoffset. On check: the box scales up with an overshoot spring, background fills, and the checkmark draws left-to-right. Three tasks are ready to check.",
@@ -215,7 +176,6 @@ const EXPS: Exp[] = [
     id: "dock",
     name: "macOS Dock",
     date: "Oct 2025",
-    tags: "magnification / cursor / Gaussian",
     desc: "Icons magnify as the cursor approaches, with Gaussian distance falloff.",
     detail:
       "Scale is computed as 1 + (maxScale  1)  e^(dist / ). The Gaussian falloff means adjacent icons grow proportionally  the icon under the cursor peaks at 1.8, its neighbours at ~1.4.  controls the spread width. On mouseleave, everything springs back with a gentle overshoot.",
@@ -224,7 +184,6 @@ const EXPS: Exp[] = [
     id: "island",
     name: "Dynamic Island",
     date: "Sep 2025",
-    tags: "morphing / Apple / LiveActivity",
     desc: "Apple's Dynamic Island with five Live Activity states.",
     detail:
       "The pill morphs between states using a single div  no clipping, no hidden layers. Width and height animate together with a spring that slightly overshoots. Content fades in 150ms after the shape starts moving, so text never rides a distorting container. Five states: ring, alarm, download, navigation, message.",
@@ -2004,12 +1963,42 @@ const DEMOS: Record<ExpId, React.FC> = {
   island: IslandDemo,
 };
 
+export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
+  "var-font": "variable-font-morph",
+  bento: "bento-grid",
+  "scroll-progress": "scroll-linked-progress",
+  "spring-btn": "spring-physics-button",
+  "cursor-trail": "cursor-trail",
+  "tilt-card": "tilt-card",
+  cmd: "command-menu",
+  mag: "magnetic-button",
+  cnt: "animated-counter",
+  stk: "image-stack",
+  "noise-btn": "noise-button",
+  scramble: "text-scramble",
+  abb: "apple-bottom-bar",
+  "seg-ctrl": "segmented-control",
+  toast: "toast-notifications",
+  drag: "drag-to-dismiss",
+  checkbox: "checkbox-animation",
+  dock: "macos-dock",
+  island: "dynamic-island",
+};
+
+export function getExperimentPath(exp: Exp) {
+  return `/experiments/${EXPERIMENT_SLUGS[exp.id]}`;
+}
+
+export function getExperimentBySlug(slug: string) {
+  return EXPS.find(
+    (exp) => EXPERIMENT_SLUGS[exp.id] === slug || exp.id === slug,
+  );
+}
+
 /*
    MAIN COMPONENT
  */
 export default function Experiments() {
-  const [active, setActive] = useState<ExpId>("var-font");
-  const [view, setView] = useState<"demo" | "code">("demo");
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -2028,113 +2017,141 @@ export default function Experiments() {
     return () => obs.disconnect();
   }, []);
 
-  useEffect(() => {
-    sectionRef.current
-      ?.querySelector(".exp-nav-item.active")
-      ?.scrollIntoView({ block: "nearest", inline: "nearest" });
-  }, [active]);
-
-  const switchTo = (id: ExpId) => {
-    if (id === active) return;
-    setActive(id);
-    setView("demo");
-  };
-
-  const current = EXPS.find((e) => e.id === active)!;
-  const DemoComponent = DEMOS[active];
-  const currentIndex = EXPS.findIndex((e) => e.id === active);
-  const currentNumber = String(currentIndex + 1).padStart(2, "0");
-
   return (
     <section id="exp-section" ref={sectionRef}>
-      <div className="exp-lab">
-        <div className="exp-nav" aria-label="Experiments">
-          <div
-            className="exp-nav-groups"
-            role="tablist"
-            aria-orientation="vertical"
+      <nav className="exp-journal-list" aria-label="Experiments">
+        {EXPS.map((exp, index) => (
+          <Link
+            className="exp-journal-row"
+            href={getExperimentPath(exp)}
+            key={exp.id}
           >
-            {EXP_GROUPS.map((group) => (
-              <div className="exp-nav-group" key={group.label}>
-                <span className="exp-nav-group-label">{group.label}</span>
-                {group.ids.map((id) => {
-                  const exp = EXPS.find((item) => item.id === id)!;
-                  const index = EXPS.findIndex((item) => item.id === id);
-                  const selected = active === exp.id;
+            <span className="exp-journal-num">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="exp-journal-copy">
+              <span className="exp-journal-title">{exp.name}</span>
+              <span className="exp-journal-desc">{exp.desc}</span>
+            </span>
+            <span className="exp-journal-date">{exp.date}</span>
+          </Link>
+        ))}
+      </nav>
+    </section>
+  );
+}
 
-                  return (
-                    <button
-                      key={exp.id}
-                      role="tab"
-                      aria-selected={selected}
-                      aria-controls="exp-stage"
-                      aria-label={`${String(index + 1).padStart(2, "0")} ${exp.name}: ${exp.tags}`}
-                      className={`exp-nav-item${selected ? " active" : ""}`}
-                      onClick={() => switchTo(exp.id)}
-                    >
-                      <span className="exp-nav-num">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="exp-nav-copy">
-                        <span className="exp-nav-name">{exp.name}</span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+export function ExperimentDemoBlock({ id }: { id: ExpId }) {
+  const DemoComponent = DEMOS[id];
+
+  return (
+    <div className="exp-card exp-mdx-demo" id="exp-stage">
+      <div className="exp-pane show">
+        <DemoComponent />
+      </div>
+    </div>
+  );
+}
+
+export function ExperimentSourceBlock({ id }: { id: ExpId }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="exp-source-block">
+      <button
+        aria-expanded={open}
+        className="exp-source-toggle"
+        onClick={() => setOpen((value) => !value)}
+      >
+        Source
+      </button>
+      {open ? (
+        <div className="exp-code-pane">
+          <div
+            className="exp-code-inner"
+            dangerouslySetInnerHTML={{ __html: CODE[id] }}
+          />
         </div>
+      ) : null}
+    </div>
+  );
+}
 
-        <div className="exp-workspace">
+export function ExperimentArticle({
+  children,
+  slug,
+}: {
+  children: ReactNode;
+  slug: string;
+}) {
+  const current = getExperimentBySlug(slug);
+
+  if (!current) {
+    return (
+      <section id="exp-section">
+        <div className="exp-empty">
+          <p>Experiment not found.</p>
+          <Link href="/experiments">Back to experiments</Link>
+        </div>
+      </section>
+    );
+  }
+
+  const currentIndex = EXPS.findIndex((exp) => exp.id === current.id);
+  const previous = EXPS[currentIndex - 1];
+  const next = EXPS[currentIndex + 1];
+
+  return (
+    <section id="exp-section">
+      <article className="exp-article">
+        <nav className="exp-article-nav" aria-label="Experiment navigation">
+          <Link href="/experiments" className="exp-article-all">
+            Experiments
+          </Link>
+          <div className="exp-article-links">
+            {previous ? (
+              <Link href={getExperimentPath(previous)}>Previous</Link>
+            ) : (
+              <span aria-hidden="true" />
+            )}
+            {next ? (
+              <Link href={getExperimentPath(next)}>Next</Link>
+            ) : (
+              <span aria-hidden="true" />
+            )}
+          </div>
+        </nav>
+
+        <div className="exp-article-main">
           <div className="exp-current">
             <div className="exp-current-kicker">
               <span>{current.date}</span>
             </div>
-            <div className="exp-current-main">
-              <div>
-                <h2 className="exp-current-title">{current.name}</h2>
-              </div>
-            </div>
+            <h1 className="exp-current-title">{current.name}</h1>
             <p className="exp-current-detail">{current.detail}</p>
           </div>
-          <div
-            className="exp-toggle"
-            aria-label="Experiment view"
-            role="tablist"
-          >
-            <button
-              role="tab"
-              aria-selected={view === "demo"}
-              className={`exp-toggle-btn${view === "demo" ? " active" : ""}`}
-              onClick={() => setView("demo")}
-            >
-              Preview
-            </button>
-            <button
-              role="tab"
-              aria-selected={view === "code"}
-              className={`exp-toggle-btn${view === "code" ? " active" : ""}`}
-              onClick={() => setView("code")}
-            >
-              Source
-            </button>
-          </div>
-          <div className="exp-card mt-2" id="exp-stage">
-            <div className={`exp-pane${view === "demo" ? " show" : ""}`}>
-              <DemoComponent />
-            </div>
-            <div className={`exp-pane${view === "code" ? " show" : ""}`}>
-              <div className="exp-code-pane">
-                <div
-                  className="exp-code-inner"
-                  dangerouslySetInnerHTML={{ __html: CODE[active] }}
-                />
-              </div>
-            </div>
-          </div>
+          <div className="exp-mdx-body">{children}</div>
         </div>
-      </div>
+      </article>
     </section>
+  );
+}
+
+export function ExperimentDetailPage({ slug }: { slug: string }) {
+  const current = getExperimentBySlug(slug);
+
+  if (!current) {
+    return (
+      <ExperimentArticle slug={slug}>
+        <span />
+      </ExperimentArticle>
+    );
+  }
+
+  return (
+    <ExperimentArticle slug={slug}>
+      <ExperimentDemoBlock id={current.id} />
+      <ExperimentSourceBlock id={current.id} />
+    </ExperimentArticle>
   );
 }
