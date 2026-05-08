@@ -13,8 +13,7 @@ export default function Header() {
         />
       </div>
       <p className="tagline">
-        Full-stack engineer. I care about the <em>parts most engineers skip</em>
-        .
+        Product engineer. I care about the <em>parts most engineers skip</em>.
       </p>
       <div className="bio">
         <p>
@@ -22,7 +21,7 @@ export default function Header() {
           Three companies currently run software I built <em>from scratch</em>,
           through{" "}
           <a
-            href="https://corelith.com"
+            href="https://corelith.pagka.dev"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -42,7 +41,7 @@ export default function Header() {
           <span className="stat-lbl">companies in production</span>
         </div>
         <div className="stat">
-          <span className="stat-val">6+</span>
+          <span className="stat-val">7+</span>
           <span className="stat-lbl">years building</span>
         </div>
         <div className="stat">
@@ -63,12 +62,27 @@ export default function Header() {
         <span className="nav-sep" aria-hidden="true">
           /
         </span>
+        <a href="/writing">Writing</a>
+        <span className="nav-sep" aria-hidden="true">
+          /
+        </span>
         <a
           href="https://github.com/tate2301"
           target="_blank"
           rel="noopener noreferrer"
         >
           GitHub
+        </a>
+        <span className="nav-sep" aria-hidden="true">
+          /
+        </span>
+        {/* TODO: replace with your real Upwork profile URL */}
+        <a
+          href="https://www.upwork.com/freelancers/tatendachinyamakobvu"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Upwork
         </a>
         <span className="nav-sep" aria-hidden="true">
           /

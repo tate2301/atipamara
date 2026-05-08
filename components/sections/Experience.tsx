@@ -7,11 +7,18 @@ const experiences = [
     desc: "Building and running software for clients across Zimbabwe. Three companies in production.",
   },
   {
-    year: "2023–now",
-    company: "Afrisight",
-    role: "Collaborator — Analytics Platform",
+    year: "2025–now",
+    company: "CXAnalytics",
+    role: "Contract — Query Builder",
     href: "https://afrisight.com",
-    desc: "Analytics pipeline tooling for a market research platform used across Africa.",
+    desc: "Stripe-Sigma-style no-code analytics on top of CXanalytics' MongoDB. Aggregation pipeline builder, live schema inference, collaboration, and publishing — so CX teams can slice survey data without an engineer in the loop.",
+  },
+  {
+    year: "2023–Mar 2025",
+    company: "Afrisight",
+    role: "Lead Engineer & Brand — CXanalytics + Mobile",
+    href: "https://afrisight.com",
+    desc: "Built CXanalytics — Afrisight's enterprise CX analytics product. Brand, dashboard, and survey targeting algorithms. Shipped the consumer mobile app used by panelists across Africa.",
   },
   {
     year: "2023–now",

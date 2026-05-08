@@ -27,18 +27,47 @@ const projects = [
     image: "/images/corelith.png",
   },
   {
-    name: "Afrisight Analytics Engine",
+    name: "CXanalytics",
     // AFRISIGHT_QUOTE — insert once received
     // Format:
     // "[Quote about business impact, not working relationship]"
     // — [First name], [Role], Afrisight
-    tagline: "Pipeline builder for a market research platform",
+    tagline: "Customer experience analytics — by Afrisight",
     description:
-      "Built for Afrisight, a market research platform operating across Africa. Consumer brands and sales teams use it to find patterns in survey data and make better decisions.\n\nNo-code interface for MongoDB aggregation pipelines — nested logical filters, profile joins, live schema inference, and a results table with search, sort, pagination, and CSV export. My data science background meant I knew what the analysts actually needed.",
-    tags: ["TypeScript", "MongoDB", "Next.js", "React"],
+      "CXanalytics is Afrisight's enterprise customer-experience analytics product. I designed the brand from scratch, built the dashboard from a blank canvas, and wrote the targeting algorithms that decide which survey reaches which respondent.\n\nThe surface that turns raw panel responses into something a brand team can actually act on. Querying, segmentation, and reporting — all on top of the data flowing in from the Afrisight mobile app.",
+    tags: ["TypeScript", "Next.js", "MongoDB", "React", "Brand Identity"],
+    badge: "production" as const,
+    badgeLabel: "Production · Enterprise",
+    image: "/images/afrisight.png",
+  },
+  {
+    name: "CXanalytics Query Builder",
+    tagline: "Stripe-Sigma-style no-code analytics on MongoDB",
+    description:
+      "Contract build for CXAnalytics after I wrapped up full-time at Afrisight. Lets enterprise CX teams write complex aggregation pipelines on raw MongoDB survey data without an engineer in the loop.\n\nNested logical filters, profile joins, live schema inference, pipeline preview, team collaboration, and publishing — so a finished query becomes a reusable report operators can run on demand. Stripe Sigma, applied to survey responses.",
+    tags: ["TypeScript", "Next.js", "MongoDB Aggregation", "Schema Inference"],
+    badge: "production" as const,
+    badgeLabel: "Production · Contract",
+  },
+  {
+    name: "Afrisight Mobile",
+    tagline: "Consumer app for a pan-African market research panel",
+    description:
+      "The panel-side surface for Afrisight — where respondents across Africa take surveys and earn rewards. The product side of CXanalytics: where the data starts before it lands in an enterprise dashboard.\n\nReact Native, mobile-first, built for emerging-market connectivity — surveys don't lose progress when a tower drops. Older Android devices, smaller screens, real money in payouts, real trust to earn. Shipped, in production, used daily.",
+    tags: ["React Native", "TypeScript", "Mobile", "Offline-first"],
     badge: "production" as const,
     badgeLabel: "Production · Afrisight",
-    image: "/images/afrisight.png",
+    // TODO: add screenshot at /images/afrisight-mobile.png
+  },
+  {
+    name: "mediamtx-rtsp-forwarder",
+    tagline: "Edge-box bridge from on-prem CCTV to the browser",
+    description:
+      "Born inside the Corelith CCTV integration module. Runs on small on-prem edge boxes alongside Hikvision NVRs, picks up the RTSP feeds, and forwards them to the web so a camera grid renders inside the ERP — without exposing the customer's NVR to the public internet.\n\nMakes the 'view your shop floor from the dashboard' feature work for clients running cameras behind a NAT'd internet connection — a very real Zimbabwean constraint.",
+    tags: ["RTSP", "WebRTC", "MediaMTX", "Hikvision", "On-prem"],
+    badge: "production" as const,
+    badgeLabel: "Production · Open source",
+    href: "https://github.com/tate2301/mediamtx-rtsp-forwarder",
   },
   {
     name: "PaaS Platform",

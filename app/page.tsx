@@ -7,9 +7,9 @@ import Awards from "@/components/sections/Awards";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "Tatenda Chinyamakobvu — Design Engineer",
+  title: "Tatenda Chinyamakobvu — Product Engineer",
   description:
-    "Design engineer based in Harare, Zimbabwe. Building interfaces and products for founders and startups.",
+    "Product engineer based in Harare, Zimbabwe. Three companies run software I built from scratch — POS, ERP, customer analytics, and on-prem CCTV.",
 };
 
 export default function Page() {

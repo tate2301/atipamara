@@ -1,31 +1,61 @@
-"use client";
-import clsx from "clsx";
-import UnderDevelopment from "@/components/UnderDevelopment";
+import type { Metadata } from "next";
+import Link from "next/link";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import Footer from "@/components/sections/Footer";
 
-// export const metadata: Metadata = {
-//   title: "Interaction Playground",
-//   description:
-//     "Atipamara is a design engineer based in Harare, Zimbabwe. He helps startups, founders, and their teams to realize their full potential through thoughtful design and engineering.",
-// };
+export const metadata: Metadata = {
+  title: "Writing — Tatenda Chinyamakobvu",
+  description:
+    "Notes, debugging stories, and short essays from a product engineer in Zimbabwe.",
+};
 
-export default function Page() {
+const posts = [
+  {
+    slug: "fixing-wsl-localhost-issues",
+    title: "Fixing WSL localhost & port forwarding issues",
+    date: "October 22, 2025",
+    excerpt:
+      "The smallest fix for the most annoying WSL2 networking bug — disable Fast Startup.",
+  },
+];
+
+export default function WritingPage() {
   return (
-    <div className="h-full max-w-2xl mx-auto pb-32 pt-16 p-4">
-      <div className="mb-32">
-        <h1
-          className={clsx(
-            "text-5xl font-normal mb-3 text-zinc-950 dark:text-zinc-100",
-          )}
-        >
-          Writing
-        </h1>
-        <p className="text-lg">
-          This is the best way to express my thoughts and ideas
-        </p>
+    <>
+      <div className="wrap">
+        <header>
+          <ThemeToggle />
+          <Link href="/" className="exp-back">
+            Home
+          </Link>
+          <div className="wordmark">
+            <h1>Writing</h1>
+          </div>
+          <p className="tagline">
+            Short notes from the day-to-day — debugging stories, build logs,
+            and the occasional opinion.
+          </p>
+        </header>
+        <section className="section">
+          <span className="label">Posts</span>
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/writing/${post.slug}`}
+              className="exp-row"
+            >
+              <div className="exp-year">{post.date}</div>
+              <div>
+                <span className="exp-company">{post.title}</span>
+                <div className="exp-desc">{post.excerpt}</div>
+              </div>
+            </Link>
+          ))}
+        </section>
       </div>
-      <div className="space-y-24 border-t border-dashed border-zinc-400/20 pt-32">
-        <UnderDevelopment />
+      <div className="wrap">
+        <Footer />
       </div>
-    </div>
+    </>
   );
 }
