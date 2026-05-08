@@ -28,28 +28,17 @@ import {
   ArrowsHorizontal,
 } from "@phosphor-icons/react";
 
+import {
+  EXPERIMENT_SLUGS,
+  type ExpId,
+} from "./experiments-data";
+
+export { EXPERIMENT_SLUGS };
+export type { ExpId };
+
 /*
    TYPES & DATA
  */
-export type ExpId =
-  | "var-font"
-  | "cursor-trail"
-  | "tilt-card"
-  | "cmd"
-  | "mag"
-  | "toast"
-  | "drag"
-  | "checkbox"
-  | "dock"
-  | "island"
-  | "oklch"
-  | "fluid-type"
-  | "flip-list"
-  | "spring-config"
-  | "focus-ring"
-  | "resizable"
-  | "streaming"
-  | "view-transition";
 
 export type Exp = {
   id: ExpId;
@@ -2142,27 +2131,6 @@ const DEMOS: Record<ExpId, React.FC> = {
   resizable: ResizableDemo,
   streaming: StreamingDemo,
   "view-transition": ViewTransitionDemo,
-};
-
-export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
-  oklch: "oklch-color",
-  "fluid-type": "fluid-typography",
-  "var-font": "variable-font-morph",
-  "cursor-trail": "cursor-trail",
-  "tilt-card": "tilt-card",
-  cmd: "command-menu",
-  mag: "magnetic-button",
-  toast: "toast-notifications",
-  drag: "drag-to-dismiss",
-  checkbox: "checkbox-animation",
-  dock: "macos-dock",
-  island: "dynamic-island",
-  "spring-config": "spring-configurator",
-  "flip-list": "flip-animation",
-  "focus-ring": "focus-ring-system",
-  resizable: "resizable-panels",
-  streaming: "streaming-text",
-  "view-transition": "view-transitions",
 };
 
 export function getExperimentPath(exp: Exp) {

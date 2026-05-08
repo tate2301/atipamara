@@ -3,10 +3,12 @@ import type { ComponentType } from "react";
 import Footer from "@/components/sections/Footer";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
+  EXPERIMENT_SLUGS,
+  getExperimentMeta,
+} from "@/components/sections/experiments-data";
+import {
   ExperimentDetailPage,
   ExperimentArticle,
-  getExperimentBySlug,
-  EXPERIMENT_SLUGS,
 } from "@/components/sections/Experiments";
 
 type Props = { params: { slug: string } };
@@ -16,11 +18,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const exp = getExperimentBySlug(params.slug);
-  if (!exp) return {};
+  const meta = getExperimentMeta(params.slug);
+  if (!meta) return {};
   return {
-    title: `${exp.name} — Tatenda Chinyamakobvu`,
-    description: exp.desc,
+    title: `${meta.name} — Tatenda Chinyamakobvu`,
+    description: meta.desc,
   };
 }
 
