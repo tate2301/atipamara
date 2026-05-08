@@ -1,0 +1,30 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+# Checkbox Animation
+
+<ExperimentDemoBlock id="checkbox" />
+
+An animated checkbox where the checkmark draws itself along an SVG path on check, and retracts on uncheck. No image sprites, no icon libraries — a single `<path>` element with `stroke-dasharray` and `stroke-dashoffset` as the only animation primitives.
+
+## Stroke dasharray technique
+
+An SVG `<path>` can have its stroke broken into dashes via `stroke-dasharray`. If we set both the dash length and gap length to the total path length, we can use `stroke-dashoffset` to control how much of the stroke is "hidden" behind the gap.
+
+```
+const len = path.getTotalLength()          // e.g. 30
+path.style.strokeDasharray = `${len}`
+path.style.strokeDashoffset = `${len}`     // fully hidden
+// → transition offset to 0 to reveal
+path.style.strokeDashoffset = "0"
+```
+
+<Callout type="insight">
+`getTotalLength()` is the key. Every path has a different length — hardcoding a guess works until the path changes. Measuring it once on mount makes the technique robust.
+</Callout>
+
+## Box and fill
+
+The box border scales from `0.8` to `1` on check with a spring-like cubic-bezier to make the container feel like it "pops" before the mark draws. Background fills from `transparent` to the accent color simultaneously — both transitions are staggered by about 60ms so the mark draws slightly after the fill starts, rather than racing it.
+
+<ExperimentSourceBlock id="checkbox" />

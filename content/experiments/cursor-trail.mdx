@@ -1,0 +1,26 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+# Cursor Trail
+
+<ExperimentDemoBlock id="cursor-trail" />
+
+A chain of 12 nodes, each following its predecessor with a progressively looser spring coefficient. No physics library — just exponential lerp applied per frame inside `requestAnimationFrame`.
+
+## How it works
+
+Each node holds an `(x, y)` position. On every frame, node 0 chases the raw mouse position at a stiffness of `0.45`. Every subsequent node chases the one before it at a stiffness of `max(0.1, 0.38 - i × 0.025)` — so the chain trails off naturally rather than going slack all at once.
+
+The sizes decrease from 10px at the head to 3px at the tail, and opacity fades from 0.9 to 0.15, giving the impression of motion blur without any blur filter.
+
+<Callout type="insight">
+The key is making stiffness a function of index, not a fixed constant. A uniform coefficient produces a rigid rope; this gradient produces something that reads as physical weight.
+</Callout>
+
+## Rendering
+
+Nodes are absolutely-positioned `div` elements driven by `transform: translate()`. Using `transform` instead of `left/top` keeps all layout in the compositor thread — no reflow per frame, even with 12 elements animating simultaneously.
+
+The loop itself is a single `requestAnimationFrame` ref that runs as long as the component is mounted. Cleanup cancels the frame on unmount.
+
+<ExperimentSourceBlock id="cursor-trail" />

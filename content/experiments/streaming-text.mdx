@@ -1,0 +1,34 @@
+import { ExperimentDemoBlock, ExperimentSourceBlock } from "@/components/sections/Experiments";
+import { Callout } from "@/components/mdx/Callout";
+
+# Streaming Text
+
+<ExperimentDemoBlock id="streaming" />
+
+Character-by-character text output that mimics the rhythm of LLM token streaming. The delay between characters is not uniform — it's modulated by what was just written, which makes the output feel like thinking rather than playback.
+
+## Variable delay model
+
+Three delay values cover the common cases:
+
+- **28ms** — ordinary characters, fast enough to feel instant but slow enough to read
+- **40ms** — spaces, a small pause that separates words visually
+- **200ms** — sentence-ending punctuation (`.`, `,`, `!`, `?`), a beat that lets meaning land
+
+```typescript
+const delay = /[.,!?]/.test(ch) ? 200 : /[ ]/.test(ch) ? 40 : 28;
+```
+
+This matches how real LLM streaming feels — punctuation creates natural breathing room.
+
+<Callout type="insight">
+Uniform delays feel mechanical. Variable delays feel like the text is being composed. The difference is entirely in the punctuation pauses — everything else can stay constant.
+</Callout>
+
+## Cursor
+
+The blinking cursor element is a 2px-wide inline block with a CSS `steps(1)` animation — a square wave blink at 700ms. It's rendered unconditionally and controlled via `opacity`, so it doesn't cause layout shifts when it appears or disappears.
+
+The cursor's opacity is set to `0` when streaming completes, giving a clear "done" signal without removing the element.
+
+<ExperimentSourceBlock id="streaming" />
