@@ -22,7 +22,7 @@ const projects = [
       "Three businesses run on it: a grocery retailer, a scrap metal recycler, and a mining operation. Each gets its own subdomain, branded workspace, and industry-specific module set — the retail tenant runs POS, stock management, and purchasing; the scrap tenant tracks weight in/out, inbound tickets, and supplier settlements by kg. One shared core for HR, payroll, financial reporting, banking, and receivables across all three.\n\nOffline-first via service worker sync — 'Preparing offline workspace' loads before the dashboard does. Subdomain multitenancy with strict tenant isolation, RBAC with 2FA, append-only audit log. Built for Zimbabwe where the internet is negotiable.",
     tags: ["Next.js 15", "PostgreSQL", "Prisma", "PWA", "Docker"],
     badge: "production" as const,
-    badgeLabel: "Production · 3 clients",
+    meta: "120+ users",
     href: "https://github.com/tate2301/huchu",
     image: "/images/corelith.png",
   },
@@ -37,7 +37,7 @@ const projects = [
       "CXanalytics is Afrisight's enterprise customer-experience analytics product. I designed the brand from scratch, built the dashboard from a blank canvas, and wrote the targeting algorithms that decide which survey reaches which respondent.\n\nThe surface that turns raw panel responses into something a brand team can actually act on. Querying, segmentation, and reporting — all on top of the data flowing in from the Afrisight mobile app.",
     tags: ["TypeScript", "Next.js", "MongoDB", "React", "Brand Identity"],
     badge: "production" as const,
-    badgeLabel: "Production · Enterprise",
+    meta: "Enterprise",
     image: "/images/afrisight.png",
   },
   {
@@ -47,7 +47,7 @@ const projects = [
       "Contract build for CXAnalytics after I wrapped up full-time at Afrisight. Lets enterprise CX teams write complex aggregation pipelines on raw MongoDB survey data without an engineer in the loop.\n\nNested logical filters, profile joins, live schema inference, pipeline preview, team collaboration, and publishing — so a finished query becomes a reusable report operators can run on demand. Stripe Sigma, applied to survey responses.",
     tags: ["TypeScript", "Next.js", "MongoDB Aggregation", "Schema Inference"],
     badge: "production" as const,
-    badgeLabel: "Production · Contract",
+    meta: "Contract",
   },
   {
     name: "Afrisight Mobile",
@@ -56,7 +56,7 @@ const projects = [
       "The panel-side surface for Afrisight — where respondents across Africa take surveys and earn rewards. The product side of CXanalytics: where the data starts before it lands in an enterprise dashboard.\n\nReact Native, mobile-first, built for emerging-market connectivity — surveys don't lose progress when a tower drops. Older Android devices, smaller screens, real money in payouts, real trust to earn. Shipped, in production, used daily.",
     tags: ["React Native", "TypeScript", "Mobile", "Offline-first"],
     badge: "production" as const,
-    badgeLabel: "Production · Afrisight",
+    meta: "Afrisight",
     // TODO: add screenshot at /images/afrisight-mobile.png
   },
   {
@@ -66,7 +66,7 @@ const projects = [
       "Born inside the Corelith CCTV integration module. Runs on small on-prem edge boxes alongside Hikvision NVRs, picks up the RTSP feeds, and forwards them to the web so a camera grid renders inside the ERP — without exposing the customer's NVR to the public internet.\n\nMakes the 'view your shop floor from the dashboard' feature work for clients running cameras behind a NAT'd internet connection — a very real Zimbabwean constraint.",
     tags: ["RTSP", "WebRTC", "MediaMTX", "Hikvision", "On-prem"],
     badge: "production" as const,
-    badgeLabel: "Production · Open source",
+    meta: "Edge / OSS",
     href: "https://github.com/tate2301/mediamtx-rtsp-forwarder",
   },
   {
@@ -76,7 +76,7 @@ const projects = [
       "GitHub push-to-deploy, automatic preview environments for every pull request, managed database provisioning (PostgreSQL, MySQL, MongoDB, Redis, MinIO), and a full Prometheus + Loki + Grafana observability stack.\n\nBuilt to understand every layer of deployment infrastructure. The best way to learn a system is to build it yourself.",
     tags: ["Next.js", "Node.js", "Docker", "BullMQ", "Traefik"],
     badge: "open" as const,
-    badgeLabel: "Open source",
+    meta: "Side project",
     href: "https://github.com/tate2301/paas-platform",
     illustration: "paas" as const,
   },
@@ -87,7 +87,7 @@ const projects = [
       "The standard React integration for Paynow, Zimbabwe's dominant payment gateway. Web checkout, EcoCash, OneMoney, polling. Full TypeScript support.\n\nUsed in production fintech applications. Organically adopted — no promotion, just useful.",
     tags: ["TypeScript", "React", "Paynow API"],
     badge: "open" as const,
-    badgeLabel: "Open source · 10★",
+    meta: "10★",
     href: "https://github.com/tate2301/paynow-react",
     illustration: "paynow" as const,
     codeSnippet: PAYNOW_SNIPPET,
@@ -106,7 +106,7 @@ export default function Projects() {
           description={p.description}
           tags={p.tags}
           badge={p.badge}
-          badgeLabel={p.badgeLabel}
+          meta={p.meta}
           href={"href" in p ? p.href : undefined}
           image={"image" in p ? p.image : undefined}
           illustration={"illustration" in p ? p.illustration : undefined}

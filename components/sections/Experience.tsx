@@ -67,7 +67,9 @@ export default function Experience() {
             <div>
               <span className="exp-company">{e.company}</span>
               <span className="exp-role">{e.role}</span>
-              <div className="exp-desc">{e.desc}</div>
+              <div className="exp-desc-wrap">
+                <div className="exp-desc">{e.desc}</div>
+              </div>
             </div>
           </a>
         ) : (
@@ -76,7 +78,9 @@ export default function Experience() {
             <div>
               <span className="exp-company">{e.company}</span>
               <span className="exp-role">{e.role}</span>
-              <div className="exp-desc">{e.desc}</div>
+              <div className="exp-desc-wrap">
+                <div className="exp-desc">{e.desc}</div>
+              </div>
             </div>
           </div>
         ),

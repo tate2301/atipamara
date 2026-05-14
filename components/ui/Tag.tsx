@@ -1,8 +1,14 @@
 type TagVariant = "default" | "production" | "open";
 
 type TagProps = {
-  label: string;
+  label?: string;
   variant?: TagVariant;
+};
+
+const DEFAULT_LABELS: Record<TagVariant, string> = {
+  default: "",
+  production: "Production",
+  open: "Open source",
 };
 
 export default function Tag({ label, variant = "default" }: TagProps) {
@@ -12,5 +18,6 @@ export default function Tag({ label, variant = "default" }: TagProps) {
       : variant === "open"
         ? "tag-open"
         : "tag";
-  return <span className={cls}>{label}</span>;
+  const text = label ?? DEFAULT_LABELS[variant];
+  return <span className={cls}>{text}</span>;
 }
