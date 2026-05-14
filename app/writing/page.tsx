@@ -1,36 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import SiteNav from "@/components/sections/SiteNav";
 import Footer from "@/components/sections/Footer";
+import { posts, type Post } from "./posts";
 
 export const metadata: Metadata = {
   title: "Writing — Tatenda Chinyamakobvu",
   description:
     "Notes, debugging stories, and short essays from a product engineer in Zimbabwe.",
 };
-
-type Post = {
-  slug: string;
-  title: string;
-  date: string;
-  year: string;
-  topic: string;
-  readTime: string;
-  excerpt: string;
-};
-
-const posts: Post[] = [
-  {
-    slug: "fixing-wsl-localhost-issues",
-    title: "Fixing WSL localhost & port forwarding issues",
-    date: "Oct 22",
-    year: "2025",
-    topic: "Debugging",
-    readTime: "1 min",
-    excerpt:
-      "The smallest fix for the most annoying WSL2 networking bug — disable Fast Startup.",
-  },
-];
 
 function groupByYear(items: Post[]) {
   const map = new Map<string, Post[]>();
@@ -47,13 +25,10 @@ export default function WritingPage() {
   return (
     <>
       <div className="wrap">
-        <div className="exp-page-header">
-          <ThemeToggle />
-          <Link href="/" className="exp-back">
-            Home
-          </Link>
-          <h1 className="exp-page-title">Writing</h1>
-          <p className="exp-page-desc">
+        <SiteNav />
+        <div className="page-head">
+          <h1 className="page-title">Writing</h1>
+          <p className="page-desc">
             Notes from the day-to-day — debugging stories, build logs, and the
             occasional opinion. Written when something was annoying enough to
             need a record.
