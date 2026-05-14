@@ -1,16 +1,8 @@
-import ThemeToggle from "@/components/ui/ThemeToggle";
-
 export default function Header() {
   return (
     <header>
-      <ThemeToggle />
       <div className="wordmark">
         <h1>Tatenda Chinyamakobvu</h1>
-        <span
-          className="wordmark-dot"
-          aria-label="Available for work"
-          title="Available for work"
-        />
       </div>
       <p className="tagline">
         Product engineer. I care about the <em>parts most engineers skip</em>.
@@ -53,48 +45,15 @@ export default function Header() {
           <span className="stat-lbl">based in Zimbabwe</span>
         </div>
       </div>
-      <nav className="nav-links">
-        <a href="mailto:hi@chris.pagka.dev">hi@chris.pagka.dev</a>
-        <span className="nav-sep" aria-hidden="true">
-          /
-        </span>
-        <a href="/experiments">Experiments</a>
-        <span className="nav-sep" aria-hidden="true">
-          /
-        </span>
-        <a href="/writing">Writing</a>
-        <span className="nav-sep" aria-hidden="true">
-          /
-        </span>
-        <a
-          href="https://github.com/tate2301"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
+      <div className="contact-row">
+        <a className="contact-email" href="mailto:hi@chris.pagka.dev">
+          hi@chris.pagka.dev
         </a>
-        <span className="nav-sep" aria-hidden="true">
-          /
+        <span className="status-pill" title="Available for work">
+          <span className="status-pill-dot" aria-hidden="true" />
+          Available for work
         </span>
-        {/* TODO: replace with your real Upwork profile URL */}
-        <a
-          href="https://www.upwork.com/freelancers/tatendachinyamakobvu"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Upwork
-        </a>
-        <span className="nav-sep" aria-hidden="true">
-          /
-        </span>
-        <a
-          href="https://twitter.com/atipamara"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          X
-        </a>
-      </nav>
+      </div>
     </header>
   );
 }

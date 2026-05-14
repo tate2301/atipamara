@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import path from "path";
 import fs from "fs";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import SiteNav from "@/components/sections/SiteNav";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
@@ -20,13 +19,10 @@ export default function Page() {
   return (
     <>
       <div className="wrap">
-        <div className="exp-page-header">
-          <ThemeToggle />
-          <Link href="/" className="exp-back">
-            Home
-          </Link>
-          <h1 className="exp-page-title">Photos</h1>
-          <p className="exp-page-desc">
+        <SiteNav />
+        <div className="page-head">
+          <h1 className="page-title">Photos</h1>
+          <p className="page-desc">
             A small archive — favourite people, pups, and moments worth keeping.
           </p>
         </div>
