@@ -42,11 +42,17 @@ export default function ProjectRow({
 
   return (
     <div
-      className={`project-row${open ? " open" : ""} p-4`}
+      className={`project-row${open ? " open" : ""}`}
       onClick={() => setOpen((v) => !v)}
     >
       <div className="project-head">
-        <div className="project-left">
+        {badge && (
+          <Tag
+            label={badgeLabel ?? badge}
+            variant={badge === "production" ? "production" : "open"}
+          />
+        )}
+        <div className="project-body">
           {href ? (
             <a
               href={href}
@@ -60,28 +66,22 @@ export default function ProjectRow({
           ) : (
             <span className="project-name">{name}</span>
           )}
-          <span className="project-dash">—</span>
           <span className="project-desc">{tagline}</span>
         </div>
-        <div className="project-right">
-          {badge && (
-            <Tag
-              label={badgeLabel ?? badge}
-              variant={badge === "production" ? "production" : "open"}
+        <span
+          className={`project-chevron${open ? " open" : ""}`}
+          aria-hidden="true"
+        >
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M3 5l4 4 4-4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
-          )}
-          <span className={`project-chevron${open ? " open" : ""}`}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M3 5l4 4 4-4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </div>
+          </svg>
+        </span>
       </div>
 
       <div className="project-reveal">
