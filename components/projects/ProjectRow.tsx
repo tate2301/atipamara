@@ -13,7 +13,7 @@ type ProjectRowProps = {
   description: string;
   tags: string[];
   badge?: "production" | "open";
-  badgeLabel?: string;
+  meta?: string;
   href?: string;
   image?: string;
   illustration?: "paas" | "paynow";
@@ -26,7 +26,7 @@ export default function ProjectRow({
   description,
   tags,
   badge,
-  badgeLabel,
+  meta,
   href,
   image,
   illustration,
@@ -47,27 +47,23 @@ export default function ProjectRow({
     >
       <div className="project-head">
         {badge && (
-          <Tag
-            label={badgeLabel ?? badge}
-            variant={badge === "production" ? "production" : "open"}
-          />
+          <Tag variant={badge === "production" ? "production" : "open"} />
         )}
-        <div className="project-body">
-          {href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-name project-name-link"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {name}
-            </a>
-          ) : (
-            <span className="project-name">{name}</span>
-          )}
-          <span className="project-desc">{tagline}</span>
-        </div>
+        {href ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-name project-name-link"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {name}
+          </a>
+        ) : (
+          <span className="project-name">{name}</span>
+        )}
+        <span className="project-desc">{tagline}</span>
+        {meta && <span className="project-meta">{meta}</span>}
         <span
           className={`project-chevron${open ? " open" : ""}`}
           aria-hidden="true"
