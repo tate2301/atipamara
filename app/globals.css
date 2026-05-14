@@ -160,7 +160,7 @@ header { padding: 56px 0 64px; position: relative; }
 /* --------------------------------------------
    CONTACT ROW (email + availability, below header content)
 -------------------------------------------- */
-.contact-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 24px; margin-top: 4px; border-top: 1px solid var(--border); }
+.contact-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
 .contact-email { font-family: var(--font-mono); font-size: 14px; color: var(--fg-muted); padding: 3px 0; border-bottom: 1px solid transparent; transition: color var(--t-fast), border-color var(--t-fast); }
 .contact-email:hover { color: var(--fg); border-color: var(--border-hover); }
 
@@ -175,9 +175,11 @@ header { padding: 56px 0 64px; position: relative; }
 /* --------------------------------------------
    TAG
 -------------------------------------------- */
-.tag { font-family: var(--font-mono); font-size: 14px; color: var(--fg-muted); background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 3px; padding: 2px 6px; white-space: nowrap; line-height: 1.5; display: inline-block; }
-.tag-production { font-family: var(--font-mono); font-size: 14px; padding: 2px 6px; border-radius: 3px; white-space: nowrap; line-height: 1.5; display: inline-block; color: var(--green); background: var(--green-bg); }
-.tag-open { font-family: var(--font-mono); font-size: 14px; padding: 2px 6px; border-radius: 3px; white-space: nowrap; line-height: 1.5; display: inline-block; color: var(--accent); background: var(--accent-subtle); }
+.tag { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; white-space: nowrap; line-height: 1.5; display: inline-block; }
+.tag-production, .tag-open { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 8px; border-radius: 999px; background: var(--pill-bg); border: 1px solid var(--pill-border); color: var(--pill-fg); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; white-space: nowrap; }
+.tag-production::before, .tag-open::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.tag-production::before { background: var(--green); }
+.tag-open::before { background: var(--accent); }
 
 /* --------------------------------------------
    PROJECTS
