@@ -8,23 +8,53 @@ type ExpId =
   | "var-font" | "bento" | "scroll-progress" | "spring-btn"
   | "cursor-trail" | "tilt-card" | "cmd" | "mag"
   | "cnt" | "stk" | "noise-btn" | "scramble" | "abb" | "seg-ctrl"
-  | "toast" | "drag" | "checkbox" | "dock" | "island";
+  | "toast" | "drag" | "checkbox" | "dock" | "island"
+  | "otp" | "ctx" | "rope";
 
 type Exp = {
   id: ExpId;
   name: string;
   date: string;
-  tags: string;
+  tags: string[];
+  cat: string;
   desc: string;
   detail: string;
 };
 
 const EXPS: Exp[] = [
   {
+    id: "rope",
+    name: "Rope Physics",
+    date: "Jun 2026",
+    tags: ["canvas", "physics"],
+    cat: "Physics",
+    desc: "A rope simulated with Verlet integration — grab the end and throw it.",
+    detail: "24 particles connected by distance constraints. Verlet integration gives each particle implicit velocity via position deltas. 8 constraint iterations per frame keeps the rope inextensible without a stiff solver. Drag the free end and release — watch the energy dissipate through the damping coefficient.",
+  },
+  {
+    id: "ctx",
+    name: "Context Menu",
+    date: "May 2026",
+    tags: ["interaction", "animation"],
+    cat: "Input",
+    desc: "Right-click anywhere in the zone to spawn a context menu at the cursor.",
+    detail: "The menu enters with a spring scale + translateY from the cursor's exact position. Positioned to stay inside bounds. Click any item or click outside to close. The entrance animation uses cubic-bezier(.34,1.2,.64,1) — 20ms faster than spring-btn because menus feel heavier at full spring duration.",
+  },
+  {
+    id: "otp",
+    name: "OTP Input",
+    date: "Apr 2026",
+    tags: ["input", "UX"],
+    cat: "Input",
+    desc: "Six-digit one-time code input with auto-advance, backspace, and paste support.",
+    detail: "Each cell focuses the next on digit entry. Backspace returns to the previous cell and clears it. Paste distributes digits across all cells from the insertion point. The focused cell scales up slightly via a spring — a small touch that makes the active field unmissable. Enter six digits to see the completion state.",
+  },
+  {
     id: "var-font",
     name: "Variable Font Morph",
     date: "Mar 2025",
-    tags: "typography · CSS",
+    tags: ["typography", "CSS"],
+    cat: "Text",
     desc: "Font weight and width axes animate on hover, morphing between states.",
     detail: "A single word rendered with a variable font. On hover, the weight axis slides from 300 to 800 — the text visibly breathes. The easing curve overshoots slightly before settling, giving it physical weight. Built entirely with font-variation-settings and a CSS transition. Drag the slider to explore the weight axis manually.",
   },
@@ -32,7 +62,8 @@ const EXPS: Exp[] = [
     id: "bento",
     name: "Bento Grid",
     date: "Feb 2025",
-    tags: "layout · CSS Grid",
+    tags: ["layout", "CSS Grid"],
+    cat: "Visual",
     desc: "An asymmetric feature grid where each card has its own personality.",
     detail: "Five cards in a CSS Grid layout — one large hero card, two medium, two small. Each has a different internal layout. The grid gaps are intentionally uneven. Cards lift with a box-shadow on hover. Resize the window and the grid reflows at defined breakpoints using named grid areas.",
   },
@@ -40,7 +71,8 @@ const EXPS: Exp[] = [
     id: "scroll-progress",
     name: "Scroll-Linked Progress",
     date: "Jan 2025",
-    tags: "scroll · animation",
+    tags: ["scroll", "animation"],
+    cat: "Scroll",
     desc: "A reading progress bar driven by scroll position — zero JS in the CSS version.",
     detail: "A 3px bar at the top of a scrollable container fills as you scroll. The pure-CSS version uses animation-timeline: scroll() — no scroll event listeners, no requestAnimationFrame. The demo uses a JS fallback for cross-browser support.",
   },
@@ -48,7 +80,8 @@ const EXPS: Exp[] = [
     id: "spring-btn",
     name: "Spring Physics Button",
     date: "Dec 2024",
-    tags: "physics · spring · press",
+    tags: ["physics", "spring"],
+    cat: "Physics",
     desc: "A button that compresses on press and bounces back with real spring physics.",
     detail: "On mousedown, the button squashes (scaleY 0.92, scaleX 1.04) like it has physical mass. On release, it springs back using a cubic-bezier that overshoots. The shadow deepens on press. No animation library — all cubic-bezier curves hand-tuned in CSS.",
   },
@@ -56,7 +89,8 @@ const EXPS: Exp[] = [
     id: "cursor-trail",
     name: "Cursor Trail",
     date: "Nov 2024",
-    tags: "cursor · canvas · motion",
+    tags: ["cursor", "canvas"],
+    cat: "Physics",
     desc: "A trail of fading dots follows the cursor with spring lag between each node.",
     detail: "12 nodes, each following the previous with decreasing spring stiffness. The first node is tight, the last loose. Each is a circle on a canvas overlay — radius shrinking toward the tail, hue cycling slowly. Move your cursor around the panel.",
   },
@@ -64,7 +98,8 @@ const EXPS: Exp[] = [
     id: "tilt-card",
     name: "Tilt Card",
     date: "Oct 2024",
-    tags: "3D · perspective · mouse",
+    tags: ["3D", "perspective"],
+    cat: "Visual",
     desc: "A card that tilts in 3D toward the cursor, with a specular highlight that moves.",
     detail: "On mousemove, the card rotates up to 12° on X and Y axes. A radial gradient set to mix-blend-mode: overlay tracks the cursor, simulating a light source. On mouseleave, the card springs back to flat. The drop-shadow shifts based on tilt angle.",
   },
@@ -72,7 +107,8 @@ const EXPS: Exp[] = [
     id: "cmd",
     name: "Command Menu",
     date: "Sep 2024",
-    tags: "⌘K · keyboard · search",
+    tags: ["⌘K", "keyboard"],
+    cat: "Input",
     desc: "A ⌘K command palette with fuzzy search, grouped results, and keyboard navigation.",
     detail: "Press ⌘K to open. Type to filter — the fuzzy match doesn't require exact matches. Arrow keys navigate, Enter runs, Escape closes. Results are grouped. The backdrop blurs content behind. The palette animates in from below.",
   },
@@ -80,7 +116,8 @@ const EXPS: Exp[] = [
     id: "mag",
     name: "Magnetic Button",
     date: "Aug 2024",
-    tags: "cursor · physics · hover",
+    tags: ["cursor", "physics"],
+    cat: "Physics",
     desc: "A button that pulls toward the cursor with elastic spring return.",
     detail: "As the cursor approaches the button, it translates toward the cursor — up to 8px in any direction. The pull is proportional to distance from centre. On mouseleave, it springs back using cubic-bezier(.23,1,.32,1) with a slight overshoot.",
   },
@@ -88,7 +125,8 @@ const EXPS: Exp[] = [
     id: "cnt",
     name: "Animated Counter",
     date: "Jul 2024",
-    tags: "scroll · numbers · easing",
+    tags: ["scroll", "numbers"],
+    cat: "Scroll",
     desc: "Numbers count up from zero when scrolled into view, driven by easeOutCubic.",
     detail: "Three stats animate independently with a slight stagger. The easing is easeOutCubic — fast at the start, slowing into the final value. An IntersectionObserver triggers on first entry. A replay button resets and re-runs all three.",
   },
@@ -96,7 +134,8 @@ const EXPS: Exp[] = [
     id: "stk",
     name: "Image Stack",
     date: "Jun 2024",
-    tags: "hover · spring · avatars",
+    tags: ["hover", "spring"],
+    cat: "Visual",
     desc: "Stacked avatar circles fan out on hover with a spring overshoot.",
     detail: "Four avatar circles overlapping at rest. On hover they fan out symmetrically — first rotates left, last rotates right. The transition uses cubic-bezier(.34,1.56,.64,1), the spring with perceptible overshoot. On mouseleave they snap back.",
   },
@@ -104,7 +143,8 @@ const EXPS: Exp[] = [
     id: "noise-btn",
     name: "Noise Button",
     date: "May 2024",
-    tags: "texture · grain · shine",
+    tags: ["texture", "grain"],
+    cat: "Visual",
     desc: "A button with SVG noise grain texture and a light-sweep on hover.",
     detail: "Two layered pseudo-elements: a fractal noise SVG filter (mix-blend-mode: overlay) adds grain that makes the surface feel physical. On hover, a diagonal gradient animates from right to left, simulating a light sweep. The combination Vercel and Linear use on premium CTAs.",
   },
@@ -112,7 +152,8 @@ const EXPS: Exp[] = [
     id: "scramble",
     name: "Text Scramble",
     date: "Apr 2024",
-    tags: "text · random · hover",
+    tags: ["text", "random"],
+    cat: "Text",
     desc: "Characters cycle through random glyphs before resolving, left to right.",
     detail: "On hover, each character cycles through random alphanumerics at ~30fps. Characters resolve left to right — leftmost locks in first. The effect feels like a terminal decoding a message. The iteration speed is fractional so the decoding isn't perfectly mechanical.",
   },
@@ -120,7 +161,8 @@ const EXPS: Exp[] = [
     id: "abb",
     name: "Apple Bottom Bar",
     date: "Mar 2024",
-    tags: "blur · glass · iOS",
+    tags: ["blur", "glass"],
+    cat: "Visual",
     desc: "Recreation of the frosted-glass pill from the iPhone 15 marketing page.",
     detail: "A rounded pill with backdrop-filter: blur(20px), semi-transparent background, and a subtle white border. The blur radius and opacity are calibrated to match Apple's implementation — most copies get the opacity wrong (too high) or the border wrong (too visible).",
   },
@@ -128,7 +170,8 @@ const EXPS: Exp[] = [
     id: "seg-ctrl",
     name: "Segmented Control",
     date: "Feb 2024",
-    tags: "selection · spring · indicator",
+    tags: ["selection", "spring"],
+    cat: "Input",
     desc: "A pill indicator slides between segments with a spring that slightly overshoots.",
     detail: "Three segments: Design, Code, Ship. A white pill indicator slides under the active segment using cubic-bezier(.34,1.1,.64,1) — just enough overshoot to feel lively. The indicator width morphs to match each button's width.",
   },
@@ -136,7 +179,8 @@ const EXPS: Exp[] = [
     id: "toast",
     name: "Toast Notifications",
     date: "Jan 2026",
-    tags: "feedback · stack · dismiss",
+    tags: ["feedback", "stack"],
+    cat: "Input",
     desc: "Stacked notifications that slide in, queue behind each other, and auto-dismiss.",
     detail: "Three types: success, error, info. New toasts land at the front; older ones stack behind at reduced scale and opacity — a visual metaphor for depth. Each auto-dismisses after 3.5 seconds. Click any toast to remove it early. This is the visual language behind Sonner.",
   },
@@ -144,7 +188,8 @@ const EXPS: Exp[] = [
     id: "drag",
     name: "Drag to Dismiss",
     date: "Dec 2025",
-    tags: "gesture · pointer · spring",
+    tags: ["gesture", "pointer"],
+    cat: "Physics",
     desc: "A card that tracks pointer drag and dismisses when thrown far enough.",
     detail: "Pointer capture keeps tracking even if the cursor leaves the element. On release, velocity is measured — a fast flick dismisses even if the distance was short. A slow drag needs to exceed 80px. Spring return on abandon. This is the interaction model of every mobile bottom sheet.",
   },
@@ -152,7 +197,8 @@ const EXPS: Exp[] = [
     id: "checkbox",
     name: "Checkbox Animation",
     date: "Nov 2025",
-    tags: "SVG · path · micro-interaction",
+    tags: ["SVG", "path"],
+    cat: "Input",
     desc: "A checkmark that draws itself with a spring on check, strikethrough on complete.",
     detail: "An SVG path drives the checkmark draw using stroke-dasharray and stroke-dashoffset. On check: the box scales up with an overshoot spring, background fills, and the checkmark draws left-to-right. Three tasks — check them all.",
   },
@@ -160,7 +206,8 @@ const EXPS: Exp[] = [
     id: "dock",
     name: "macOS Dock",
     date: "Oct 2025",
-    tags: "magnification · cursor · Gaussian",
+    tags: ["magnification", "Gaussian"],
+    cat: "Physics",
     desc: "Icons magnify as the cursor approaches, with Gaussian distance falloff.",
     detail: "Scale is computed as 1 + (maxScale − 1) · e^(−dist² / σ²). The Gaussian falloff means adjacent icons grow proportionally — the icon under the cursor peaks at 1.8×, its neighbours at ~1.4×. σ controls the spread width. On mouseleave, everything springs back with a gentle overshoot.",
   },
@@ -168,15 +215,302 @@ const EXPS: Exp[] = [
     id: "island",
     name: "Dynamic Island",
     date: "Sep 2025",
-    tags: "morphing · Apple · LiveActivity",
+    tags: ["morphing", "Apple"],
+    cat: "Visual",
     desc: "Apple's Dynamic Island with five Live Activity states.",
     detail: "The pill morphs between states using a single div — no clipping, no hidden layers. Width and height animate together with a spring that slightly overshoots. Content fades in 150ms after the shape starts moving, so text never rides a distorting container. Five states: ring, alarm, download, navigation, message.",
   },
 ];
 
+const CATS = ["All", "Physics", "Text", "Visual", "Input", "Scroll"];
+
 /* ════════════════════════════════════════════
    DEMO COMPONENTS
 ════════════════════════════════════════════ */
+
+/* ── Rope Physics ────────────────────────── */
+function RopeDemo() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const stateRef = useRef<{ x: number; y: number; px: number; py: number }[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0, down: false });
+  const rafRef = useRef<number>();
+  const colorsRef = useRef({ fg: "#888", accent: "#C95C2A" });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const N = 24;
+    const REST = 11;
+    const GRAVITY = 0.35;
+    const DAMPING = 0.985;
+    const ITERS = 10;
+
+    const readColors = () => {
+      const s = getComputedStyle(document.documentElement);
+      colorsRef.current.fg = s.getPropertyValue("--fg").trim() || "#1A1916";
+      colorsRef.current.accent = s.getPropertyValue("--accent").trim() || "#C95C2A";
+    };
+    readColors();
+
+    const observer = new MutationObserver(readColors);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+    const init = () => {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      canvas.width = w;
+      canvas.height = h;
+      const pts = [];
+      for (let i = 0; i < N; i++) {
+        const y = 30 + i * REST;
+        pts.push({ x: w / 2, y, px: w / 2, py: y });
+      }
+      stateRef.current = pts;
+    };
+    init();
+
+    const tick = () => {
+      const pts = stateRef.current;
+      if (!pts.length) { rafRef.current = requestAnimationFrame(tick); return; }
+      const { down, x: mx, y: my } = mouseRef.current;
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 1; i < N; i++) {
+        const p = pts[i];
+        const vx = (p.x - p.px) * DAMPING;
+        const vy = (p.y - p.py) * DAMPING;
+        p.px = p.x;
+        p.py = p.y;
+        p.x += vx;
+        p.y += vy + GRAVITY;
+        if (p.x < 2) { p.x = 2; }
+        if (p.x > w - 2) { p.x = w - 2; }
+        if (p.y > h - 2) { p.y = h - 2; p.py = p.y + vy * 0.3; }
+      }
+
+      if (down) {
+        const last = pts[N - 1];
+        last.x = mx; last.y = my;
+        last.px = mx; last.py = my;
+      }
+
+      for (let iter = 0; iter < ITERS; iter++) {
+        pts[0].x = w / 2; pts[0].y = 30;
+        for (let i = 0; i < N - 1; i++) {
+          const a = pts[i]; const b = pts[i + 1];
+          const dx = b.x - a.x; const dy = b.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+          const diff = (dist - REST) / dist * 0.5;
+          if (i !== 0) { a.x += dx * diff; a.y += dy * diff; }
+          b.x -= dx * diff; b.y -= dy * diff;
+        }
+        pts[0].x = w / 2; pts[0].y = 30;
+        if (down) { const last = pts[N - 1]; last.x = mx; last.y = my; }
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < N - 1; i++) {
+        const mx2 = (pts[i].x + pts[i + 1].x) / 2;
+        const my2 = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx2, my2);
+      }
+      ctx.lineTo(pts[N - 1].x, pts[N - 1].y);
+
+      const grad = ctx.createLinearGradient(pts[0].x, pts[0].y, pts[N - 1].x, pts[N - 1].y);
+      grad.addColorStop(0, colorsRef.current.accent + "cc");
+      grad.addColorStop(1, colorsRef.current.accent + "55");
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(pts[0].x, pts[0].y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = colorsRef.current.fg;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(pts[N - 1].x, pts[N - 1].y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = colorsRef.current.accent;
+      ctx.fill();
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      observer.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="exp-demo" style={{ padding: 0, position: "relative" }}>
+      <span className="exp-demo-label" style={{ zIndex: 1 }}>rope physics — drag end</span>
+      <canvas
+        ref={canvasRef}
+        className="d-rope-canvas"
+        style={{ width: "100%", height: "100%" }}
+        onMouseMove={(e) => {
+          const r = canvasRef.current?.getBoundingClientRect();
+          if (!r) return;
+          mouseRef.current.x = e.clientX - r.left;
+          mouseRef.current.y = e.clientY - r.top;
+        }}
+        onMouseDown={() => { mouseRef.current.down = true; }}
+        onMouseUp={() => { mouseRef.current.down = false; }}
+        onMouseLeave={() => { mouseRef.current.down = false; }}
+      />
+    </div>
+  );
+}
+
+/* ── Context Menu ────────────────────────── */
+function CtxDemo() {
+  const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
+  const areaRef = useRef<HTMLDivElement>(null);
+
+  const onContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const rect = areaRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setMenu({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <div className="exp-demo">
+      <span className="exp-demo-label">right-click anywhere</span>
+      <div
+        ref={areaRef}
+        className="d-ctx-area"
+        onContextMenu={onContextMenu}
+        onClick={() => setMenu(null)}
+      >
+        {!menu && "right-click here"}
+        {menu && (
+          <div
+            className="d-ctx-menu"
+            style={{ top: menu.y, left: menu.x }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="d-ctx-item" onClick={() => setMenu(null)}>
+              <span className="d-ctx-icon">✏️</span>
+              Edit
+              <span className="d-ctx-hint">⌘E</span>
+            </div>
+            <div className="d-ctx-item" onClick={() => setMenu(null)}>
+              <span className="d-ctx-icon">📋</span>
+              Copy
+              <span className="d-ctx-hint">⌘C</span>
+            </div>
+            <div className="d-ctx-item" onClick={() => setMenu(null)}>
+              <span className="d-ctx-icon">🔗</span>
+              Share
+            </div>
+            <div className="d-ctx-sep" />
+            <div className="d-ctx-item danger" onClick={() => setMenu(null)}>
+              <span className="d-ctx-icon">🗑</span>
+              Delete
+              <span className="d-ctx-hint">⌫</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── OTP Input ───────────────────────────── */
+function OtpDemo() {
+  const LEN = 6;
+  const [vals, setVals] = useState<string[]>(Array(LEN).fill(""));
+  const refs = useRef<(HTMLInputElement | null)[]>([]);
+  const complete = vals.every((v) => v !== "");
+
+  const reset = () => {
+    setVals(Array(LEN).fill(""));
+    refs.current[0]?.focus();
+  };
+
+  const onChange = (i: number, raw: string) => {
+    const digit = raw.replace(/\D/g, "").slice(-1);
+    if (!digit) return;
+    const next = vals.map((v, idx) => (idx === i ? digit : v));
+    setVals(next);
+    if (i < LEN - 1) refs.current[i + 1]?.focus();
+  };
+
+  const onKeyDown = (i: number, e: React.KeyboardEvent) => {
+    if (e.key === "Backspace") {
+      if (vals[i]) {
+        setVals((v) => v.map((c, idx) => (idx === i ? "" : c)));
+      } else if (i > 0) {
+        refs.current[i - 1]?.focus();
+        setVals((v) => v.map((c, idx) => (idx === i - 1 ? "" : c)));
+      }
+    }
+  };
+
+  const onPaste = (e: React.ClipboardEvent, start: number) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text").replace(/\D/g, "");
+    const next = [...vals];
+    for (let i = 0; i < text.length && start + i < LEN; i++) {
+      next[start + i] = text[i];
+    }
+    setVals(next);
+    const focus = Math.min(start + text.length, LEN - 1);
+    refs.current[focus]?.focus();
+  };
+
+  return (
+    <div className="exp-demo" style={{ flexDirection: "column", gap: "20px" }}>
+      <span className="exp-demo-label">otp input</span>
+      <div className="d-otp-wrap">
+        {vals.map((v, i) => (
+          <input
+            key={i}
+            ref={(el) => { refs.current[i] = el; }}
+            className={`d-otp-input${v ? " filled" : ""}`}
+            type="text"
+            inputMode="numeric"
+            pattern="\d*"
+            maxLength={1}
+            value={v}
+            onChange={(e) => onChange(i, e.target.value)}
+            onKeyDown={(e) => onKeyDown(i, e)}
+            onPaste={(e) => onPaste(e, i)}
+            onFocus={(e) => e.target.select()}
+          />
+        ))}
+      </div>
+      {complete ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--green)" }}>
+            ✓ code verified
+          </p>
+          <button
+            onClick={reset}
+            style={{ fontFamily: "var(--font-mono)", fontSize: "10.5px", color: "var(--fg-subtle)", background: "none", border: "1px solid var(--border)", borderRadius: "4px", padding: "3px 10px", cursor: "pointer" }}
+          >
+            ↺ reset
+          </button>
+        </div>
+      ) : (
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--fg-subtle)" }}>
+          enter code or paste
+        </p>
+      )}
+    </div>
+  );
+}
 
 /* ── Variable Font Morph ─────────────────── */
 function VarFontDemo() {
@@ -205,14 +539,6 @@ function VarFontDemo() {
 
 /* ── Bento Grid ──────────────────────────── */
 function BentoDemo() {
-  const card = (style?: React.CSSProperties) => ({
-    padding: "16px",
-    border: "1px solid var(--border)",
-    borderRadius: "8px",
-    background: "var(--bg-subtle)",
-    transition: "box-shadow 140ms ease, transform 140ms ease",
-    ...style,
-  });
   const lift = (e: React.MouseEvent<HTMLDivElement>) => {
     (e.currentTarget as HTMLElement).style.cssText += ";box-shadow:var(--shadow-md);transform:translateY(-2px)";
   };
@@ -220,6 +546,11 @@ function BentoDemo() {
     (e.currentTarget as HTMLElement).style.boxShadow = "";
     (e.currentTarget as HTMLElement).style.transform = "";
   };
+  const card = (extra?: React.CSSProperties): React.CSSProperties => ({
+    padding: "16px", border: "1px solid var(--border)", borderRadius: "8px",
+    background: "var(--bg-subtle)", transition: "box-shadow 140ms ease, transform 140ms ease",
+    cursor: "default", ...extra,
+  });
 
   return (
     <div className="exp-demo" style={{ padding: "16px" }}>
@@ -233,7 +564,7 @@ function BentoDemo() {
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", padding: "1px 5px", borderRadius: "2px", color: "var(--green)", background: "var(--green-bg)" }}>production</span>
         </div>
         <div style={card()} onMouseEnter={lift} onMouseLeave={drop}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-muted)", lineHeight: 1.6 }}>&ldquo;The best way to learn a system is to build it yourself.&rdquo;</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-muted)", lineHeight: 1.6 }}>&ldquo;Build it. Ship it. Maintain it.&rdquo;</div>
         </div>
       </div>
     </div>
@@ -285,7 +616,7 @@ function SpringBtnDemo() {
     <div className="exp-demo" style={{ position: "relative" }}>
       <span className="exp-demo-label">spring physics</span>
       {flashing && (
-        <div style={{ position: "absolute", inset: 0, borderRadius: "8px", background: "var(--accent-subtle)", animation: "d-pulse-flash 300ms ease-out forwards", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, borderRadius: "8px", background: "var(--accent-bg)", animation: "d-pulse-flash 300ms ease-out forwards", pointerEvents: "none" }} />
       )}
       <button className="d-spring-btn" onClick={flash}>Press me</button>
     </div>
@@ -372,39 +703,31 @@ function TiltCardDemo() {
     setLeaving(false);
   };
 
-  const onLeave = () => { setTilt({ x: 0, y: 0 }); setLeaving(true); };
-
   return (
     <div className="exp-demo" style={{ perspective: "700px" }}>
       <span className="exp-demo-label">tilt card</span>
       <div
         ref={cardRef}
         onMouseMove={onMove}
-        onMouseLeave={onLeave}
+        onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setLeaving(true); }}
         style={{
-          width: "200px",
-          padding: "24px",
-          border: "1px solid var(--border)",
-          borderRadius: "16px",
+          width: "200px", padding: "24px",
+          border: "1px solid var(--border)", borderRadius: "16px",
           background: "var(--bg-card)",
           boxShadow: leaving ? "var(--shadow-md)" : `${-tilt.y * 0.6}px ${tilt.x * 0.6}px 24px rgba(0,0,0,.14)`,
           transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           transition: leaving ? "transform 500ms cubic-bezier(.25,.46,.45,.94), box-shadow 500ms ease" : "none",
-          position: "relative",
-          overflow: "hidden",
-          cursor: "none",
+          position: "relative", overflow: "hidden", cursor: "none",
         }}
       >
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: `radial-gradient(circle at ${hl.x}% ${hl.y}%, rgba(255,255,255,0.4) 0%, transparent 65%)`,
-            mixBlendMode: "overlay" as const,
-            pointerEvents: "none",
-            transition: leaving ? "opacity 300ms ease" : "none",
-            opacity: leaving ? 0 : 1,
-          }}
-        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: `radial-gradient(circle at ${hl.x}% ${hl.y}%, rgba(255,255,255,0.4) 0%, transparent 65%)`,
+          mixBlendMode: "overlay" as const,
+          pointerEvents: "none",
+          transition: leaving ? "opacity 300ms ease" : "none",
+          opacity: leaving ? 0 : 1,
+        }} />
         <p style={{ fontSize: "13px", fontWeight: 500, color: "var(--fg)", marginBottom: "4px" }}>Tatenda Chinyamakobvu</p>
         <p style={{ fontSize: "11.5px", color: "var(--fg-muted)" }}>Full-stack engineer</p>
         <p style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--fg-subtle)", marginTop: "12px" }}>Corelith · Zimbabwe</p>
@@ -615,8 +938,6 @@ function ScrambleDemo() {
   const [display, setDisplay] = useState(TARGET);
   const rafRef = useRef<number>();
   const t0 = useRef(0);
-  const LOCK_DELAY = 65;
-  const SCRAMBLE_DUR = 320;
 
   const scramble = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -625,7 +946,7 @@ function ScrambleDemo() {
       const elapsed = now - t0.current;
       let allDone = true;
       const result = TARGET.split("").map((ch, i) => {
-        if (elapsed >= i * LOCK_DELAY + SCRAMBLE_DUR) return ch;
+        if (elapsed >= i * 65 + 320) return ch;
         allDone = false;
         return CHARS[Math.floor(Math.random() * CHARS.length)];
       });
@@ -705,14 +1026,10 @@ function SegCtrlDemo() {
             onClick={() => setActive(i)}
             style={{
               position: "relative", zIndex: 1,
-              padding: "7px 18px",
-              background: "none", border: "none",
-              cursor: "pointer",
-              fontFamily: "var(--font-sans)", fontSize: "13px",
+              padding: "7px 18px", background: "none", border: "none",
+              cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "13px",
               color: active === i ? "var(--fg)" : "var(--fg-muted)",
-              transition: "color 140ms ease",
-              borderRadius: "5px",
-              whiteSpace: "nowrap",
+              transition: "color 140ms ease", borderRadius: "5px", whiteSpace: "nowrap",
             }}
           >
             {seg}
@@ -787,12 +1104,9 @@ function DragDemo() {
 
   const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
-    dragging.current = true;
-    setIsDragging(true);
+    dragging.current = true; setIsDragging(true);
     startY.current = e.clientY - yRef.current;
-    lastYRef.current = e.clientY;
-    lastTRef.current = performance.now();
-    velRef.current = 0;
+    lastYRef.current = e.clientY; lastTRef.current = performance.now(); velRef.current = 0;
   };
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -800,22 +1114,17 @@ function DragDemo() {
     const newY = Math.max(0, e.clientY - startY.current);
     const dt = performance.now() - lastTRef.current;
     if (dt > 0) velRef.current = (e.clientY - lastYRef.current) / dt;
-    lastYRef.current = e.clientY;
-    lastTRef.current = performance.now();
+    lastYRef.current = e.clientY; lastTRef.current = performance.now();
     updateY(newY);
   };
 
   const onUp = () => {
     if (!dragging.current) return;
-    dragging.current = false;
-    setIsDragging(false);
+    dragging.current = false; setIsDragging(false);
     if (yRef.current > 80 || velRef.current > 0.5) {
       updateY(300);
       setTimeout(() => { setDismissed(true); updateY(0); }, 280);
-    } else {
-      velRef.current = 0;
-      updateY(0);
-    }
+    } else { velRef.current = 0; updateY(0); }
   };
 
   return (
@@ -824,10 +1133,7 @@ function DragDemo() {
       {dismissed ? (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--fg-subtle)" }}>dismissed ✓</span>
-          <button
-            style={{ fontFamily: "var(--font-mono)", fontSize: "11px", padding: "4px 10px", background: "none", border: "1px solid var(--border)", borderRadius: "4px", cursor: "pointer", color: "var(--fg-muted)" }}
-            onClick={() => setDismissed(false)}
-          >↺ restore</button>
+          <button style={{ fontFamily: "var(--font-mono)", fontSize: "11px", padding: "4px 10px", background: "none", border: "1px solid var(--border)", borderRadius: "4px", cursor: "pointer", color: "var(--fg-muted)" }} onClick={() => setDismissed(false)}>↺ restore</button>
         </div>
       ) : (
         <div
@@ -877,12 +1183,7 @@ function CheckboxDemo() {
               />
             </svg>
           </div>
-          <span style={{
-            fontSize: "13px",
-            color: checked[i] ? "var(--fg-subtle)" : "var(--fg)",
-            textDecoration: checked[i] ? "line-through" : "none",
-            transition: "color 200ms ease",
-          }}>
+          <span style={{ fontSize: "13px", color: checked[i] ? "var(--fg-subtle)" : "var(--fg)", textDecoration: checked[i] ? "line-through" : "none", transition: "color 200ms ease" }}>
             {task}
           </span>
         </div>
@@ -920,19 +1221,11 @@ function DockDemo() {
         {ICONS.map((icon, i) => {
           const s = getScale(i);
           return (
-            <div
-              key={i}
-              className="d-dock-icon"
-              style={{
-                width: `${BASE}px`,
-                height: `${BASE}px`,
-                fontSize: "22px",
-                transform: `translateY(${-(s - 1) * BASE * 0.5}px) scale(${s})`,
-                transition: mouseX !== null ? "transform 60ms ease" : "transform 300ms cubic-bezier(.34,1.2,.64,1)",
-              }}
-            >
-              {icon}
-            </div>
+            <div key={i} className="d-dock-icon" style={{
+              width: `${BASE}px`, height: `${BASE}px`, fontSize: "22px",
+              transform: `translateY(${-(s - 1) * BASE * 0.5}px) scale(${s})`,
+              transition: mouseX !== null ? "transform 60ms ease" : "transform 300ms cubic-bezier(.34,1.2,.64,1)",
+            }}>{icon}</div>
           );
         })}
       </div>
@@ -943,12 +1236,9 @@ function DockDemo() {
 /* ── Dynamic Island ──────────────────────── */
 type IslandState = "idle" | "ring" | "alarm" | "download" | "nav" | "message";
 const ISLAND_DIMS: Record<IslandState, { w: number; h: number }> = {
-  idle:     { w: 126, h: 32 },
-  ring:     { w: 316, h: 84 },
-  alarm:    { w: 258, h: 74 },
-  download: { w: 252, h: 76 },
-  nav:      { w: 252, h: 74 },
-  message:  { w: 288, h: 88 },
+  idle: { w: 126, h: 32 }, ring: { w: 316, h: 84 },
+  alarm: { w: 258, h: 74 }, download: { w: 252, h: 76 },
+  nav: { w: 252, h: 74 }, message: { w: 288, h: 88 },
 };
 
 function IslandDemo() {
@@ -961,8 +1251,7 @@ function IslandDemo() {
   const activate = (s: IslandState) => {
     clearTimeout(autoRef.current);
     cancelAnimationFrame(rafRef.current!);
-    setVis(false);
-    setState(s);
+    setVis(false); setState(s);
     setTimeout(() => setVis(true), 160);
     if (s === "download") {
       setProg(0);
@@ -970,56 +1259,36 @@ function IslandDemo() {
       const tick = (now: number) => {
         const p = Math.min((now - t0) / 3800, 1);
         setProg(p * 100);
-        if (p < 1) {
-          rafRef.current = requestAnimationFrame(tick);
-        } else {
-          autoRef.current = setTimeout(() => {
-            setVis(false);
-            setTimeout(() => setState("idle"), 200);
-          }, 900);
-        }
+        if (p < 1) { rafRef.current = requestAnimationFrame(tick); }
+        else { autoRef.current = setTimeout(() => { setVis(false); setTimeout(() => setState("idle"), 200); }, 900); }
       };
       rafRef.current = requestAnimationFrame(tick);
     } else {
-      autoRef.current = setTimeout(() => {
-        setVis(false);
-        setTimeout(() => setState("idle"), 200);
-      }, 5000);
+      autoRef.current = setTimeout(() => { setVis(false); setTimeout(() => setState("idle"), 200); }, 5000);
     }
   };
 
   useEffect(() => () => { clearTimeout(autoRef.current); cancelAnimationFrame(rafRef.current!); }, []);
 
   const { w, h } = ISLAND_DIMS[state];
-  const R = 20;
-  const circ = 2 * Math.PI * R;
-  const dashOffset = circ * (1 - prog / 100);
+  const R = 20; const circ = 2 * Math.PI * R;
 
   return (
     <div className="exp-demo" style={{ flexDirection: "column", gap: "18px", paddingTop: "6px" }}>
       <span className="exp-demo-label">dynamic island</span>
-
       <div style={{ display: "flex", justifyContent: "center", minHeight: "100px", alignItems: "flex-start" }}>
         <div style={{
-          width: `${w}px`, height: `${h}px`,
-          background: "#000",
-          borderRadius: "100px",
-          overflow: "hidden",
+          width: `${w}px`, height: `${h}px`, background: "#000",
+          borderRadius: "100px", overflow: "hidden",
           transition: "width 420ms cubic-bezier(.34,1.15,.64,1), height 420ms cubic-bezier(.34,1.15,.64,1)",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
-          <div style={{
-            opacity: vis && state !== "idle" ? 1 : 0,
-            transition: "opacity 180ms ease",
-            width: "100%", height: "100%",
-            padding: "0 14px",
-            display: "flex", alignItems: "center", gap: "10px",
-          }}>
+          <div style={{ opacity: vis && state !== "idle" ? 1 : 0, transition: "opacity 180ms ease", width: "100%", height: "100%", padding: "0 14px", display: "flex", alignItems: "center", gap: "10px" }}>
             {state === "ring" && (
               <>
                 <div style={{ width: "46px", height: "46px", borderRadius: "50%", background: "rgba(34,197,94,.18)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>👤</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.45)", letterSpacing: ".02em" }}>Incoming Call</div>
+                  <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,.45)" }}>Incoming Call</div>
                   <div style={{ fontSize: "14px", fontWeight: 600, color: "#fff", marginTop: "1px" }}>Tatenda C.</div>
                   <div style={{ display: "flex", gap: "2px", alignItems: "center", height: "14px", marginTop: "4px" }}>
                     {[0.4, 0.8, 1, 0.6, 0.9, 0.5, 0.75, 1, 0.45, 0.65].map((amp, i) => (
@@ -1055,15 +1324,7 @@ function IslandDemo() {
                 </div>
                 <svg width="50" height="50" viewBox="0 0 50 50" style={{ flexShrink: 0 }}>
                   <circle cx="25" cy="25" r={R} fill="none" stroke="rgba(255,255,255,.15)" strokeWidth="3" />
-                  <circle
-                    cx="25" cy="25" r={R} fill="none"
-                    stroke="rgba(255,255,255,.9)" strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeDasharray={circ}
-                    strokeDashoffset={dashOffset}
-                    transform="rotate(-90 25 25)"
-                    style={{ transition: "stroke-dashoffset 80ms linear" }}
-                  />
+                  <circle cx="25" cy="25" r={R} fill="none" stroke="rgba(255,255,255,.9)" strokeWidth="3" strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={circ * (1 - prog / 100)} transform="rotate(-90 25 25)" style={{ transition: "stroke-dashoffset 80ms linear" }} />
                   <text x="25" y="25" textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="monospace">{Math.round(prog)}%</text>
                 </svg>
               </>
@@ -1094,15 +1355,9 @@ function IslandDemo() {
           </div>
         </div>
       </div>
-
       <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", justifyContent: "center" }}>
         {(["ring", "alarm", "download", "nav", "message"] as IslandState[]).map((s) => (
-          <button
-            key={s}
-            className="d-island-btn"
-            data-active={state === s}
-            onClick={() => activate(s)}
-          >
+          <button key={s} className="d-island-btn" data-active={state === s} onClick={() => activate(s)}>
             {s === "ring" ? "📞 Ring" : s === "alarm" ? "⏰ Alarm" : s === "download" ? "⬇ Download" : s === "nav" ? "↗ Nav" : "💬 Message"}
           </button>
         ))}
@@ -1115,15 +1370,64 @@ function IslandDemo() {
    CODE SNIPPETS
 ════════════════════════════════════════════ */
 const CODE: Record<ExpId, string> = {
+  rope: `<span class="cm">// Verlet integration — velocity from delta</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i < N; i++) {
+  <span class="kw">const</span> vx = (p.x - p.px) * DAMPING
+  <span class="kw">const</span> vy = (p.y - p.py) * DAMPING
+  p.px = p.x;  p.py = p.y
+  p.x += vx;   p.y += vy + GRAVITY
+}
+
+<span class="cm">// Constraint solver — 10 iterations</span>
+<span class="kw">for</span> (<span class="kw">let</span> iter = <span class="num">0</span>; iter < <span class="num">10</span>; iter++) {
+  <span class="kw">const</span> d = Math.<span class="fn">sqrt</span>(dx*dx + dy*dy) || <span class="num">0.001</span>
+  <span class="kw">const</span> diff = (d - REST) / d * <span class="num">0.5</span>
+  a.x += dx * diff;  b.x -= dx * diff
+  a.y += dy * diff;  b.y -= dy * diff
+}`,
+
+  ctx: `<span class="cm">// Spawn at cursor, dismiss on outside click</span>
+<span class="kw">const</span> <span class="fn">onContextMenu</span> = (e: MouseEvent) => {
+  e.<span class="fn">preventDefault</span>()
+  <span class="kw">const</span> rect = ref.current!.<span class="fn">getBoundingClientRect</span>()
+  <span class="fn">setMenu</span>({ x: e.clientX - rect.left,
+              y: e.clientY - rect.top })
+}
+
+<span class="cm">/* Entrance animation */</span>
+@keyframes <span class="fn">ctxIn</span> {
+  <span class="kw">from</span> {
+    opacity: <span class="num">0</span>;
+    transform: scale(.<span class="num">92</span>) translateY(-<span class="num">6px</span>);
+  }
+  <span class="kw">to</span> {
+    opacity: <span class="num">1</span>;
+    transform: scale(<span class="num">1</span>) translateY(<span class="num">0</span>);
+  }
+}`,
+
+  otp: `<span class="cm">// Auto-advance on digit input</span>
+<span class="kw">const</span> <span class="fn">onChange</span> = (i: <span class="kw">number</span>, v: <span class="kw">string</span>) => {
+  <span class="kw">const</span> digit = v.<span class="fn">replace</span>(<span class="str">/\D/g</span>, <span class="str">''</span>).<span class="fn">slice</span>(-<span class="num">1</span>)
+  <span class="kw">if</span> (!digit) <span class="kw">return</span>
+  <span class="fn">setVals</span>(prev => prev.<span class="fn">map</span>((c, idx) =>
+    idx === i ? digit : c))
+  <span class="kw">if</span> (i < LEN - <span class="num">1</span>) refs.current[i + <span class="num">1</span>]?.<span class="fn">focus</span>()
+}
+
+<span class="cm">// Paste distributes from insertion point</span>
+<span class="kw">const</span> text = e.clipboardData.<span class="fn">getData</span>(<span class="str">'text'</span>)
+  .<span class="fn">replace</span>(<span class="str">/\D/g</span>, <span class="str">''</span>)
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < text.length && start + i < LEN; i++)
+  next[start + i] = text[i]`,
+
   "var-font": `<span class="cm">/* Animate weight axis on hover */</span>
 .<span class="fn">word</span> {
   <span class="prop">font-variation-settings</span>: <span class="str">'wght'</span> <span class="kw">var</span>(--weight, <span class="num">300</span>);
   <span class="prop">transition</span>: font-variation-settings
     <span class="num">400ms</span> cubic-bezier(.<span class="num">34</span>,<span class="num">1.3</span>,.<span class="num">64</span>,<span class="num">1</span>);
 }
-.<span class="fn">word</span>:hover {
-  --weight: <span class="num">800</span>;
-}
+.<span class="fn">word</span>:hover { --weight: <span class="num">800</span>; }
 
 <span class="cm">/* Or drive with JS for a range slider */</span>
 <span class="kw">const</span> [weight, setWeight] = <span class="fn">useState</span>(<span class="num">300</span>)
@@ -1134,8 +1438,7 @@ style={{ fontVariationSettings: \`<span class="str">'wght' \${weight}</span>\` }
   <span class="prop">grid-template-columns</span>: <span class="num">1fr 1fr</span>;
   <span class="prop">grid-template-areas</span>:
     <span class="str">"hero hero"</span>
-    <span class="str">"stat  quote"</span>
-    <span class="str">"tags  location"</span>;
+    <span class="str">"stat  quote"</span>;
   <span class="prop">gap</span>: <span class="num">8px</span>;
 }
 .<span class="fn">hero</span> { <span class="prop">grid-area</span>: hero }
@@ -1167,8 +1470,7 @@ container.<span class="fn">addEventListener</span>(<span class="str">'scroll'</s
   "spring-btn": `<span class="cm">/* Squash on press, spring on release */</span>
 .<span class="fn">btn</span>:active {
   transform: scaleY(<span class="num">0.92</span>) scaleX(<span class="num">1.04</span>);
-  transition: transform <span class="num">80ms</span> ease-in,
-              box-shadow <span class="num">80ms</span> ease-in;
+  transition: transform <span class="num">80ms</span> ease-in;
 }
 .<span class="fn">btn</span> {
   <span class="prop">transition</span>:
@@ -1181,7 +1483,6 @@ container.<span class="fn">addEventListener</span>(<span class="str">'scroll'</s
   "cursor-trail": `<span class="cm">// 12 nodes with decreasing spring stiffness</span>
 <span class="kw">const</span> N = nodes.current
 N[<span class="num">0</span>].x += (mouse.x - N[<span class="num">0</span>].x) * <span class="num">0.45</span>
-N[<span class="num">0</span>].y += (mouse.y - N[<span class="num">0</span>].y) * <span class="num">0.45</span>
 
 <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i < N.length; i++) {
   <span class="kw">const</span> k = Math.<span class="fn">max</span>(<span class="num">0.1</span>, <span class="num">0.38</span> - i * <span class="num">0.025</span>)
@@ -1192,20 +1493,16 @@ N[<span class="num">0</span>].y += (mouse.y - N[<span class="num">0</span>].y) *
   "tilt-card": `<span class="cm">// Map cursor position to rotation</span>
 <span class="kw">const</span> nx = (clientX - rect.left) / rect.width
 <span class="kw">const</span> ny = (clientY - rect.top) / rect.height
-<span class="fn">setTilt</span>({
-  x: (ny - <span class="num">0.5</span>) * -<span class="num">14</span>,
-  y: (nx - <span class="num">0.5</span>) * <span class="num">14</span>,
-})
+<span class="fn">setTilt</span>({ x: (ny - <span class="num">0.5</span>) * -<span class="num">14</span>, y: (nx - <span class="num">0.5</span>) * <span class="num">14</span> })
 
 <span class="cm">// Highlight tracks cursor</span>
 style={{ background:
   \`radial-gradient(circle at
     \${nx * <span class="num">100</span>}% \${ny * <span class="num">100</span>}%,
-    rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>,<span class="num">0.4</span>) <span class="num">0</span>%,
-    transparent <span class="num">65</span>%)\`,
+    rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>,<span class="num">0.4</span>) <span class="num">0</span>%, transparent <span class="num">65</span>%)\`,
   mixBlendMode: <span class="str">'overlay'</span> }}`,
 
-  cmd: `<span class="cm">// Fuzzy match — typing "git" matches "Open GitHub"</span>
+  cmd: `<span class="cm">// Fuzzy match — "git" matches "Open GitHub"</span>
 <span class="kw">function</span> <span class="fn">fuzzyMatch</span>(str: <span class="kw">string</span>, q: <span class="kw">string</span>) {
   <span class="kw">let</span> si = <span class="num">0</span>
   <span class="kw">for</span> (<span class="kw">const</span> ch <span class="kw">of</span> q.<span class="fn">toLowerCase</span>()) {
@@ -1214,17 +1511,7 @@ style={{ background:
     si = i + <span class="num">1</span>
   }
   <span class="kw">return true</span>
-}
-
-<span class="cm">// Global ⌘K listener</span>
-<span class="fn">useEffect</span>(() => {
-  <span class="kw">const</span> h = (e: KeyboardEvent) => {
-    <span class="kw">if</span> ((e.metaKey || e.ctrlKey) && e.key === <span class="str">'k'</span>)
-      <span class="fn">setOpen</span>(<span class="kw">true</span>)
-  }
-  window.<span class="fn">addEventListener</span>(<span class="str">'keydown'</span>, h)
-  <span class="kw">return</span> () => window.<span class="fn">removeEventListener</span>(<span class="str">'keydown'</span>, h)
-}, [])`,
+}`,
 
   mag: `<span class="cm">// Translate toward cursor centre</span>
 <span class="kw">const</span> <span class="fn">onMove</span> = (e: MouseEvent) => {
@@ -1233,13 +1520,10 @@ style={{ background:
   <span class="kw">const</span> dy = e.clientY - (r.top + r.height / <span class="num">2</span>)
   <span class="fn">setPos</span>({ x: dx * <span class="num">0.35</span>, y: dy * <span class="num">0.35</span> })
 }
-
-style={{
-  transform: \`translate(\${pos.x}px, \${pos.y}px)\`,
+style={{ transform: \`translate(\${pos.x}px, \${pos.y}px)\`,
   transition: hovering
     ? <span class="str">'transform 80ms linear'</span>
-    : <span class="str">'transform 400ms cubic-bezier(.23,1,.32,1)'</span>
-}}`,
+    : <span class="str">'transform 400ms cubic-bezier(.23,1,.32,1)'</span> }}`,
 
   cnt: `<span class="cm">// easeOutCubic counter via rAF</span>
 <span class="kw">const</span> t0 = performance.<span class="fn">now</span>()
@@ -1249,8 +1533,7 @@ style={{
     (<span class="num">1</span> - (<span class="num">1</span> - p) ** <span class="num">3</span>) * target
   ))
   <span class="kw">if</span> (p < <span class="num">1</span>) <span class="fn">requestAnimationFrame</span>(tick)
-}
-<span class="fn">requestAnimationFrame</span>(tick)`,
+}`,
 
   stk: `<span class="cm">/* CSS drives all transforms */</span>
 .<span class="fn">d-stack-img</span> {
@@ -1260,9 +1543,6 @@ style={{
 .<span class="fn">spread</span> :nth-child(<span class="num">1</span>) {
   transform: translateX(-<span class="num">24px</span>) rotate(-<span class="num">8deg</span>);
 }
-.<span class="fn">spread</span> :nth-child(<span class="num">2</span>) {
-  transform: translateX(-<span class="num">8px</span>) rotate(-<span class="num">3deg</span>);
-}
 
 <span class="cm">// React toggles the class</span>
 <span class="kw">const</span> [spread, setSpread] = <span class="fn">useState</span>(<span class="kw">false</span>)`,
@@ -1271,9 +1551,7 @@ style={{
 &lt;filter id=<span class="str">"noise"</span>&gt;
   &lt;feTurbulence
     type=<span class="str">"fractalNoise"</span>
-    baseFrequency=<span class="str">"0.65"</span>
-    numOctaves=<span class="str">"3"</span> /&gt;
-  &lt;feColorMatrix type=<span class="str">"saturate"</span> values=<span class="str">"0"</span> /&gt;
+    baseFrequency=<span class="str">"0.65"</span> numOctaves=<span class="str">"3"</span> /&gt;
 &lt;/filter&gt;
 
 <span class="cm">/* Light sweep on hover */</span>
@@ -1284,9 +1562,7 @@ style={{
     transparent <span class="num">70%</span>);
   background-size: <span class="num">200%</span>;
 }
-.<span class="fn">btn</span>:hover .<span class="fn">shine</span> {
-  background-position: -<span class="num">100%</span>;
-}`,
+.<span class="fn">btn</span>:hover .<span class="fn">shine</span> { background-position: -<span class="num">100%</span>; }`,
 
   scramble: `<span class="cm">// Characters resolve left-to-right via rAF</span>
 <span class="kw">const</span> CHARS = <span class="str">"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"</span>
@@ -1306,7 +1582,6 @@ style={{
 .<span class="fn">pill</span> {
   background: rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>, .<span class="num">75</span>);
   backdrop-filter: blur(<span class="num">20px</span>);
-  -webkit-backdrop-filter: blur(<span class="num">20px</span>);
   border: <span class="num">1px</span> solid rgba(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>, .<span class="num">5</span>);
   border-radius: <span class="num">100px</span>;
 }
@@ -1335,28 +1610,23 @@ style={{
   transform: \`translateY(\${fromTop * -<span class="num">9</span>}px)
     scale(\${<span class="num">1</span> - fromTop * <span class="num">0.05</span>})\`,
   opacity: <span class="num">1</span> - fromTop * <span class="num">0.18</span>,
-  zIndex: i,
 }}
 
-<span class="cm">// Auto-dismiss after 3.5s</span>
-<span class="fn">setTimeout</span>(() => <span class="fn">remove</span>(id), <span class="num">3500</span>)
+<span class="cm">// Auto-dismiss after 3.5s, max 3 in stack</span>
+<span class="fn">setTimeout</span>(() => <span class="fn">remove</span>(id), <span class="num">3500</span>)`,
 
-<span class="cm">// Max 3 toasts in stack</span>
-<span class="fn">setToasts</span>(prev => [...prev.<span class="fn">slice</span>(-<span class="num">2</span>), { id, msg, type }])`,
-
-  drag: `<span class="cm">// Pointer capture — tracks outside element bounds</span>
+  drag: `<span class="cm">// Pointer capture — tracks outside element</span>
 <span class="kw">const</span> <span class="fn">onDown</span> = (e: PointerEvent) => {
   e.currentTarget.<span class="fn">setPointerCapture</span>(e.pointerId)
   startY.current = e.clientY - yRef.current
 }
 
-<span class="cm">// Velocity-based dismiss on release</span>
+<span class="cm">// Velocity-based dismiss</span>
 <span class="kw">const</span> <span class="fn">onUp</span> = () => {
-  <span class="kw">if</span> (yRef.current > <span class="num">80</span> || vel.current > <span class="num">0.5</span>) {
+  <span class="kw">if</span> (yRef.current > <span class="num">80</span> || vel.current > <span class="num">0.5</span>)
     <span class="fn">dismiss</span>()   <span class="cm">// fast flick OR far drag</span>
-  } <span class="kw">else</span> {
+  <span class="kw">else</span>
     <span class="fn">setY</span>(<span class="num">0</span>)    <span class="cm">// spring back</span>
-  }
 }`,
 
   checkbox: `<span class="cm">/* Draw checkmark via stroke-dashoffset */</span>
@@ -1370,9 +1640,8 @@ style={{
 
 <span class="cm">/* Box springs on check */</span>
 .<span class="fn">checkbox</span>.<span class="fn">checked</span> {
-  <span class="prop">background</span>: var(--accent);
-  <span class="prop">transform</span>: scale(<span class="num">1.1</span>);
-  <span class="prop">transition</span>: transform <span class="num">150ms</span>
+  transform: scale(<span class="num">1.1</span>);
+  transition: transform <span class="num">150ms</span>
     cubic-bezier(.<span class="num">34</span>, <span class="num">1.56</span>, .<span class="num">64</span>, <span class="num">1</span>);
 }`,
 
@@ -1382,9 +1651,7 @@ style={{
   <span class="kw">return</span> <span class="num">1</span> + (MAX - <span class="num">1</span>) *
     Math.<span class="fn">exp</span>(-(dist * dist) / (σ * σ))
 }
-
-<span class="cm">// σ = 55 → icon at 1 gap away ≈ 1.4×</span>
-<span class="cm">// σ = 80 → wider, softer falloff</span>
+<span class="cm">// σ = 55 → icon at 1 gap ≈ 1.4×</span>
 transform: \`translateY(\${-(s-<span class="num">1</span>)*BASE*<span class="num">0.5</span>}px)
   scale(\${s})\``,
 
@@ -1393,18 +1660,20 @@ style={{
   <span class="prop">width</span>:  \`\${dims.w}px\`,
   <span class="prop">height</span>: \`\${dims.h}px\`,
   <span class="prop">borderRadius</span>: <span class="str">'100px'</span>,
-  <span class="prop">background</span>: <span class="str">'#000'</span>,
   <span class="prop">transition</span>:
     <span class="str">'width 420ms cubic-bezier(.34,1.15,.64,1),'</span> +
     <span class="str">'height 420ms cubic-bezier(.34,1.15,.64,1)'</span>,
 }}
 
-<span class="cm">// Content fades in 160ms after morph starts</span>
+<span class="cm">// Content fades 160ms after morph starts</span>
 opacity: vis && state !== <span class="str">'idle'</span> ? <span class="num">1</span> : <span class="num">0</span>,
 transition: <span class="str">'opacity 180ms ease'</span>`,
 };
 
 const DEMOS: Record<ExpId, React.FC> = {
+  rope: RopeDemo,
+  ctx: CtxDemo,
+  otp: OtpDemo,
   "var-font": VarFontDemo,
   bento: BentoDemo,
   "scroll-progress": ScrollProgressDemo,
@@ -1430,10 +1699,12 @@ const DEMOS: Record<ExpId, React.FC> = {
    MAIN COMPONENT
 ════════════════════════════════════════════ */
 export default function Experiments() {
-  const [active, setActive] = useState<ExpId>("var-font");
-  const [view, setView] = useState<"demo" | "code">("demo");
-  const [fading, setFading] = useState(false);
+  const [openId, setOpenId] = useState<ExpId | null>(null);
+  const [views, setViews] = useState<Partial<Record<ExpId, "demo" | "code">>>({});
+  const [cat, setCat] = useState("All");
+  const [barShadow, setBarShadow] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -1446,89 +1717,118 @@ export default function Experiments() {
     return () => obs.disconnect();
   }, []);
 
-  const switchTo = (id: ExpId) => {
-    if (id === active) return;
-    setFading(true);
-    setTimeout(() => { setActive(id); setView("demo"); setFading(false); }, 140);
+  useEffect(() => {
+    const handler = () => {
+      const bar = barRef.current;
+      if (!bar) return;
+      const rect = bar.getBoundingClientRect();
+      setBarShadow(rect.top <= 0);
+    };
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  const toggle = (id: ExpId) => {
+    setOpenId((prev) => prev === id ? null : id);
+    setViews((prev) => ({ ...prev, [id]: prev[id] ?? "demo" }));
   };
 
-  const current = EXPS.find((e) => e.id === active)!;
-  const DemoComponent = DEMOS[active];
+  const getView = (id: ExpId) => views[id] ?? "demo";
+  const setView = (id: ExpId, v: "demo" | "code") =>
+    setViews((prev) => ({ ...prev, [id]: v }));
+
+  const filtered = cat === "All" ? EXPS : EXPS.filter((e) => e.cat === cat);
 
   return (
     <section id="exp-section" ref={sectionRef}>
-      {/* sticky bar */}
-      <div className="exp-bar">
-        <div className="exp-bar-left">
-          <span className="exp-bar-title">Experiments</span>
-          <span className="exp-bar-count">{EXPS.length}</span>
+      <div ref={barRef} className={`exp-bar${barShadow ? " shadow" : ""}`}>
+        <div className="exp-bar-top">
+          <div className="exp-bar-left">
+            <span className="exp-bar-title">Experiments</span>
+            <span className="exp-bar-count">{filtered.length}</span>
+          </div>
         </div>
-      </div>
-
-      {/* mobile tabs */}
-      <div className="exp-mobile-tabs">
-        {EXPS.map((exp) => (
-          <button
-            key={exp.id}
-            className={`exp-mobile-tab${active === exp.id ? " active" : ""}`}
-            onClick={() => switchTo(exp.id)}
-          >
-            {exp.name}
-          </button>
-        ))}
-      </div>
-
-      {/* split */}
-      <div className="exp-split">
-        {/* list */}
-        <div className="exp-list-col">
-          {EXPS.map((exp, i) => (
-            <div key={exp.id}>
-              {i > 0 && <div className="exp-list-divider" />}
-              <div
-                className={`exp-list-item${active === exp.id ? " active" : ""}`}
-                onClick={() => switchTo(exp.id)}
-              >
-                <div className="exp-list-inner">
-                  <span className="exp-list-name">{exp.name}</span>
-                  <span className="exp-list-meta">{exp.date}</span>
-                </div>
-                <span className="exp-list-arrow">→</span>
-              </div>
-            </div>
+        <div className="exp-cats">
+          {CATS.map((c) => (
+            <button
+              key={c}
+              className={`exp-cat${cat === c ? " active" : ""}`}
+              onClick={() => { setCat(c); setOpenId(null); }}
+            >
+              {c}
+            </button>
           ))}
         </div>
+      </div>
 
-        {/* panel */}
-        <div className="exp-panel-col">
-          <p style={{ fontSize: "12.5px", color: "var(--fg-muted)", lineHeight: 1.7, marginBottom: "16px" }}>
-            {current.detail}
-          </p>
-          <div className="exp-toggle">
-            <button
-              className={`exp-toggle-btn${view === "demo" ? " active" : ""}`}
-              onClick={() => setView("demo")}
+      <div className="exp-list">
+        {filtered.map((exp, i) => {
+          const isOpen = openId === exp.id;
+          const view = getView(exp.id);
+          const DemoComponent = DEMOS[exp.id];
+
+          return (
+            <div
+              key={exp.id}
+              className={`exp-acc-item${isOpen ? " open" : ""}`}
             >
-              Preview
-            </button>
-            <button
-              className={`exp-toggle-btn${view === "code" ? " active" : ""}`}
-              onClick={() => setView("code")}
-            >
-              Code
-            </button>
-          </div>
-          <div className={`exp-card${fading ? " fade" : ""}`}>
-            <div className={`exp-pane${view === "demo" ? " show" : ""}`}>
-              <DemoComponent />
-            </div>
-            <div className={`exp-pane${view === "code" ? " show" : ""}`}>
-              <div className="exp-code-pane">
-                <div className="exp-code-inner" dangerouslySetInnerHTML={{ __html: CODE[active] }} />
+              <button
+                className="exp-acc-head"
+                onClick={() => toggle(exp.id)}
+                aria-expanded={isOpen}
+              >
+                <span className="exp-acc-idx">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="exp-acc-name">{exp.name}</span>
+                <div className="exp-acc-tags">
+                  {exp.tags.map((t) => (
+                    <span key={t} className="exp-acc-tag">{t}</span>
+                  ))}
+                </div>
+                <span className="exp-acc-date">{exp.date}</span>
+                <span className="exp-acc-arrow" aria-hidden="true">▾</span>
+              </button>
+
+              <div className="exp-acc-body">
+                <div className="exp-acc-inner">
+                  <div className="exp-acc-content">
+                    <p className="exp-acc-desc">{exp.detail}</p>
+
+                    <div className="exp-toggle">
+                      <button
+                        className={`exp-toggle-btn${view === "demo" ? " active" : ""}`}
+                        onClick={() => setView(exp.id, "demo")}
+                      >
+                        Preview
+                      </button>
+                      <button
+                        className={`exp-toggle-btn${view === "code" ? " active" : ""}`}
+                        onClick={() => setView(exp.id, "code")}
+                      >
+                        Code
+                      </button>
+                    </div>
+
+                    <div className="exp-card">
+                      <div className={`exp-pane${view === "demo" ? " show" : ""}`}>
+                        {isOpen && <DemoComponent />}
+                      </div>
+                      <div className={`exp-pane${view === "code" ? " show" : ""}`}>
+                        <div className="exp-code-pane">
+                          <div
+                            className="exp-code-inner"
+                            dangerouslySetInnerHTML={{ __html: CODE[exp.id] }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );

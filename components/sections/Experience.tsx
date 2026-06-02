@@ -57,18 +57,22 @@ export default function Experience() {
             className="exp-row"
           >
             <div className="exp-year">{e.year}</div>
-            <div>
-              <span className="exp-company">{e.company}</span>
-              <span className="exp-role">{e.role}</span>
+            <div className="exp-right">
+              <div className="exp-top">
+                <span className="exp-company">{e.company}</span>
+                <span className="exp-role">{e.role}</span>
+              </div>
               <div className="exp-desc">{e.desc}</div>
             </div>
           </a>
         ) : (
           <div key={e.company + e.year} className="exp-row">
             <div className="exp-year">{e.year}</div>
-            <div>
-              <span className="exp-company">{e.company}</span>
-              <span className="exp-role">{e.role}</span>
+            <div className="exp-right">
+              <div className="exp-top">
+                <span className="exp-company">{e.company}</span>
+                <span className="exp-role">{e.role}</span>
+              </div>
               <div className="exp-desc">{e.desc}</div>
             </div>
           </div>

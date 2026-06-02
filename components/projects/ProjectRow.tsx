@@ -49,7 +49,7 @@ export default function ProjectRow({
             <span className="project-name">{name}</span>
           )}
           <span className="project-dash">—</span>
-          <span className="project-desc">{tagline}</span>
+          <span className="project-tagline">{tagline}</span>
         </div>
         <div className="project-right">
           {badge && (
@@ -63,24 +63,26 @@ export default function ProjectRow({
           ))}
         </div>
       </div>
+
       <div className="project-reveal">
-        <div className="reveal-inner">
-          <p className="reveal-body">{description}</p>
-          <div className="reveal-img">
+        <div className="project-reveal-inner">
+          <div className="reveal-inner">
+            <p className="reveal-body">{description}</p>
             {image ? (
-              <Image src={image} alt={name} width={240} height={150} />
+              <div className="reveal-img">
+                <Image src={image} alt={name} width={240} height={150} />
+              </div>
             ) : codeSnippet ? (
-              <pre
-                className="reveal-code"
-                style={{ height: "100%", margin: 0, borderRadius: 0, border: "none", fontSize: "10.5px" }}
-              >
-                {codeSnippet}
-              </pre>
+              <div className="reveal-code-wrap">
+                <pre className="reveal-code">{codeSnippet}</pre>
+              </div>
             ) : (
-              <div className="reveal-placeholder">
-                {name.toLowerCase()}
-                <br />
-                screenshot coming soon
+              <div className="reveal-img">
+                <div className="reveal-placeholder">
+                  {name.toLowerCase()}
+                  <br />
+                  screenshot coming soon
+                </div>
               </div>
             )}
           </div>
