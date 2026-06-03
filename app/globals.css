@@ -135,6 +135,18 @@ header { opacity: 0; animation: fadeUp 480ms ease-out 60ms forwards; }
 .section:nth-child(4) { animation-delay: 240ms; }
 .section:nth-child(5) { animation-delay: 300ms; }
 
+/* Progressive disclosure — one thing at a time */
+.section:has(.project-row:hover) .project-row { transition: opacity 200ms ease; }
+.section:has(.project-row:hover) .project-row:not(:hover) { opacity: 0.32; }
+.section:has(a.exp-row:hover) a.exp-row,
+.section:has(.exp-row:hover) .exp-row { transition: opacity 200ms ease; }
+.section:has(a.exp-row:hover) a.exp-row:not(:hover),
+.section:has(.exp-row:hover) .exp-row:not(:hover) { opacity: 0.32; }
+.section:has(.award-row:hover) .award-row { transition: opacity 200ms ease; }
+.section:has(.award-row:hover) .award-row:not(:hover) { opacity: 0.32; }
+.exp-list:has(.exp-acc-item:hover) .exp-acc-item { transition: opacity 200ms ease; }
+.exp-list:has(.exp-acc-item:hover) .exp-acc-item:not(:hover) { opacity: 0.32; }
+
 /* ════════════════════════════════════════════
    HEADER — editorial
 ════════════════════════════════════════════ */

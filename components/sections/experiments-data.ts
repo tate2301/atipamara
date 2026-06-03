@@ -16,7 +16,12 @@ export type ExpId =
   | "focus-ring"
   | "resizable"
   | "streaming"
-  | "view-transition";
+  | "view-transition"
+  | "reaction-diffusion"
+  | "var-font-physics"
+  | "spring-grid"
+  | "houdini-prop"
+  | "magnetic-text";
 
 export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
   oklch: "oklch-color",
@@ -37,6 +42,11 @@ export const EXPERIMENT_SLUGS: Record<ExpId, string> = {
   resizable: "resizable-panels",
   streaming: "streaming-text",
   "view-transition": "view-transitions",
+  "reaction-diffusion": "reaction-diffusion",
+  "var-font-physics": "var-font-physics",
+  "spring-grid": "spring-grid",
+  "houdini-prop": "houdini-prop",
+  "magnetic-text": "magnetic-text",
 };
 
 type ExpMeta = { id: ExpId; name: string; desc: string };
@@ -132,6 +142,11 @@ export const EXPERIMENT_META: Record<string, ExpMeta> = {
     name: "View Transitions",
     desc: "Shared-element morphing between list and detail views using the native browser API.",
   },
+  "reaction-diffusion": { id: "reaction-diffusion", name: "Reaction-Diffusion", desc: "Gray-Scott cellular automaton — two chemicals interact to grow coral-like organic patterns. Click to seed." },
+  "var-font-physics": { id: "var-font-physics", name: "Variable Font Physics", desc: "Pointer velocity drives the weight axis of a variable font. Fast movement = heavy; stillness = light." },
+  "spring-grid": { id: "spring-grid", name: "Spring Grid", desc: "A cloth mesh of spring-connected nodes. Drag to pull, release to watch the wave propagate." },
+  "houdini-prop": { id: "houdini-prop", name: "CSS @property", desc: "Registering a custom property as <color> lets CSS interpolate gradients — impossible without Houdini." },
+  "magnetic-text": { id: "magnetic-text", name: "Magnetic Text", desc: "Each letter is an independent spring mass. The cursor repels them; they spring back to rest." },
 };
 
 export function getExperimentMeta(slug: string): ExpMeta | undefined {

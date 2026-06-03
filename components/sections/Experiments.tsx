@@ -50,6 +50,41 @@ export type Exp = {
 
 export const EXPS: Exp[] = [
   {
+    id: "reaction-diffusion",
+    name: "Reaction-Diffusion",
+    date: "Jun 2026",
+    desc: "Gray-Scott cellular automaton. Two chemicals, A and B, interact to form organic coral patterns.",
+    detail: "The Gray-Scott model: ∂A/∂t = Dₐ∇²A − AB² + f(1−A), ∂B/∂t = D_b∇²B + AB² − (f+k)B. With f=0.0545 and k=0.062, the system grows coral. The canvas runs 8 simulation steps per frame at 120×90 resolution. Click anywhere to seed new B substance and watch it grow.",
+  },
+  {
+    id: "var-font-physics",
+    name: "Variable Font Physics",
+    date: "Jun 2026",
+    desc: "Pointer velocity drives the font-weight axis. Move fast for bold, slow for light.",
+    detail: "Each mousemove event computes Euclidean distance from the previous position. That speed value is mapped to a target weight (100–900) via linear scaling. A spring interpolation (lerp factor 0.12) smooths transitions. On idle, it decays back to 300. The result: typography with physical weight.",
+  },
+  {
+    id: "spring-grid",
+    name: "Spring Grid",
+    date: "Jun 2026",
+    desc: "A 10×8 cloth mesh. Each node connects to its neighbors via spring constraints.",
+    detail: "Simple Hooke's law: F = k × (rest − current). Each frame computes spring force toward the origin position, adds it to velocity, multiplies by a damping factor (0.92), then integrates. There are no cross-spring constraints — only the return-to-origin spring and the drag interaction. Drag any node.",
+  },
+  {
+    id: "houdini-prop",
+    name: "CSS @property",
+    date: "Jun 2026",
+    desc: "Register a custom property as <color> and CSS can smoothly interpolate gradients.",
+    detail: "CSS normally can't animate gradient color stops — the spec treats them as discrete. CSS.registerProperty() declares the type, letting the browser interpolate correctly. Two custom properties, --g-start and --g-end, are registered as <color>. A CSS transition on both properties animates the gradient smoothly on hover.",
+  },
+  {
+    id: "magnetic-text",
+    name: "Magnetic Text",
+    date: "Jun 2026",
+    desc: "Each letter is an independent spring mass. Cursor proximity pushes them away.",
+    detail: "Individual letter positions are tracked in a ref array. Each animation frame: compute cursor distance from each letter's current position, apply a repulsion force scaled by proximity (falls off quadratically beyond 90px), then add a spring restoring force toward the origin (k=0.11). Damping: 0.84. The result is physically coherent scatter.",
+  },
+  {
     id: "oklch",
     name: "OKLCH Color Mixer",
     date: "May 2025",
@@ -1822,6 +1857,260 @@ function ViewTransitionDemo() {
   );
 }
 
+/*  Reaction-Diffusion  */
+function ReactionDiffusionDemo() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const W = 128, H = 96;
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d')!;
+    let A = new Float32Array(W * H).fill(1);
+    let B = new Float32Array(W * H).fill(0);
+    let nA = new Float32Array(W * H);
+    let nB = new Float32Array(W * H);
+    const seed = (cx: number, cy: number) => {
+      for (let dy = -6; dy <= 6; dy++)
+        for (let dx = -6; dx <= 6; dx++) {
+          const x = cx + dx, y = cy + dy;
+          if (x >= 0 && x < W && y >= 0 && y < H) {
+            const i = y * W + x;
+            B[i] = 0.5 + Math.random() * 0.1;
+            A[i] = 0.5;
+          }
+        }
+    };
+    seed(W >> 1, H >> 1);
+    const f = 0.0545, k = 0.062, Da = 1.0, Db = 0.5, dt = 1.0;
+    const img = ctx.createImageData(W, H);
+    let running = true, raf = 0;
+    const step = () => {
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const i = y * W + x;
+        const a = A[i], b = B[i];
+        const lA = A[y * W + (x-1+W)%W] + A[y * W + (x+1)%W] + A[((y-1+H)%H)*W+x] + A[((y+1)%H)*W+x] - 4*a;
+        const lB = B[y * W + (x-1+W)%W] + B[y * W + (x+1)%W] + B[((y-1+H)%H)*W+x] + B[((y+1)%H)*W+x] - 4*b;
+        const r = a * b * b;
+        nA[i] = Math.max(0, Math.min(1, a + dt*(Da*lA - r + f*(1-a))));
+        nB[i] = Math.max(0, Math.min(1, b + dt*(Db*lB + r - (f+k)*b)));
+      }
+      [A, nA] = [nA, A]; [B, nB] = [nB, B];
+    };
+    const render = () => {
+      for (let i = 0; i < W*H; i++) {
+        const v = Math.floor(A[i] * 255);
+        img.data[i*4] = img.data[i*4+1] = img.data[i*4+2] = v;
+        img.data[i*4+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    };
+    const loop = () => {
+      if (!running) return;
+      for (let s = 0; s < 8; s++) step();
+      render();
+      raf = requestAnimationFrame(loop);
+    };
+    const onClick = (e: MouseEvent) => {
+      const r = canvas.getBoundingClientRect();
+      seed(Math.floor((e.clientX - r.left) / r.width * W), Math.floor((e.clientY - r.top) / r.height * H));
+    };
+    canvas.addEventListener('click', onClick);
+    loop();
+    return () => { running = false; cancelAnimationFrame(raf); canvas.removeEventListener('click', onClick); };
+  }, []);
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '260px', background: '#000', overflow: 'hidden', cursor: 'crosshair', borderRadius: '4px' }}>
+      <canvas ref={canvasRef} style={{ width: '100%', height: '100%', imageRendering: 'pixelated', display: 'block' }} />
+      <span style={{ position: 'absolute', bottom: 10, left: 12, fontFamily: 'monospace', fontSize: '9px', color: 'rgba(255,255,255,.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>click to seed</span>
+    </div>
+  );
+}
+
+/*  Variable Font Physics  */
+function VarFontPhysicsDemo() {
+  const textRef = useRef<HTMLDivElement>(null);
+  const stateRef = useRef({ prev: { x: 0, y: 0 }, weight: 300 });
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const s = stateRef.current;
+      const speed = Math.sqrt((e.clientX-s.prev.x)**2 + (e.clientY-s.prev.y)**2);
+      s.weight += (Math.min(900, 100 + speed * 14) - s.weight) * 0.14;
+      s.prev = { x: e.clientX, y: e.clientY };
+    };
+    let raf = 0;
+    const loop = () => {
+      const s = stateRef.current;
+      s.weight += (300 - s.weight) * 0.07;
+      if (el) el.style.fontVariationSettings = `"wght" ${Math.round(s.weight)}`;
+      raf = requestAnimationFrame(loop);
+    };
+    window.addEventListener('mousemove', onMove);
+    loop();
+    return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf); };
+  }, []);
+  return (
+    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'220px', gap:'14px' }}>
+      <div ref={textRef} style={{ fontSize:'clamp(44px,9vw,80px)', fontWeight:300, letterSpacing:'-0.04em', lineHeight:1, userSelect:'none', color:'var(--fg)', fontVariationSettings:'"wght" 300' }}>
+        momentum
+      </div>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'var(--fg-subtle)' }}>move your cursor</span>
+    </div>
+  );
+}
+
+/*  Spring Grid  */
+function SpringGridDemo() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    const W = canvas.offsetWidth, H = canvas.offsetHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    const ctx = canvas.getContext('2d')!;
+    ctx.scale(dpr, dpr);
+    const COLS = 10, ROWS = 8;
+    const gx = W / (COLS + 1), gy = H / (ROWS + 1);
+    type Node = { x:number;y:number;vx:number;vy:number;ox:number;oy:number };
+    const nodes: Node[] = [];
+    for (let r = 0; r < ROWS; r++)
+      for (let c = 0; c < COLS; c++)
+        nodes.push({ x:gx*(c+1), y:gy*(r+1), vx:0, vy:0, ox:gx*(c+1), oy:gy*(r+1) });
+    const K = 0.04, DAMP = 0.91;
+    let drag: number | null = null, mx = 0, my = 0, running = true;
+    const getColor = () => getComputedStyle(document.documentElement).getPropertyValue('--fg').trim() || '#111';
+    let raf = 0;
+    const loop = () => {
+      if (!running) return;
+      ctx.clearRect(0, 0, W, H);
+      const col = getColor();
+      ctx.strokeStyle = col; ctx.globalAlpha = 0.15; ctx.lineWidth = 0.7;
+      for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+        const i = r*COLS+c;
+        if (c < COLS-1) { const j=r*COLS+c+1; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); }
+        if (r < ROWS-1) { const j=(r+1)*COLS+c; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); }
+      }
+      ctx.globalAlpha = 0.6; ctx.fillStyle = col;
+      nodes.forEach((n, i) => {
+        ctx.beginPath(); ctx.arc(n.x, n.y, i===drag ? 3.5 : 2, 0, Math.PI*2); ctx.fill();
+        if (i === drag) { n.x = mx; n.y = my; n.vx = 0; n.vy = 0; return; }
+        n.vx = (n.vx + K*(n.ox-n.x)) * DAMP;
+        n.vy = (n.vy + K*(n.oy-n.y)) * DAMP;
+        n.x += n.vx; n.y += n.vy;
+      });
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(loop);
+    };
+    const nearest = (x:number,y:number) => { let best=Infinity,idx=-1; nodes.forEach((n,i)=>{ const d=(n.x-x)**2+(n.y-y)**2; if(d<best){best=d;idx=i;} }); return best<50*50?idx:-1; };
+    const onDown = (e:PointerEvent) => { const r=canvas.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; drag=nearest(mx,my); };
+    const onMove = (e:PointerEvent) => { const r=canvas.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; };
+    const onUp = () => { drag=null; };
+    canvas.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    loop();
+    return () => { running=false; cancelAnimationFrame(raf); canvas.removeEventListener('pointerdown',onDown); window.removeEventListener('pointermove',onMove); window.removeEventListener('pointerup',onUp); };
+  }, []);
+  return <canvas ref={canvasRef} style={{ width:'100%', height:'260px', display:'block', cursor:'crosshair', touchAction:'none' }} />;
+}
+
+/*  Houdini Property  */
+function HoudiniPropertyDemo() {
+  useEffect(() => {
+    if (typeof CSS !== 'undefined' && (CSS as any).registerProperty) {
+      try {
+        (CSS as any).registerProperty({ name: '--g-start', syntax: '<color>', inherits: false, initialValue: '#C95C2A' });
+        (CSS as any).registerProperty({ name: '--g-end', syntax: '<color>', inherits: false, initialValue: '#F4A261' });
+      } catch (_) {}
+    }
+  }, []);
+  return (
+    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'220px', gap:'28px' }}>
+      <style>{`
+        .h-demo-btn {
+          --g-start: #C95C2A; --g-end: #F4A261;
+          background: linear-gradient(135deg, var(--g-start), var(--g-end));
+          transition: --g-start 700ms ease, --g-end 700ms ease;
+          border: none; border-radius: 6px; padding: 13px 40px;
+          font-size: 15px; font-weight: 500; color: #fff;
+          cursor: pointer; letter-spacing: -0.01em;
+          font-family: var(--font-sans);
+        }
+        .h-demo-btn:hover { --g-start: #2563EB; --g-end: #7C3AED; }
+      `}</style>
+      <button className="h-demo-btn">hover me</button>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'var(--fg-subtle)', textAlign:'center', lineHeight:1.6 }}>
+        gradients can&apos;t transition without<br/>CSS.registerProperty()
+      </span>
+    </div>
+  );
+}
+
+/*  Magnetic Text  */
+function MagneticTextDemo() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lettersRef = useRef<{ el: HTMLSpanElement; ox:number; oy:number; x:number; y:number; vx:number; vy:number }[]>([]);
+  const mouseRef = useRef({ x: -999, y: -999 });
+  const WORD = "TATENDA";
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const spans = Array.from(container.querySelectorAll('.mag-l')) as HTMLSpanElement[];
+    const init = () => {
+      const cr = container.getBoundingClientRect();
+      lettersRef.current = spans.map(el => {
+        const r = el.getBoundingClientRect();
+        const ox = r.left + r.width/2 - cr.left;
+        const oy = r.top + r.height/2 - cr.top;
+        return { el, ox, oy, x:ox, y:oy, vx:0, vy:0 };
+      });
+    };
+    setTimeout(init, 50);
+    const onMove = (e: MouseEvent) => {
+      const r = container.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    const onLeave = () => { mouseRef.current = { x: -999, y: -999 }; };
+    container.addEventListener('mousemove', onMove);
+    container.addEventListener('mouseleave', onLeave);
+    let raf = 0;
+    const loop = () => {
+      const { x: mx, y: my } = mouseRef.current;
+      lettersRef.current.forEach(l => {
+        const dx = l.x - mx, dy = l.y - my;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        let fx = 0, fy = 0;
+        if (dist < 90 && dist > 0) {
+          const force = ((90 - dist) / 90) ** 2 * 55;
+          fx = (dx / dist) * force;
+          fy = (dy / dist) * force;
+        }
+        fx += (l.ox - l.x) * 0.11;
+        fy += (l.oy - l.y) * 0.11;
+        l.vx = (l.vx + fx) * 0.84;
+        l.vy = (l.vy + fy) * 0.84;
+        l.x += l.vx; l.y += l.vy;
+        l.el.style.transform = `translate(${(l.x - l.ox).toFixed(1)}px,${(l.y - l.oy).toFixed(1)}px)`;
+      });
+      raf = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => { cancelAnimationFrame(raf); container.removeEventListener('mousemove', onMove); container.removeEventListener('mouseleave', onLeave); };
+  }, []);
+  return (
+    <div ref={containerRef} style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'220px', userSelect:'none', cursor:'none' }}>
+      <div style={{ display:'flex', gap:'1px' }}>
+        {WORD.split('').map((ch, i) => (
+          <span key={i} className="mag-l" style={{ fontSize:'clamp(36px,8vw,72px)', fontWeight:700, letterSpacing:'-0.03em', color:'var(--fg)', display:'inline-block', willChange:'transform' }}>{ch}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /*
    CODE SNIPPETS
  */
@@ -2110,6 +2399,73 @@ el.style.transition = <span class="str">'none'</span>
 ::view-transition-old(<span class="fn">item-1</span>) {
   <span class="prop">animation</span>: slide-out <span class="num">200ms</span> ease;
 }`,
+
+  "reaction-diffusion": `<span class="cm">// Gray-Scott reaction-diffusion</span>
+<span class="kw">const</span> f = <span class="num">0.0545</span>, k = <span class="num">0.062</span>
+<span class="kw">const</span> Da = <span class="num">1.0</span>, Db = <span class="num">0.5</span>
+
+<span class="cm">// Per cell per step:</span>
+<span class="kw">const</span> r = a * b * b  <span class="cm">// reaction rate</span>
+nA[i] = a + (Da*laplA - r + f*(1-a))
+nB[i] = b + (Db*laplB + r - (f+k)*b)
+
+<span class="cm">// 8 steps per frame at 128×96</span>
+<span class="cm">// Laplacian: 4-neighbor finite difference</span>`,
+
+  "var-font-physics": `<span class="cm">// Map pointer speed to font-weight</span>
+<span class="kw">const</span> speed = Math.<span class="fn">sqrt</span>(
+  (e.clientX - prev.x)**<span class="num">2</span> +
+  (e.clientY - prev.y)**<span class="num">2</span>
+)
+<span class="kw">const</span> target = Math.<span class="fn">min</span>(<span class="num">900</span>, <span class="num">100</span> + speed * <span class="num">14</span>)
+<span class="cm">// Spring lerp toward target</span>
+weight += (target - weight) * <span class="num">0.14</span>
+<span class="cm">// Idle decay back to 300</span>
+weight += (<span class="num">300</span> - weight) * <span class="num">0.07</span>
+el.style.fontVariationSettings = \`"wght" \${weight}\``,
+
+  "spring-grid": `<span class="cm">// Each node: spring toward origin</span>
+<span class="kw">const</span> K = <span class="num">0.04</span>, DAMP = <span class="num">0.91</span>
+
+nodes.<span class="fn">forEach</span>((n, i) => {
+  <span class="kw">if</span> (i === drag) <span class="kw">return</span>  <span class="cm">// dragged node</span>
+  n.vx = (n.vx + K*(n.ox - n.x)) * DAMP
+  n.vy = (n.vy + K*(n.oy - n.y)) * DAMP
+  n.x += n.vx; n.y += n.vy
+})`,
+
+  "houdini-prop": `<span class="cm">// Register custom properties as &lt;color&gt;</span>
+CSS.<span class="fn">registerProperty</span>({
+  name: <span class="str">'--g-start'</span>,
+  syntax: <span class="str">'&lt;color&gt;'</span>,
+  inherits: <span class="kw">false</span>,
+  initialValue: <span class="str">'#C95C2A'</span>,
+})
+
+<span class="cm">/* Now CSS can interpolate the gradient */</span>
+.<span class="fn">btn</span> {
+  background: linear-gradient(135deg,
+    var(--g-start), var(--g-end));
+  <span class="prop">transition</span>: --g-start <span class="num">700ms</span> ease,
+              --g-end <span class="num">700ms</span> ease;
+}
+.<span class="fn">btn</span>:hover { --g-start: <span class="str">#2563EB</span>; --g-end: <span class="str">#7C3AED</span>; }`,
+
+  "magnetic-text": `<span class="cm">// Repulsion + spring restore per letter</span>
+letters.<span class="fn">forEach</span>(l => {
+  <span class="kw">const</span> dx = l.x - mx, dy = l.y - my
+  <span class="kw">const</span> dist = Math.<span class="fn">sqrt</span>(dx*dx + dy*dy)
+  <span class="kw">let</span> fx = <span class="num">0</span>, fy = <span class="num">0</span>
+  <span class="kw">if</span> (dist < <span class="num">90</span> && dist > <span class="num">0</span>) {
+    <span class="kw">const</span> force = ((90-dist)/<span class="num">90</span>)**<span class="num">2</span> * <span class="num">55</span>
+    fx = (dx/dist)*force; fy = (dy/dist)*force
+  }
+  fx += (l.ox - l.x) * <span class="num">0.11</span>  <span class="cm">// spring</span>
+  fy += (l.oy - l.y) * <span class="num">0.11</span>
+  l.vx = (l.vx + fx) * <span class="num">0.84</span>  <span class="cm">// damp</span>
+  l.vy = (l.vy + fy) * <span class="num">0.84</span>
+  l.x += l.vx; l.y += l.vy
+})`,
 };
 
 const DEMOS: Record<ExpId, React.FC> = {
@@ -2131,6 +2487,11 @@ const DEMOS: Record<ExpId, React.FC> = {
   resizable: ResizableDemo,
   streaming: StreamingDemo,
   "view-transition": ViewTransitionDemo,
+  "reaction-diffusion": ReactionDiffusionDemo,
+  "var-font-physics": VarFontPhysicsDemo,
+  "spring-grid": SpringGridDemo,
+  "houdini-prop": HoudiniPropertyDemo,
+  "magnetic-text": MagneticTextDemo,
 };
 
 export function getExperimentPath(exp: Exp) {
