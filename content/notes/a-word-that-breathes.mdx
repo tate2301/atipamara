@@ -1,0 +1,13 @@
+import { Demo, Source } from "@/components/notes/demos";
+
+A variable font is one file holding every weight the designer ever drew — not nine stops, a continuum. Hover the word.
+
+<Demo id="var-font" />
+
+`font-variation-settings` addresses the axis directly: not 400 or 700 but 347, or 812.5, or anywhere else you care to stand. The in-between weights don't exist in the file. The OpenType engine draws them live, on demand, every frame of the transition.
+
+The hover works because of its easing. `cubic-bezier(.34, 1.3, .64, 1)` overshoots — the word briefly lands heavier than its target, then relaxes, like an intake of breath. Run the same transition linearly and it reads as a rendering glitch.
+
+Weight is only the first axis. Width, slant, optical size, whatever the designer cut — a font file is a design space now, and CSS can walk all of it.
+
+<Source id="var-font" />

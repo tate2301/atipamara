@@ -1,0 +1,13 @@
+import { Demo, Source } from "@/components/notes/demos";
+
+The Dynamic Island is a hardware apology so good that people forgot it was one. Apple had to cut a hole in the screen, so they made the hole a place. I rebuilt it to find out why it feels alive.
+
+<Demo id="island" />
+
+The answer is restraint. Every state — call, alarm, download, navigation, message — is one div with `border-radius: 100px`. Nothing opens. Width and height animate together, so the pill never expands into a panel. It breathes.
+
+The spring matters more than the shape. `cubic-bezier(.34, 1.15, .64, 1)` overshoots by about eight percent — enough to read as physical, not enough to read as playful. Swap in a bouncier curve and it becomes a toy. Swap in `ease-out` and it becomes a widget. The overshoot is load-bearing.
+
+And the text never rides a moving container. Content fades in 120ms after the morph begins, once the distortion has mostly settled — the same trick iOS pulls when it launches an app. You have never noticed it. That is the point.
+
+<Source id="island" />

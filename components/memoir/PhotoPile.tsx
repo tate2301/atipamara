@@ -38,6 +38,17 @@ export default function PhotoPile({ photos }: { photos: string[] }) {
 
   return (
     <div className="pile-wrap">
+      <button
+        type="button"
+        className="pile-caption"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        {open
+          ? "gather them back"
+          : `${photos.length} photographs — open them`}
+      </button>
+
       <motion.div
         layout
         className={open ? "pile pile-open" : "pile"}
@@ -78,17 +89,6 @@ export default function PhotoPile({ photos }: { photos: string[] }) {
           </motion.div>
         ))}
       </motion.div>
-
-      <button
-        type="button"
-        className="pile-caption"
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-      >
-        {open
-          ? "gather them back"
-          : `${photos.length} photographs — open them`}
-      </button>
 
       <AnimatePresence>
         {active && (
