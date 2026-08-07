@@ -7,9 +7,9 @@ import "@fontsource/libertinus-serif/latin-400-italic.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tatenda Chinyamakobvu — Product Engineer",
+  title: "Tatenda Chinyamakobvu",
   description:
-    "Product engineer based in Harare, Zimbabwe. Three companies run software I built from scratch — POS, ERP, customer analytics, and on-prem CCTV.",
+    "A short memoir of things built and things learned. Product engineer in Harare, Zimbabwe.",
   icons: "./favicon.png",
 };
 

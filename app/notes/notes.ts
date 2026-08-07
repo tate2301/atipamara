@@ -42,13 +42,6 @@ export const notes: Note[] = [
     kind: "interactive",
     line: "What sRGB does to color, and how perceptual space undoes it.",
   },
-  {
-    slug: "a-word-that-breathes",
-    title: "A word that breathes",
-    date: "Mar 2025",
-    kind: "interactive",
-    line: "One font file, every weight, and an easing curve that inhales.",
-  },
 ];
 
 export function getNote(slug: string): Note | undefined {

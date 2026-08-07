@@ -4,16 +4,18 @@ Everyone has run a cursor along the macOS Dock. Almost nobody can say why it fee
 
 <Demo id="dock" />
 
-The secret is that nothing zooms. Every icon's scale is a point on a Gaussian curve centred on your cursor:
+The secret is that nothing zooms. Every icon's scale is a point on a bell curve centred on your cursor:
 
 ```
-scale(i) = 1 + (MAX − 1) × e^(−distance² / σ²)
+scale = 1 + (MAX - 1) * exp(-(dist * dist) / (sigma * sigma))
 ```
 
-There is no hovered icon. There is a field, and every icon lives in it — the one under your cursor peaks, and its neighbours rise with it in proportion.
+There is no hovered icon. There is a field, and every icon lives in it. The one under your cursor peaks, and its neighbours rise with it in proportion.
 
 Sigma is the whole personality. At 30 the falloff is so steep it looks like a cheap hover effect. At 100 the entire dock inflates at once. At 58 it becomes a material.
 
-One more detail nobody notices: icons scale from their bottom edge, then get lifted so they never sink through the shelf. Delete that one line and the illusion collapses. That line is the difference between animation and physics.
+Icons scale from their bottom edge, then get lifted so they never sink through the shelf. Delete that one line and the illusion collapses.
+
+Click an icon while you're there. The launch bounce is a second spring riding on top of the first, and the little dot underneath is how macOS has drawn "running" for twenty years. Small things, but they're the difference between a demo and a place.
 
 <Source id="dock" />

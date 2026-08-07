@@ -13,7 +13,12 @@ export default function PhotoPile({ photos }: { photos: string[] }) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActive(null);
+      if (e.key !== "Escape") return;
+      setActive((current) => {
+        if (current) return null;
+        setOpen(false);
+        return current;
+      });
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -38,17 +43,6 @@ export default function PhotoPile({ photos }: { photos: string[] }) {
 
   return (
     <div className="pile-wrap">
-      <button
-        type="button"
-        className="pile-caption"
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-      >
-        {open
-          ? "gather them back"
-          : `${photos.length} photographs — open them`}
-      </button>
-
       <motion.div
         layout
         className={open ? "pile pile-open" : "pile"}
@@ -69,7 +63,7 @@ export default function PhotoPile({ photos }: { photos: string[] }) {
             transition={springFor(i)}
             role="button"
             tabIndex={0}
-            aria-label={open ? "View photograph" : "Open the photographs"}
+            aria-label={open ? "View photograph" : "Open the photograph pile"}
             onClick={() => (open ? setActive(src) : setOpen(true))}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {

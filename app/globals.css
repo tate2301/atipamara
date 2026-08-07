@@ -85,20 +85,17 @@ strong { color: var(--fg); font-weight: 400; }
 .memoir-toggle:hover { opacity: 1; }
 
 /* --------------------------------------------
-   MEMOIR — shared column
+   MEMOIR shared column
 -------------------------------------------- */
 .memoir { position: relative; max-width: 580px; margin: 0 auto; padding: 108px 28px 72px; }
 
 .memoir-masthead { margin-bottom: 120px; }
 .memoir-name { font-family: var(--font-serif); font-size: 32px; font-weight: 400; letter-spacing: .005em; color: var(--fg); line-height: 1.25; }
-.memoir-role { margin-top: 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-subtle); }
-.memoir-rule { width: 28px; height: 1px; background: var(--border-hover); margin: 40px 0; border: none; }
+.memoir-rule { width: 28px; height: 1px; background: var(--border-hover); margin: 36px 0; border: none; }
 .memoir-lede { font-family: var(--font-serif); font-style: italic; font-size: 18px; line-height: 1.85; color: var(--fg-muted); max-width: 44ch; }
 
 .memoir-chapter { margin-bottom: 120px; }
-.memoir-kicker { display: flex; align-items: baseline; gap: 14px; margin-bottom: 44px; }
-.memoir-kicker-num { font-family: var(--font-serif); font-size: 16px; color: var(--fg-subtle); }
-.memoir-kicker-title { font-family: var(--font-mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--fg); }
+.memoir-kicker { display: block; font-family: var(--font-serif); font-size: 19px; color: var(--fg-subtle); margin-bottom: 44px; }
 .memoir-chapter p { font-family: var(--font-serif); font-size: 17.5px; line-height: 1.95; color: var(--fg); margin-bottom: 28px; }
 .memoir-chapter p:last-child { margin-bottom: 0; }
 .memoir-chapter a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3.5px; text-decoration-color: var(--border-hover); transition: text-decoration-color var(--t-fast); }
@@ -119,8 +116,6 @@ strong { color: var(--fg); font-weight: 400; }
    PHOTO PILE
 -------------------------------------------- */
 .pile-wrap { margin-top: 48px; display: flex; flex-direction: column; gap: 24px; }
-.pile-caption { align-self: flex-start; background: none; border: none; cursor: pointer; font-family: var(--font-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-subtle); padding: 4px 0; transition: color var(--t-fast); }
-.pile-caption:hover { color: var(--fg); }
 .pile { display: grid; place-items: center; width: 100%; min-height: 330px; }
 .pile-item { position: relative; grid-area: 1 / 1; width: min(222px, 56vw); aspect-ratio: 3 / 4; border-radius: 3px; overflow: hidden; background: var(--bg-subtle); box-shadow: 0 1px 2px rgba(0,0,0,.1), 0 10px 28px rgba(0,0,0,.12); cursor: pointer; }
 .pile-item:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
@@ -242,3 +237,52 @@ strong { color: var(--fg); font-weight: 400; }
 .memoir-foot-row a { color: var(--fg-subtle); letter-spacing: .06em; transition: color var(--t-fast); }
 .memoir-foot-row a:hover { color: var(--fg); }
 .memoir-colophon { margin-top: 8px; font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--fg-subtle); }
+
+/* --------------------------------------------
+   DEMO: dock extras
+-------------------------------------------- */
+.dock-name { min-height: 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--fg-subtle); text-align: center; }
+.dock-col { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.dock-bounce { display: flex; }
+.dock-bounce.bouncing { animation: dock-bounce 640ms cubic-bezier(.28,.6,.36,1); }
+@keyframes dock-bounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-26px); }
+  55%  { transform: translateY(0); }
+  75%  { transform: translateY(-9px); }
+  100% { transform: translateY(0); }
+}
+.dock-dot { width: 3.5px; height: 3.5px; border-radius: 50%; background: var(--fg-subtle); opacity: 0; transform: scale(.4); transition: opacity 240ms ease, transform 240ms cubic-bezier(.34,1.4,.64,1); }
+.dock-dot.on { opacity: 1; transform: scale(1); }
+
+/* --------------------------------------------
+   DEMO: spring lab
+-------------------------------------------- */
+.slab-stage { position: relative; width: 100%; height: 210px; border: 1px dashed var(--border); border-radius: 10px; overflow: hidden; }
+.slab-anchor { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: var(--border-hover); }
+.slab-sling { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.slab-trail { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--fg); pointer-events: none; }
+.slab-ball { position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: var(--fg); touch-action: none; user-select: none; transition: scale 120ms ease; box-shadow: var(--shadow-md); }
+.slab-curve { width: 100%; height: 48px; display: block; }
+.slab-presets { display: flex; gap: 6px; flex-wrap: wrap; }
+.slab-preset { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; padding: 5px 12px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 100px; cursor: pointer; color: var(--fg-muted); transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast); }
+.slab-preset:hover { color: var(--fg); border-color: var(--border-hover); }
+.slab-preset[data-active="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.slab-sliders { display: flex; flex-direction: column; gap: 8px; }
+.slab-slider { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 12px; }
+.slab-slider span { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-subtle); }
+
+/* --------------------------------------------
+   DEMO: oklch mixer
+-------------------------------------------- */
+.ok-row { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 12px; }
+.ok-label { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .08em; color: var(--fg-subtle); }
+.ok-bar { height: 44px; border-radius: 8px; border: 1px solid var(--border); transition: background 250ms ease; }
+.ok-mid { display: flex; gap: 10px; margin-top: 4px; }
+.ok-swatch { flex: 1; height: 76px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: flex-end; padding: 8px 10px; transition: background 250ms ease; }
+.ok-swatch span { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.85); text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.ok-controls { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.ok-slider { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 12px; }
+.ok-slider span { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-subtle); }
+.ok-surprise { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; padding: 5px 12px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 100px; cursor: pointer; color: var(--fg-muted); transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast); }
+.ok-surprise:hover { color: var(--fg); border-color: var(--border-hover); }

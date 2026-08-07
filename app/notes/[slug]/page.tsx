@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const note = getNote(params.slug);
   if (!note) return {};
   return {
-    title: `${note.title} — Tatenda Chinyamakobvu`,
+    title: `${note.title} · Tatenda Chinyamakobvu`,
     description: note.line,
   };
 }
@@ -38,10 +38,6 @@ async function loadMdx(slug: string): Promise<ComponentType | null> {
         const m = await import(
           "@/content/notes/why-your-gradients-turn-grey.mdx"
         );
-        return m.default;
-      }
-      case "a-word-that-breathes": {
-        const m = await import("@/content/notes/a-word-that-breathes.mdx");
         return m.default;
       }
       case "the-day-localhost-lied": {
@@ -93,7 +89,7 @@ export default async function NoteRoute({ params }: Props) {
       {next && next.slug !== note.slug && (
         <footer className="note-foot">
           <Link href={`/notes/${next.slug}`}>
-            Next — {next.title}
+            Next: {next.title}
           </Link>
         </footer>
       )}

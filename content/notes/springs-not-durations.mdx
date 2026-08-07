@@ -1,13 +1,15 @@
 import { Demo, Source } from "@/components/notes/demos";
 
-Durations are a lie we tell interfaces. Nothing in the physical world takes exactly 300 milliseconds. Things have mass, they resist, they settle. Everything that moves on this site runs on three numbers instead, and this note lets you feel them.
+Durations are a lie we tell interfaces. Nothing in the physical world takes exactly 300 milliseconds. Things have mass, they resist, they settle. Everything that moves on this site runs on three numbers instead.
+
+Grab the ball and throw it. The dashed line is you loading the spring. Everything after you let go is physics.
 
 <Demo id="spring-config" />
 
-Stiffness is how hard the spring pulls. Damping is how hard the world pushes back. Mass is how much of you there is to move. That is the entire model. The curve you're watching is Verlet integration at sixty frames a second — the same math Framer Motion runs under the hood, before it gets flattened into a bezier.
+Stiffness is how hard the spring pulls. Damping is how hard the world pushes back. Mass is how much of you there is to move. That's the whole model, integrated sixty times a second. Your drag velocity carries into the throw, which is why a flick feels different from a drop.
 
-One number is worth memorising: critical damping is `2 × √(stiffness × mass)`. Below it, things bounce. Above it, things drag. Most of this site sits just below it, around fifteen percent overshoot, because a little bounce is how an interface tells you it heard you.
+One number is worth memorising. Critical damping is `2 * sqrt(stiffness * mass)`. Below it, things bounce. Above it, things drag. Most of this site sits just below it, because a little bounce is how an interface tells you it heard you.
 
-The values sound arbitrary — stiffness 200, damping 18 — but using them everywhere means every element on the page belongs to the same imagined physical world. That consistency is what people feel when they say a product feels good and can't say why.
+Try the presets. Then try to make something horrible. Knowing where horrible lives is most of the taste.
 
 <Source id="spring-config" />
