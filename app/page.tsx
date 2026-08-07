@@ -1,65 +1,237 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Header from "@/components/sections/Header";
-import SiteNav from "@/components/sections/SiteNav";
-import Projects from "@/components/sections/Projects";
-import Experience from "@/components/sections/Experience";
-import Awards from "@/components/sections/Awards";
-import Footer from "@/components/sections/Footer";
-import { EXPERIMENT_META } from "@/components/sections/experiments-data";
-import { posts } from "@/app/writing/posts";
+import path from "path";
+import fs from "fs";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import Fade from "@/components/memoir/Fade";
+import PhotoPile from "@/components/memoir/PhotoPile";
+import { notes } from "@/app/notes/notes";
 
 export const metadata: Metadata = {
-  title: "Tatenda Chinyamakobvu — Product Engineer",
+  title: "Tatenda Chinyamakobvu",
   description:
-    "Product engineer based in Harare, Zimbabwe. Three companies run software I built from scratch — POS, ERP, customer analytics, and on-prem CCTV.",
+    "A short memoir of things built and things learned. Product engineer in Harare, Zimbabwe.",
 };
 
 export default function Page() {
-  const experimentsCount = Object.keys(EXPERIMENT_META).length;
-  const writingCount = posts.length;
+  const photosDirectory = path.join(process.cwd(), "public/assets/photos");
+  const photos = fs
+    .readdirSync(photosDirectory)
+    .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
+    .sort()
+    .map((file) => `/assets/photos/${file}`);
 
   return (
-    <div className="wrap">
-      <SiteNav />
-      <Header />
-      <Projects />
-      <Experience />
-      <Awards />
-      <section className="section">
-        <Link href="/writing" className="exp-teaser-row">
-          <div>
-            <div className="exp-teaser-name">Writing</div>
-            <div className="exp-teaser-sub">
-              {writingCount} {writingCount === 1 ? "note" : "notes"} — debugging
-              stories, build logs, and the occasional opinion
-            </div>
+    <main className="memoir">
+      <div className="memoir-toggle">
+        <ThemeToggle />
+      </div>
+
+      <Fade>
+        <header className="memoir-masthead">
+          <h1 className="memoir-name">Tatenda Chinyamakobvu</h1>
+          <hr className="memoir-rule" />
+          <p className="memoir-lede">
+            Where I come from, what I&apos;ve built, what I make of it, and
+            where I&apos;m going.
+          </p>
+        </header>
+      </Fade>
+
+      <Fade>
+        <section className="memoir-chapter">
+          <span className="memoir-kicker">I</span>
+          <p className="memoir-first">
+            I grew up in Zimbabwe, writing code for fun. Fifteen years later
+            I&apos;m still that kid. People pay me now, and the stakes are
+            higher.
+          </p>
+          <p>
+            Zimbabwe teaches you what no tutorial can. The internet is
+            negotiable. Power is negotiable. Software that only works in
+            perfect conditions doesn&apos;t work. That lesson got into my
+            taste early and never left.
+          </p>
+          <p>
+            The apprenticeship came fast: a buy-on-credit feature at{" "}
+            <a
+              href="https://www.techzim.co.zw"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Techzim
+            </a>
+            , contract work for{" "}
+            <a
+              href="https://www.22seven.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              22seven
+            </a>
+            , a token bridge at TreatDAO. I entered hackathons the way other
+            people play weekend sport. Won one, placed ninth of a hundred and
+            fifty in another, took a bronze in a third.
+          </p>
+        </section>
+      </Fade>
+
+      <Fade>
+        <section className="memoir-chapter">
+          <span className="memoir-kicker">II</span>
+          <p>
+            The work I&apos;m proudest of is the least glamorous. Through{" "}
+            <a
+              href="https://corelith.pagka.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Corelith
+            </a>
+            , three companies run their days on software I built from scratch:
+            a grocer, a scrap-metal recycler, a mine. Payroll, stock, an audit
+            log no one can quietly edit. It loads its offline workspace before
+            its dashboard, because here it has to.
+          </p>
+          <p>
+            Businesses don&apos;t run on clever code. They run on boring code
+            that refuses to fall over. The parts most engineers skip are the
+            parts a business actually feels, so those are the parts I build
+            first.
+          </p>
+          <p>
+            At{" "}
+            <a
+              href="https://afrisight.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Afrisight
+            </a>{" "}
+            I built CXanalytics: the brand, the dashboard, the survey
+            targeting. I shipped the mobile app panelists across Africa use
+            every day, built so a survey survives a dropped tower. When I
+            left, they brought me back to build the query engine.
+          </p>
+          <p>
+            The rest is curiosity with a commit history.{" "}
+            <a
+              href="https://github.com/tate2301/paynow-react"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              paynow-react
+            </a>{" "}
+            quietly became the standard React integration for Zimbabwe&apos;s
+            payment gateway. The{" "}
+            <a
+              href="https://github.com/tate2301/paas-platform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              self-hosted Heroku
+            </a>{" "}
+            exists because you don&apos;t understand a system until
+            you&apos;ve built one.
+          </p>
+        </section>
+      </Fade>
+
+      <Fade>
+        <section className="memoir-chapter">
+          <span className="memoir-kicker">III</span>
+          <p>
+            Corelith is the long project: software Zimbabwean businesses trust
+            with their day. I want to build the kind of company you only hear
+            about because everything works.
+          </p>
+          <p>
+            The rest is people. Student founders at the{" "}
+            <a
+              href="https://buildwithtif.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CUT Innovation Hub
+            </a>
+            , and small useful things kept public.
+          </p>
+          <p>
+            I&apos;m available for work worth doing well.{" "}
+            <a href="mailto:thehalfstackdev@gmail.com">
+              thehalfstackdev@gmail.com
+            </a>
+          </p>
+        </section>
+      </Fade>
+
+      <Fade>
+        <section className="memoir-chapter">
+          <span className="memoir-kicker">IV</span>
+          <p className="memoir-photos-intro">
+            Not everything worth keeping is work. Favourite people, pups,
+            moments.
+          </p>
+          <PhotoPile photos={photos} />
+        </section>
+      </Fade>
+
+      <Fade>
+        <section className="memoir-chapter">
+          <span className="memoir-kicker">V</span>
+          <p className="memoir-appendix-intro">
+            Notes. Some written, some built. The built ones you can touch.
+          </p>
+          <div className="appendix-list">
+            {notes.map((n) => (
+              <Link
+                key={n.slug}
+                href={`/notes/${n.slug}`}
+                className="appendix-row"
+              >
+                <span className="appendix-copy">
+                  <span className="appendix-title">{n.title}</span>
+                  <span className="appendix-line">{n.line}</span>
+                </span>
+                <span className="appendix-meta">
+                  {n.kind === "interactive" ? "interactive" : "written"} ·{" "}
+                  {n.date}
+                </span>
+              </Link>
+            ))}
           </div>
-          <span className="exp-teaser-arrow">→</span>
-        </Link>
-      </section>
-      <section className="section">
-        <Link href="/photos" className="exp-teaser-row">
-          <div>
-            <div className="exp-teaser-name">Photos</div>
-            <div className="exp-teaser-sub">A small archive — people, pups, and moments worth keeping</div>
+        </section>
+      </Fade>
+
+      <Fade>
+        <footer className="memoir-foot">
+          <div className="memoir-foot-row">
+            <a
+              href="https://github.com/tate2301"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              github
+            </a>
+            <a
+              href="https://twitter.com/atipamara"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              x
+            </a>
+            <a
+              href="https://www.upwork.com/freelancers/tatendachinyamakobvu"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              upwork
+            </a>
+            <a href="mailto:thehalfstackdev@gmail.com">email</a>
           </div>
-          <span className="exp-teaser-arrow">→</span>
-        </Link>
-      </section>
-      <section className="section">
-        <Link href="/experiments" className="exp-teaser-row">
-          <div>
-            <div className="exp-teaser-name">Experiments</div>
-            <div className="exp-teaser-sub">
-              {experimentsCount} interactive studies — physics, color,
-              typography, interaction
-            </div>
-          </div>
-          <span className="exp-teaser-arrow">→</span>
-        </Link>
-      </section>
-      <Footer />
-    </div>
+          <p className="memoir-colophon">Made in Harare.</p>
+        </footer>
+      </Fade>
+    </main>
   );
 }

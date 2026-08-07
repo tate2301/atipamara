@@ -1,0 +1,13 @@
+import { Demo, Source } from "@/components/notes/demos";
+
+Drag the two hues to opposite sides of the wheel, purple against green, blue against orange, and watch the top gradient die in the middle.
+
+<Demo id="oklch" />
+
+Both rows get the same endpoints. The top one mixes them the way the web has for thirty years, in sRGB. The bottom mixes in OKLCH. The two big swatches are the exact midpoints: same math, halfway along, two very different beliefs about color.
+
+sRGB fails because it's an encoding, not a perception. Your eye doesn't weigh all hues equally, so a straight line through RGB space passes through colors that are mathematically halfway and visually dim. OKLCH was built the other way round. Equal distances look equal. Hold lightness and chroma steady, rotate the hue, and every step stays as vivid as the endpoints.
+
+This is why Tailwind, Radix and Linear now generate their palettes in perceptual space. A grey ramp should feel evenly spaced, and in sRGB it isn't. `oklch()` has shipped in every modern browser since 2023. Your gradients no longer have to grow old and grey.
+
+<Source id="oklch" />

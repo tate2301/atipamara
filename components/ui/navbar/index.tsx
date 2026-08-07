@@ -10,7 +10,7 @@ export default function Navbar() {
       <nav className="mb-10">
         <Link href={"/"}>
           <h1>Atipamara</h1>
-          <p className="mb-4">Design — Engineer</p>
+          <p className="mb-4">Design Engineer</p>
         </Link>
       </nav>
       <DynamicNavbar />
