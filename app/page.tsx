@@ -5,7 +5,7 @@ import fs from "fs";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import Fade from "@/components/memoir/Fade";
 import PhotoPile from "@/components/memoir/PhotoPile";
-import { Chip, Reveal, Aside, KindIcon } from "@/components/memoir/Ink";
+import { Chip, Sticker, Aside, KindIcon } from "@/components/memoir/Ink";
 import { notes } from "@/app/notes/notes";
 
 export const metadata: Metadata = {
@@ -49,20 +49,25 @@ export default function Page() {
         <section className="memoir-chapter">
           <span className="memoir-kicker">I</span>
           <p className="memoir-first">
-            I grew up in{" "}
-            <Reveal kind="zimbabwe" sticker={sticker("zimbabwe")} caption="home">
-              Zimbabwe
-            </Reveal>
-            ,{" "}
-            <Reveal
-              kind="computer"
-              sticker={sticker("computer")}
+            I grew up in Zimbabwe, writing code for fun. Fifteen years later
+            I&apos;m still that kid. People pay me now, and the stakes are
+            higher.
+            <Sticker
+              src={sticker("zimbabwe")}
+              side="left"
+              top="-52px"
+              size={124}
+              rotate={-7}
+              caption="home"
+            />
+            <Sticker
+              src={sticker("computer")}
+              side="right"
+              top="4px"
+              size={112}
+              rotate={6}
               caption="the beginning"
-            >
-              writing code for fun
-            </Reveal>
-            . Fifteen years later I&apos;m still that kid. People pay me now,
-            and the stakes are higher.
+            />
           </p>
           <p>
             Zimbabwe teaches you what no tutorial can. The internet is
@@ -84,16 +89,16 @@ export default function Page() {
               token bridge
             </Aside>{" "}
             at TreatDAO. I entered hackathons the way other people play
-            weekend sport.{" "}
-            <Reveal
-              kind="trophy"
-              sticker={sticker("trophy")}
+            weekend sport. Won one, placed ninth of a hundred and fifty in
+            another, took a bronze in a third.
+            <Sticker
+              src={sticker("trophy")}
+              side="right"
+              top="52%"
+              size={104}
+              rotate={7}
               caption="ZWL$1,000,000"
-            >
-              Won one
-            </Reveal>
-            , placed ninth of a hundred and fifty in another, took a bronze in
-            a third.
+            />
           </p>
         </section>
       </Fade>
@@ -107,13 +112,17 @@ export default function Page() {
               Corelith
             </Chip>
             , three companies run their days on software I built from scratch:
-            a grocer, a scrap-metal recycler,{" "}
-            <Reveal kind="mine" sticker={sticker("mine")} caption="yes, an actual mine">
-              a mine
-            </Reveal>
-            . Payroll, stock, an audit log no one can quietly edit. It loads
-            its offline workspace before its dashboard, because here it has
-            to.
+            a grocer, a scrap-metal recycler, a mine. Payroll, stock, an audit
+            log no one can quietly edit. It loads its offline workspace before
+            its dashboard, because here it has to.
+            <Sticker
+              src={sticker("mine")}
+              side="left"
+              top="30%"
+              size={116}
+              rotate={-8}
+              caption="yes, an actual mine"
+            />
           </p>
           <p>
             Businesses don&apos;t run on clever code. They run on boring code
@@ -128,19 +137,20 @@ export default function Page() {
             </Chip>{" "}
             I built CXanalytics: the brand, the dashboard, the survey
             targeting. I shipped the mobile app panelists across Africa use
-            every day, built so a survey survives{" "}
-            <Reveal
-              kind="tower"
-              sticker={sticker("tower")}
-              caption="it happens a lot"
-            >
-              a dropped tower
-            </Reveal>
-            . When I left, they brought me back to build the{" "}
+            every day, built so a survey survives a dropped tower. When I
+            left, they brought me back to build the{" "}
             <Aside note="Stripe Sigma, but for survey answers.">
               query engine
             </Aside>
             .
+            <Sticker
+              src={sticker("tower")}
+              side="right"
+              top="8%"
+              size={100}
+              rotate={5}
+              caption="it happens a lot"
+            />
           </p>
           <p>
             The rest is curiosity with a commit history.{" "}
@@ -192,11 +202,16 @@ export default function Page() {
         <section className="memoir-chapter">
           <span className="memoir-kicker">IV</span>
           <p className="memoir-photos-intro">
-            Not everything worth keeping is work. Favourite people,{" "}
-            <Reveal kind="pup" sticker={sticker("pup")} caption="the pups">
-              pups
-            </Reveal>
-            , moments.
+            Not everything worth keeping is work. Favourite people, pups,
+            moments.
+            <Sticker
+              src={sticker("pup")}
+              side="right"
+              top="-34px"
+              size={108}
+              rotate={8}
+              caption="the pups"
+            />
           </p>
           <PhotoPile photos={photos} />
         </section>

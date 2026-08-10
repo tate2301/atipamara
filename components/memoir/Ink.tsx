@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
@@ -9,31 +9,16 @@ import {
   Briefcase,
   Envelope,
   Cube,
-  FlagBanner,
-  Desktop,
-  HardHat,
-  Trophy,
-  Broadcast,
-  Dog,
   CursorClick,
   PenNib,
 } from "@phosphor-icons/react";
 
-const CHIP_ICONS: Record<string, React.ReactNode> = {
-  github: <GithubLogo weight="fill" size={12} />,
-  x: <XLogo weight="bold" size={12} />,
-  upwork: <Briefcase weight="fill" size={12} />,
-  email: <Envelope weight="fill" size={12} />,
-  corelith: <Cube weight="fill" size={12} />,
-};
-
-const STICKER_ICONS: Record<string, React.ReactNode> = {
-  zimbabwe: <FlagBanner weight="duotone" size={38} />,
-  computer: <Desktop weight="duotone" size={38} />,
-  trophy: <Trophy weight="duotone" size={38} />,
-  mine: <HardHat weight="duotone" size={38} />,
-  tower: <Broadcast weight="duotone" size={38} />,
-  pup: <Dog weight="duotone" size={38} />,
+const LINK_ICONS: Record<string, React.ReactNode> = {
+  github: <GithubLogo weight="fill" size={13} />,
+  x: <XLogo weight="bold" size={13} />,
+  upwork: <Briefcase weight="fill" size={13} />,
+  email: <Envelope weight="fill" size={13} />,
+  corelith: <Cube weight="fill" size={13} />,
 };
 
 export function Chip({
@@ -50,18 +35,18 @@ export function Chip({
   const external = href.startsWith("http");
   return (
     <a
-      className="chip"
+      className="ink-link"
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
-      <span className="chip-logo">
+      <span className="ink-logo">
         {logo ? (
-          <Image src={logo} alt="" width={13} height={13} unoptimized />
+          <Image src={logo} alt="" width={14} height={14} unoptimized />
         ) : (
-          CHIP_ICONS[icon ?? "github"]
+          LINK_ICONS[icon ?? "github"]
         )}
       </span>
-      <span>{children}</span>
+      <span className="ink-word">{children}</span>
     </a>
   );
 }
@@ -78,82 +63,58 @@ export function KindIcon({ kind }: { kind: "interactive" | "written" }) {
   );
 }
 
-export function Reveal({
-  kind,
-  sticker,
+export function Sticker({
+  src,
+  side,
+  top,
+  size = 116,
+  rotate = -6,
   caption,
-  children,
 }: {
-  kind: string;
-  sticker?: string;
+  src?: string;
+  side: "left" | "right";
+  top: string;
+  size?: number;
+  rotate?: number;
   caption?: string;
-  children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: PointerEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", close);
-    return () => document.removeEventListener("pointerdown", close);
-  }, [open]);
-
+  if (!src) return null;
   return (
-    <span
-      className="reveal"
-      ref={ref}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+    <motion.span
+      className={`sticker sticker-${side}`}
+      style={{ top, "--ss": `${size}px` } as React.CSSProperties}
+      aria-hidden="true"
+      initial={
+        reduceMotion
+          ? { opacity: 0 }
+          : {
+              opacity: 0,
+              scale: 0.3,
+              y: 26,
+              rotate: rotate + (side === "left" ? -16 : 16),
+            }
+      }
+      whileInView={
+        reduceMotion
+          ? { opacity: 1 }
+          : { opacity: 1, scale: 1, y: 0, rotate }
+      }
+      viewport={{ once: true, margin: "-90px 0px" }}
+      whileHover={reduceMotion ? undefined : { scale: 1.09, rotate: 0 }}
+      transition={{ type: "spring", stiffness: 260, damping: 19 }}
     >
-      <button
-        type="button"
-        className="reveal-word"
-        aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-      >
-        {children}
-      </button>
-      <AnimatePresence>
-        {open && (
-          <motion.span
-            className="reveal-pop"
-            initial={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, scale: 0.5, y: 10, rotate: -12 }
-            }
-            animate={
-              reduceMotion
-                ? { opacity: 1 }
-                : { opacity: 1, scale: 1, y: 0, rotate: -5 }
-            }
-            exit={{ opacity: 0, scale: 0.7, y: 6, transition: { duration: 0.12 } }}
-            transition={{ type: "spring", stiffness: 420, damping: 22 }}
-          >
-            {sticker ? (
-              <Image
-                src={sticker}
-                alt=""
-                width={132}
-                height={132}
-                className="reveal-img"
-                style={{ width: 132, height: "auto" }}
-                unoptimized
-              />
-            ) : (
-              <span className="reveal-icon">{STICKER_ICONS[kind]}</span>
-            )}
-            {caption && <span className="reveal-caption">{caption}</span>}
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </span>
+      <Image
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        style={{ width: "100%", height: "auto" }}
+        className="sticker-img"
+        unoptimized
+      />
+      {caption && <span className="sticker-caption">{caption}</span>}
+    </motion.span>
   );
 }
 
@@ -170,7 +131,7 @@ export function Aside({
     <>
       <button
         type="button"
-        className="reveal-word"
+        className="aside-trigger"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       >
@@ -182,9 +143,7 @@ export function Aside({
             className="aside-note"
             initial={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
             animate={
-              reduceMotion
-                ? { opacity: 1 }
-                : { height: "auto", opacity: 1 }
+              reduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }
             }
             exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
