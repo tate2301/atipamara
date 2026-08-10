@@ -286,3 +286,28 @@ strong { color: var(--fg); font-weight: 400; }
 .ok-slider span { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-subtle); }
 .ok-surprise { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; padding: 5px 12px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 100px; cursor: pointer; color: var(--fg-muted); transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast); }
 .ok-surprise:hover { color: var(--fg); border-color: var(--border-hover); }
+
+/* --------------------------------------------
+   INK: inline chips, sticker reveals, asides
+-------------------------------------------- */
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 1px 10px 1px 4px; margin: 0 1px; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-card); text-decoration: none !important; line-height: 1.4; font-size: .93em; vertical-align: -3px; box-shadow: 0 1px 1.5px rgba(0,0,0,.04); transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast); }
+.chip:hover { border-color: var(--border-hover); transform: translateY(-1.5px); box-shadow: var(--shadow-sm); }
+.chip:active { transform: translateY(0); }
+.chip-logo { width: 19px; height: 19px; border-radius: 50%; background: #fff; border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; color: #333; }
+.chip-logo img { border-radius: 2px; }
+[data-theme="dark"] .chip-logo { border-color: transparent; }
+.memoir-foot .chip { font-family: var(--font-mono); font-size: 12px; vertical-align: 0; }
+
+.reveal { position: relative; display: inline-block; }
+.reveal-word { background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; border-bottom: 1.5px dotted var(--fg-subtle); transition: border-color var(--t-fast); }
+.reveal-word:hover { border-bottom-color: var(--fg); }
+.reveal-pop { position: absolute; bottom: calc(100% + 10px); left: 50%; margin-left: -62px; width: max-content; max-width: 180px; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-md); z-index: 40; pointer-events: none; transform-origin: bottom center; }
+.reveal-icon { display: flex; color: var(--fg); }
+.reveal-img { display: block; }
+.reveal-caption { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--fg-subtle); white-space: nowrap; }
+
+.aside-note { display: block; overflow: hidden; }
+.aside-note-inner { display: block; padding: 8px 0 2px 20px; font-style: italic; font-size: .94em; color: var(--fg-muted); }
+.aside-note-inner::before { content: '\21B3\00A0'; color: var(--fg-subtle); }
+
+.kind-icon { display: inline-flex; vertical-align: -2px; margin-right: 5px; color: var(--fg-subtle); }

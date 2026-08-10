@@ -5,6 +5,7 @@ import fs from "fs";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import Fade from "@/components/memoir/Fade";
 import PhotoPile from "@/components/memoir/PhotoPile";
+import { Chip, Reveal, Aside, KindIcon } from "@/components/memoir/Ink";
 import { notes } from "@/app/notes/notes";
 
 export const metadata: Metadata = {
@@ -20,6 +21,12 @@ export default function Page() {
     .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
     .sort()
     .map((file) => `/assets/photos/${file}`);
+
+  const stickersDirectory = path.join(process.cwd(), "public/stickers");
+  const sticker = (name: string) =>
+    fs.existsSync(path.join(stickersDirectory, `${name}.png`))
+      ? `/stickers/${name}.png`
+      : undefined;
 
   return (
     <main className="memoir">
@@ -42,9 +49,20 @@ export default function Page() {
         <section className="memoir-chapter">
           <span className="memoir-kicker">I</span>
           <p className="memoir-first">
-            I grew up in Zimbabwe, writing code for fun. Fifteen years later
-            I&apos;m still that kid. People pay me now, and the stakes are
-            higher.
+            I grew up in{" "}
+            <Reveal kind="zimbabwe" sticker={sticker("zimbabwe")} caption="home">
+              Zimbabwe
+            </Reveal>
+            ,{" "}
+            <Reveal
+              kind="computer"
+              sticker={sticker("computer")}
+              caption="the beginning"
+            >
+              writing code for fun
+            </Reveal>
+            . Fifteen years later I&apos;m still that kid. People pay me now,
+            and the stakes are higher.
           </p>
           <p>
             Zimbabwe teaches you what no tutorial can. The internet is
@@ -54,24 +72,28 @@ export default function Page() {
           </p>
           <p>
             The apprenticeship came fast: a buy-on-credit feature at{" "}
-            <a
-              href="https://www.techzim.co.zw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://www.techzim.co.zw" logo="/logos/techzim.co.zw.png">
               Techzim
-            </a>
+            </Chip>
             , contract work for{" "}
-            <a
-              href="https://www.22seven.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://www.22seven.com" logo="/logos/22seven.com.png">
               22seven
-            </a>
-            , a token bridge at TreatDAO. I entered hackathons the way other
-            people play weekend sport. Won one, placed ninth of a hundred and
-            fifty in another, took a bronze in a third.
+            </Chip>
+            , a{" "}
+            <Aside note="Multichain, with a subgraph indexing their market contracts. My crypto phase. We all had one.">
+              token bridge
+            </Aside>{" "}
+            at TreatDAO. I entered hackathons the way other people play
+            weekend sport.{" "}
+            <Reveal
+              kind="trophy"
+              sticker={sticker("trophy")}
+              caption="ZWL$1,000,000"
+            >
+              Won one
+            </Reveal>
+            , placed ninth of a hundred and fifty in another, took a bronze in
+            a third.
           </p>
         </section>
       </Fade>
@@ -81,17 +103,17 @@ export default function Page() {
           <span className="memoir-kicker">II</span>
           <p>
             The work I&apos;m proudest of is the least glamorous. Through{" "}
-            <a
-              href="https://corelith.pagka.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://corelith.pagka.dev" icon="corelith">
               Corelith
-            </a>
+            </Chip>
             , three companies run their days on software I built from scratch:
-            a grocer, a scrap-metal recycler, a mine. Payroll, stock, an audit
-            log no one can quietly edit. It loads its offline workspace before
-            its dashboard, because here it has to.
+            a grocer, a scrap-metal recycler,{" "}
+            <Reveal kind="mine" sticker={sticker("mine")} caption="yes, an actual mine">
+              a mine
+            </Reveal>
+            . Payroll, stock, an audit log no one can quietly edit. It loads
+            its offline workspace before its dashboard, because here it has
+            to.
           </p>
           <p>
             Businesses don&apos;t run on clever code. They run on boring code
@@ -101,36 +123,38 @@ export default function Page() {
           </p>
           <p>
             At{" "}
-            <a
-              href="https://afrisight.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://afrisight.com" logo="/logos/afrisight.com.png">
               Afrisight
-            </a>{" "}
+            </Chip>{" "}
             I built CXanalytics: the brand, the dashboard, the survey
             targeting. I shipped the mobile app panelists across Africa use
-            every day, built so a survey survives a dropped tower. When I
-            left, they brought me back to build the query engine.
+            every day, built so a survey survives{" "}
+            <Reveal
+              kind="tower"
+              sticker={sticker("tower")}
+              caption="it happens a lot"
+            >
+              a dropped tower
+            </Reveal>
+            . When I left, they brought me back to build the{" "}
+            <Aside note="Stripe Sigma, but for survey answers.">
+              query engine
+            </Aside>
+            .
           </p>
           <p>
             The rest is curiosity with a commit history.{" "}
-            <a
+            <Chip
               href="https://github.com/tate2301/paynow-react"
-              target="_blank"
-              rel="noopener noreferrer"
+              logo="/logos/paynow.co.zw.png"
             >
               paynow-react
-            </a>{" "}
+            </Chip>{" "}
             quietly became the standard React integration for Zimbabwe&apos;s
             payment gateway. The{" "}
-            <a
-              href="https://github.com/tate2301/paas-platform"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://github.com/tate2301/paas-platform" icon="github">
               self-hosted Heroku
-            </a>{" "}
+            </Chip>{" "}
             exists because you don&apos;t understand a system until
             you&apos;ve built one.
           </p>
@@ -147,20 +171,19 @@ export default function Page() {
           </p>
           <p>
             The rest is people. Student founders at the{" "}
-            <a
+            <Chip
               href="https://buildwithtif.xyz"
-              target="_blank"
-              rel="noopener noreferrer"
+              logo="/logos/buildwithtif.xyz.png"
             >
               CUT Innovation Hub
-            </a>
+            </Chip>
             , and small useful things kept public.
           </p>
           <p>
             I&apos;m available for work worth doing well.{" "}
-            <a href="mailto:thehalfstackdev@gmail.com">
+            <Chip href="mailto:thehalfstackdev@gmail.com" icon="email">
               thehalfstackdev@gmail.com
-            </a>
+            </Chip>
           </p>
         </section>
       </Fade>
@@ -169,8 +192,11 @@ export default function Page() {
         <section className="memoir-chapter">
           <span className="memoir-kicker">IV</span>
           <p className="memoir-photos-intro">
-            Not everything worth keeping is work. Favourite people, pups,
-            moments.
+            Not everything worth keeping is work. Favourite people,{" "}
+            <Reveal kind="pup" sticker={sticker("pup")} caption="the pups">
+              pups
+            </Reveal>
+            , moments.
           </p>
           <PhotoPile photos={photos} />
         </section>
@@ -194,6 +220,7 @@ export default function Page() {
                   <span className="appendix-line">{n.line}</span>
                 </span>
                 <span className="appendix-meta">
+                  <KindIcon kind={n.kind} />
                   {n.kind === "interactive" ? "interactive" : "written"} ·{" "}
                   {n.date}
                 </span>
@@ -206,28 +233,21 @@ export default function Page() {
       <Fade>
         <footer className="memoir-foot">
           <div className="memoir-foot-row">
-            <a
-              href="https://github.com/tate2301"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Chip href="https://github.com/tate2301" icon="github">
               github
-            </a>
-            <a
-              href="https://twitter.com/atipamara"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            </Chip>
+            <Chip href="https://twitter.com/atipamara" icon="x">
               x
-            </a>
-            <a
+            </Chip>
+            <Chip
               href="https://www.upwork.com/freelancers/tatendachinyamakobvu"
-              target="_blank"
-              rel="noopener noreferrer"
+              icon="upwork"
             >
               upwork
-            </a>
-            <a href="mailto:thehalfstackdev@gmail.com">email</a>
+            </Chip>
+            <Chip href="mailto:thehalfstackdev@gmail.com" icon="email">
+              email
+            </Chip>
           </div>
           <p className="memoir-colophon">Made in Harare.</p>
         </footer>
