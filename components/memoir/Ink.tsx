@@ -140,9 +140,10 @@ export function Reveal({
               <Image
                 src={sticker}
                 alt=""
-                width={96}
-                height={96}
+                width={132}
+                height={132}
                 className="reveal-img"
+                style={{ width: 132, height: "auto" }}
                 unoptimized
               />
             ) : (
